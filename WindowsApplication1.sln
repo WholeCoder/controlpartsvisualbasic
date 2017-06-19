@@ -5,6 +5,11 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WindowsApplication1", "WindowsApplication1\WindowsApplication1.vbproj", "{2B98B6C8-5299-4097-A465-DC6E594A31D8}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestControlParts", "TestControlParts\TestControlParts.vbproj", "{2A100BF0-A94B-4FBA-8045-08D7E110DCFA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2B98B6C8-5299-4097-A465-DC6E594A31D8} = {2B98B6C8-5299-4097-A465-DC6E594A31D8}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +20,10 @@ Global
 		{2B98B6C8-5299-4097-A465-DC6E594A31D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B98B6C8-5299-4097-A465-DC6E594A31D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B98B6C8-5299-4097-A465-DC6E594A31D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A100BF0-A94B-4FBA-8045-08D7E110DCFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A100BF0-A94B-4FBA-8045-08D7E110DCFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A100BF0-A94B-4FBA-8045-08D7E110DCFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A100BF0-A94B-4FBA-8045-08D7E110DCFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

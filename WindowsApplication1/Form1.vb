@@ -12,9 +12,11 @@
         Me.TextBox1.Text = "Ruben is awesome!"
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
         Dim fileReader As String
-        fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\visual studio 2013\Projects\controlpartsvisualbasic\WindowsApplication1\at11-limit-switches.htm.template")
+        fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\WindowsApplication1\a185.htm.template")
 
+        Dim tableOptions = ""
         Dim str = ""
+        Dim tableidJustfound = False
         Dim foundReplacementIdentifier = False
         Dim list As New ArrayList
         For Each c As Char In fileReader
@@ -24,14 +26,22 @@
                 str = str & c
             ElseIf c = "|" Then
                 foundReplacementIdentifier = False
+                If str.ToString() = "table" Then
+
+                    tableidJustfound = True
+                ElseIf tableidJustfound Then
+                    tableOptions = tableOptions & str.ToString()
+                    tableidJustfound = False
+                End If
                 list.Add(str.ToString())
                 str = ""
+                tableOptions = ""
             End If
 
         Next
 
         Me.AddButton("Ruben's String")
-
+        Me.TextBox1.Text = tableOptions
         
     End Sub
 End Class
