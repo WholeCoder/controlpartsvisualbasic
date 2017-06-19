@@ -1,4 +1,13 @@
 ﻿Public Class Form1
+    Private Sub AddButton(name As String)
+        Dim newTB2 As New TextBox
+        newTB2.Name = name
+        'Set location, size and so on if you like
+        newTB2.Location = New Point(30, 30)
+        Me.Controls.Add(newTB2)
+        newTB2.Text = name & " Text"
+    End Sub
+
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Me.TextBox1.Text = "Ruben is awesome!"
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
@@ -13,20 +22,16 @@
                 foundReplacementIdentifier = True
             ElseIf foundReplacementIdentifier And c <> "|" Then
                 str = str & c
-            Else
+            ElseIf c = "|" Then
                 foundReplacementIdentifier = False
-                list.Add(str)
+                list.Add(str.ToString())
                 str = ""
             End If
 
         Next
 
-        Dim output = ""
-        For Each ch As String In list
-            output = output & ch
-        Next
+        Me.AddButton("Ruben's String")
 
-        Me.TextBox1.Text = output
-
+        
     End Sub
 End Class
