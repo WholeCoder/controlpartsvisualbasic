@@ -3,7 +3,7 @@ Imports WindowsApplication1
 Imports NUnit.Framework
 
 <TestFixture()>
-Public Class Class1
+Public Class TestParser
 
     Dim fileReader As String
 
