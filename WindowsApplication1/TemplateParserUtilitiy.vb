@@ -1,6 +1,6 @@
 ﻿Public Class TemplateParserUtilitiy
 
-    Public Shared Function GetListOfKeywords(input As String)
+    Public Shared Function ParseHashTableOfElements(input As String)
 
         Dim configs As Hashtable = New Hashtable()
 
@@ -9,7 +9,7 @@
         Dim temporaryHolderForTableId = ""
         Dim str = ""
         Dim foundReplacementIdentifier = False
-         For Each c As Char In input
+        For Each c As Char In input
             If c = "|" And Not foundReplacementIdentifier And Not parseInTableOptions Then
                 foundReplacementIdentifier = True
             ElseIf (parseInTableOptions Or foundReplacementIdentifier) And c <> "|" Then
@@ -33,5 +33,9 @@
         Next
 
         Return configs
+    End Function
+
+    Public Shared Function ConvertTableLanguageToHtmlTable(tableConfiguration As String)
+        Return "<table>" & tableConfiguration & "</table>"
     End Function
 End Class
