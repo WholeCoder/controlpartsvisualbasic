@@ -76,4 +76,20 @@ Public Class TestParser
 
         Assert.IsTrue(tableWithheaders.Equals("<table>" & extractedTableTemplateOptions & "</table>"))
     End Sub
+
+    <Test()>
+    Public Sub SeeIfTableIdentifierCanhaveItsOptionsParsed()
+
+        Dim extractedTableTemplateOptions As String
+        extractedTableTemplateOptions = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\ParsTableWithItsCongigurationOptionsHeaders.template.html")
+
+        Dim inputTemplate As String
+        inputTemplate = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\EnsureCorrectTableIsExtracted.template.html")
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate)
+
+        Dim tableOptionsString As String = getListOfKeywordskeywordList.Item("table:rubenstable").ToString()
+        Assert.IsTrue(extractedTableTemplateOptions.Equals(tableOptionsString))
+
+        Dim tableAsHTMLSTring As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlTable(tableOptionsString)
+    End Sub
 End Class

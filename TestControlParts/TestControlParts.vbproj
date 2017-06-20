@@ -126,6 +126,7 @@
     <Content Include="TestTemplates\a185_files\style.css" />
     <Content Include="TestTemplates\EnsureCorrectTableIsExtracted.template.html" />
     <Content Include="TestTemplates\ParsTableWithItsCongigurationOptionsHeaders.template.html" />
+    <Content Include="TestTemplates\SeeIfTableIdentifierCanhaveItsOptionsParsed.template.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
