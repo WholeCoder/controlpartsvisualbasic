@@ -38,9 +38,23 @@ Public Class TestParser
 
     <Test()>
     Public Sub EnsureCorrectTableIsExtracted()
-        Dim inputTemplate = "<!DOCTYPE html><html><head> <title>|field:title|</title></head><body> <h1>|field:header|</h1> |table:rubenstable|b|</body></html>"
+        Dim inputTemplate As String
+        inputTemplate = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\EnsureCorrectTableIsExtracted.template.html")
+
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.GetListOfKeywords(inputTemplate)
 
         Assert.IsTrue(getListOfKeywordskeywordList.ContainsKey("table:rubenstable"))
+    End Sub
+
+    <Test()>
+    Public Sub ParseTableWithItsCongigurationOptionsHeaders()
+        Dim extractedTableTemplateOptions As String
+        extractedTableTemplateOptions = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\ParsTableWithItsCongigurationOptionsHeaders.template.html")
+
+        Dim inputTemplate As String
+        inputTemplate = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\EnsureCorrectTableIsExtracted.template.html")
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.GetListOfKeywords(inputTemplate)
+
+        Assert.IsTrue(extractedTableTemplateOptions.Equals(getListOfKeywordskeywordList.Item("table:rubenstable").ToString()))
     End Sub
 End Class
