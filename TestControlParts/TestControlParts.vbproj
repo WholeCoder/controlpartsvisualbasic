@@ -101,6 +101,29 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="TestTemplates\a185_files\async-ads.js.download" />
+    <None Include="TestTemplates\a185_files\cse.js.download" />
+    <None Include="TestTemplates\a185_files\default+en.I.js.download" />
+    <None Include="TestTemplates\a185_files\ga.js.download" />
+    <None Include="TestTemplates\a185_files\jsapi" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsApplication1\WindowsApplication1.vbproj">
+      <Project>{2b98b6c8-5299-4097-a465-dc6e594a31d8}</Project>
+      <Name>WindowsApplication1</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestTemplates\a185.htm" />
+    <Content Include="TestTemplates\a185_files\consys.gif" />
+    <Content Include="TestTemplates\a185_files\Control-Parts-Siemens-Klockner-Moeller-relay-contactor.jpg" />
+    <Content Include="TestTemplates\a185_files\default+en.css" />
+    <Content Include="TestTemplates\a185_files\default.css" />
+    <Content Include="TestTemplates\a185_files\dilm185.jpg" />
+    <Content Include="TestTemplates\a185_files\googlelogo_grey_46x15dp.png" />
+    <Content Include="TestTemplates\a185_files\Screwdriver.jpg" />
+    <Content Include="TestTemplates\a185_files\search_box_icon.png" />
+    <Content Include="TestTemplates\a185_files\style.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

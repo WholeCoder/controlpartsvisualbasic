@@ -14,34 +14,19 @@
         Dim fileReader As String
         fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\WindowsApplication1\a185.htm.template")
 
-        Dim tableOptions = ""
+        Dim inputTemplate = "<!DOCTYPE html><html><head> <title>|table:title|b|</title></head><body> <h1>|table2:header|b|</h1> |table:rubenstable|</body></html>"
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.GetListOfKeywords(inputTemplate)
+
         Dim str = ""
-        Dim tableidJustfound = False
-        Dim foundReplacementIdentifier = False
-        Dim list As New ArrayList
-        For Each c As Char In fileReader
-            If c = "|" And Not foundReplacementIdentifier Then
-                foundReplacementIdentifier = True
-            ElseIf foundReplacementIdentifier And c <> "|" Then
-                str = str & c
-            ElseIf c = "|" Then
-                foundReplacementIdentifier = False
-                If str.ToString() = "table" Then
-
-                    tableidJustfound = True
-                ElseIf tableidJustfound Then
-                    tableOptions = tableOptions & str.ToString()
-                    tableidJustfound = False
-                End If
-                list.Add(str.ToString())
-                str = ""
-                tableOptions = ""
-            End If
-
-        Next
+        For Each de As DictionaryEntry In getListOfKeywordskeywordList
+            str = str & de.Key
+        Next de
 
         Me.AddButton("Ruben's String")
-        Me.TextBox1.Text = tableOptions
-        
+        Me.TextBox1.Text = str
+
+
     End Sub
+
+
 End Class
