@@ -10,8 +10,6 @@
     End Function
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Me.TextBox1.Text = "Ruben is awesome!"
-        Me.TextBox1.ScrollBars = ScrollBars.Vertical
         Dim fileReader As String
         fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\WindowsApplication1\a185.htm.template")
 
@@ -27,6 +25,8 @@
         Next de
 
 
+        Me.TextBox1.Text = inputTemplate
+        Me.TextBox1.ScrollBars = ScrollBars.Vertical
 
     End Sub
 

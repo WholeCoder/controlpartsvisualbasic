@@ -20,8 +20,18 @@ Public Class TestParser2
 
     <Test()>
     Public Sub SeeIfTableArgumentsCanBeParsedOutIntoObjects()
+        Dim template As String = "<!DOCTYPE html><html><head><title>Test Template</title></head><body>|table:rubenstable|<tr><td colspan=""3"">Test 3 Header</td></tr>*<tr><td>col</td><td>col 2</td><td>col3</td></tr>*<tr><td></td><td></td><td></td></tr>|</body></html>"
+        Dim templateHash As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(template)
 
-        Assert.IsTrue(True)
+        Assert.IsTrue(templateHash.Contains("table:rubenstable"))
+
+        Dim tableOptions() As String = templateHash.Item("table:rubenstable")
+
+        Assert.IsTrue(tableOptions.Count() = 3)
+
+        Assert.IsTrue(tableOptions.Contains("<tr><td colspan=""3"">Test 3 Header</td></tr>"))
+        Assert.IsTrue(tableOptions.Contains("<tr><td>col</td><td>col 2</td><td>col3</td></tr>"))
+        Assert.IsTrue(tableOptions.Contains("<tr><td></td><td></td><td></td></tr>"))
 
     End Sub
 
