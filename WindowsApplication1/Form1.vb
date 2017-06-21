@@ -14,7 +14,7 @@
         fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\WindowsApplication1\a185.htm.template")
 
         Dim inputTemplate = "<!DOCTYPE html><html><head> <title>|table:title|b|</title></head><body> <h1>|table:headertable|b|</h1> |table:rubenstable|</body></html>"
-        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate)
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate, "%", "None")
 
         Dim str = ""
         Dim y = 100

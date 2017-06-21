@@ -14,7 +14,7 @@ Public Class TestParser
 
     <Test()>
     Public Sub EmptyListReturned()
-        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements("")
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements("", "|", "*")
 
         Assert.IsTrue(getListOfKeywordskeywordList.Count = 0)
     End Sub
@@ -22,7 +22,7 @@ Public Class TestParser
     <Test()>
     Public Sub StripOutFields()
         Dim inputTemplate = "<!DOCTYPE html><html><head> <title>|field:title|</title></head><body> <h1>|field:header|</h1> <table> <tr> <th>Ruben Found This</th> <th></th> <th></th> </tr> <tr> <td></td> <td></td> <td></td> </tr> <tr> <td></td> <td></td> <td></td> </tr> </table></body></html>"
-        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate)
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate, "|", "*")
 
         Assert.IsTrue(getListOfKeywordskeywordList.Count = 2)
     End Sub
@@ -30,7 +30,7 @@ Public Class TestParser
     <Test()>
     Public Sub EnsureCorrectFields()
         Dim inputTemplate = "<!DOCTYPE html><html><head> <title>|field:title|</title></head><body> <h1>|field:header|</h1> <table> <tr> <th>Ruben Found This</th> <th></th> <th></th> </tr> <tr> <td></td> <td></td> <td></td> </tr> <tr> <td></td> <td></td> <td></td> </tr> </table></body></html>"
-        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate)
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate, "|", "*")
 
         Assert.IsTrue(getListOfKeywordskeywordList.ContainsKey("field:title"))
         Assert.IsTrue(getListOfKeywordskeywordList.ContainsKey("field:header"))
@@ -41,7 +41,7 @@ Public Class TestParser
         Dim inputTemplate As String
         inputTemplate = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\EnsureCorrectTableIsExtracted.template.html")
 
-        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate)
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate, "|", "*")
 
         Assert.IsTrue(getListOfKeywordskeywordList.ContainsKey("table:rubenstable"))
     End Sub
@@ -50,7 +50,7 @@ Public Class TestParser
     Public Sub ParseTableWithItsCongigurationOptionsHeaders()
         Dim inputTemplate As String
         inputTemplate = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\EnsureCorrectTableIsExtracted.template.html")
-        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate)
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate, "|", "*")
         Dim ss() As String = getListOfKeywordskeywordList.Item("table:rubenstable")
 
         Assert.IsTrue(ss.Count = 2)
@@ -60,7 +60,7 @@ Public Class TestParser
 
     <Test()>
     Public Sub TransformEmptyTableArgumentsIntoEmptyTable()
-        Dim emptyTranformed As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlTable("")
+        Dim emptyTranformed As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlTable("", "*")
 
         Assert.IsTrue(emptyTranformed.Equals("<table></table>"))
     End Sub
@@ -72,7 +72,7 @@ Public Class TestParser
         extractedTableTemplateOptions = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\ParsTableWithItsCongigurationOptionsHeaders.template.html")
 
 
-        Dim tableWithheaders As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlTable(extractedTableTemplateOptions)
+        Dim tableWithheaders As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlTable(extractedTableTemplateOptions, "*")
 
         Assert.IsTrue(tableWithheaders.Equals("<table>" & extractedTableTemplateOptions & "</table>"))
     End Sub

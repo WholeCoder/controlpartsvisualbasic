@@ -10,6 +10,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestControlParts", "TestCon
 		{2B98B6C8-5299-4097-A465-DC6E594A31D8} = {2B98B6C8-5299-4097-A465-DC6E594A31D8}
 	EndProjectSection
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ConsoleTesting", "ConsoleTesting\ConsoleTesting.vbproj", "{876BF874-065F-499F-85A2-8B88ED660075}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{2A100BF0-A94B-4FBA-8045-08D7E110DCFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A100BF0-A94B-4FBA-8045-08D7E110DCFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A100BF0-A94B-4FBA-8045-08D7E110DCFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{876BF874-065F-499F-85A2-8B88ED660075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{876BF874-065F-499F-85A2-8B88ED660075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{876BF874-065F-499F-85A2-8B88ED660075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{876BF874-065F-499F-85A2-8B88ED660075}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
