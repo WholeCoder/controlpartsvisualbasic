@@ -23,8 +23,9 @@
                     temporaryHolderForTableId = str
                 Else
                     parseInTableOptions = False
-                    Console.WriteLine("table value = " & str)
-                    configs.Add(temporaryHolderForTableId, str)
+                    Dim listOfTableOptions() As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlRows(str)
+                    '                    Console.WriteLine("table value = " & str)
+                    configs.Add(temporaryHolderForTableId, listOfTableOptions)
                     temporaryHolderForTableId = ""
                 End If
                 str = ""

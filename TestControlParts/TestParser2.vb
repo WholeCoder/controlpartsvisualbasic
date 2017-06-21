@@ -16,9 +16,13 @@ Public Class TestParser2
         Assert.IsTrue(parsedTableList.Contains("<tr><td colspan=""3"">Test 3 Header</td></tr>"))
         Assert.IsTrue(parsedTableList.Contains("<tr><td>col</td><td>col 2</td><td>col3</td></tr>"))
         Assert.IsTrue(parsedTableList.Contains("<tr><td></td><td></td><td></td></tr>"))
-
-        '        Dim tableAsHTMLString As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlTable(tableOptionsString)
     End Sub
 
+    <Test()>
+    Public Sub SeeIfTableArgumentsCanBeParsedOutIntoObjects()
+
+        Assert.IsTrue(True)
+
+    End Sub
 
 End Class
