@@ -31,4 +31,7 @@
     End Sub
 
 
+    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+        MsgBox("Copyright 2017", , "About The Lorax")
+    End Sub
 End Class

@@ -36,6 +36,16 @@
     End Function
 
     Public Shared Function ConvertTableLanguageToHtmlTable(tableConfiguration As String)
+        Dim tableOptionList() As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlRows(tableConfiguration)
+        Dim tableString As String = ""
+        For Each toString As String In tableOptionList
+            tableString = tableString & toString
+        Next
         Return "<table>" & tableConfiguration & "</table>"
+    End Function
+
+    Public Shared Function ConvertTableLanguageToHtmlRows(tableConfiguration As String)
+        Dim substrings() As String = tableConfiguration.Split("*")
+        Return substrings
     End Function
 End Class

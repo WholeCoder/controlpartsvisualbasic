@@ -82,6 +82,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="TestParser2.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -106,6 +107,8 @@
     <None Include="TestTemplates\a185_files\default+en.I.js.download" />
     <None Include="TestTemplates\a185_files\ga.js.download" />
     <None Include="TestTemplates\a185_files\jsapi" />
+    <Content Include="TestTemplates\TableOneTableOption.template.html" />
+    <Content Include="TestTemplates\TableOptionsWithAsterik.template.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WindowsApplication1\WindowsApplication1.vbproj">
