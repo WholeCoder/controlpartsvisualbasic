@@ -13,7 +13,10 @@
         Dim input As String
         input = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\a185.htm")
 
-        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(input, "|", "*")
+        Dim fieldSeparatorText = Me.fieldSeparatorTextBox.Text
+        Dim tableSeparatorText = Me.tableSeparatorTextBox.Text
+
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(input, fieldSeparatorText, tableSeparatorText)
 
         Dim str = ""
         Dim y = 100
