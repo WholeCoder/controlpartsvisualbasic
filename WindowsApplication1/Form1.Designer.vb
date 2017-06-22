@@ -33,6 +33,7 @@ Partial Class Form1
         Me.fieldSeparatorTextBox = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tableSeparatorTextBox = New System.Windows.Forms.TextBox()
+        Me.HelpGuideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -79,7 +80,7 @@ Partial Class Form1
         '
         'HelpToolStripMenuItem
         '
-        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem})
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HelpGuideToolStripMenuItem, Me.AboutToolStripMenuItem})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
         Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(53, 24)
         Me.HelpToolStripMenuItem.Text = "Help"
@@ -87,7 +88,7 @@ Partial Class Form1
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(125, 26)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'Label1
@@ -125,6 +126,12 @@ Partial Class Form1
         Me.tableSeparatorTextBox.TabIndex = 7
         Me.tableSeparatorTextBox.Text = "*"
         '
+        'HelpGuideToolStripMenuItem
+        '
+        Me.HelpGuideToolStripMenuItem.Name = "HelpGuideToolStripMenuItem"
+        Me.HelpGuideToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.HelpGuideToolStripMenuItem.Text = "Help Guide"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -158,5 +165,6 @@ Partial Class Form1
     Friend WithEvents fieldSeparatorTextBox As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents tableSeparatorTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents HelpGuideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
