@@ -56,22 +56,12 @@ Public Class TestParser2
 
         Dim hashOfTemplete As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(preBreakUpTableRow, "|", "*")
 
-        '        Assert.IsTrue(hashOfTemplete.Count = 1)
-
         Dim tableParameterRowList As List(Of TableRow) = hashOfTemplete.Item("table:rubenstable")
         Assert.True(tableParameterRowList.Item(0).TemplateFields.Count = 3)
 
         Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(0).Equals("column:partnumber"))
         Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(1).Equals("column:cost"))
         Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(2).Equals("column:voltage"))
-
-        '        Console.WriteLine("Count:  " & tableParameterRowList.Item(0).TemplateFields.Count)
-
-        '        Dim tableFieldList As List(Of String) = templRow.TemplateFields
-        '
-        '        Assert.True("column:partnumber".Equals(tableFieldList(0)))
-        ' The order of the fields of the table should now be preserved
-        '        Assert.IsTrue("column:partnumber".Equals(lstOfTableFieldsOrdered(2)))
     End Sub
 
 End Class

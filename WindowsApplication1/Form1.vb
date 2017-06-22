@@ -6,7 +6,7 @@
         newTB2.Location = New Point(x, y)
         Me.Controls.Add(newTB2)
         newTB2.Text = name
-        Return newTB2.Height
+        Return newTB2.Width
     End Function
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -19,11 +19,18 @@
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(input, fieldSeparatorText, tableSeparatorText)
 
         Dim str = ""
-        Dim y = 100
+        Dim x = 50
         For Each de As DictionaryEntry In getListOfKeywordskeywordList
-            Dim height = Me.AddButton(de.Key, 30, y)
-            '            Me.TextBox1.Text = de.Value
-            y += height
+            If de.Key.ToString().StartsWith("table") Then
+                Dim tableRowList As List(Of TableRow) = de.Value
+
+                For Each ent As TableRow In tableRowList
+                    For Each e2 As String In ent.TemplateFields
+                        Dim Width = Me.AddButton(e2, x, 230)
+                        x += Width
+                    Next
+                Next
+            End If
         Next de
 
         Me.TextBox1.Text = input
