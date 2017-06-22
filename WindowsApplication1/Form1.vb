@@ -27,6 +27,8 @@
         Me.TextBox1.Text = inputTemplate
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
 
+        My.Forms.Form2.Text = Now.ToString
+        My.Forms.Form2.Show()
     End Sub
 
 
