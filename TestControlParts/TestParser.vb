@@ -49,13 +49,13 @@ Public Class TestParser
     <Test()>
     Public Sub ParseTableWithItsCongigurationOptionsHeaders()
         Dim inputTemplate As String
-        inputTemplate = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\EnsureCorrectTableIsExtracted.template.html")
+        inputTemplate = "<!DOCTYPE html><html><head> <title>|field:title|</title></head><body> <h1>|field:header|</h1> |table:rubenstable|<tr><td colspan=""3"">Test 3 Header</td></tr>*<tr> <td>col</td> <td>col 2</td><td>col3</td></tr>|</body></html>"
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate, "|", "*")
-        Dim ss() As String = getListOfKeywordskeywordList.Item("table:rubenstable")
+        Dim listOfTableColumns As List(Of TableRow) = getListOfKeywordskeywordList.Item("table:rubenstable")
 
-        Assert.IsTrue(ss.Count = 2)
-        Assert.IsTrue(ss.GetValue(0).ToString().Equals("<tr><td colspan=" & Chr(34) & "3" & Chr(34) & ">Test 3 Header</td></tr>"))
-        Assert.IsTrue(ss.GetValue(1).ToString().Equals("<tr> <td>col</td> <td>col 2</td><td>col3</td></tr>"))
+        Assert.IsTrue(listOfTableColumns.Count = 2)
+        Assert.IsTrue(listOfTableColumns(0).TemplateText.Equals("<tr><td colspan=""3"">Test 3 Header</td></tr>"))
+        Assert.IsTrue(listOfTableColumns(1).TemplateText.Equals("<tr> <td>col</td> <td>col 2</td><td>col3</td></tr>"))
     End Sub
 
     <Test()>

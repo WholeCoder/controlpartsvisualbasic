@@ -24,7 +24,6 @@
             y += height
         Next de
 
-
         Me.TextBox1.Text = inputTemplate
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
 
@@ -33,5 +32,9 @@
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         MsgBox("Copyright 2017", , "About The Lorax")
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Application.Exit()
     End Sub
 End Class

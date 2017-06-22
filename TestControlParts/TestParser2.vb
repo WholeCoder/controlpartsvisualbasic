@@ -20,23 +20,28 @@ Public Class TestParser2
 
     <Test()>
     Public Sub SeeIfTableArgumentsCanBeParsedOutIntoObjects()
-        Dim template As String = "<!DOCTYPE html><html><head><title>Test Template</title></head><body>|table:rubenstable|<tr><td colspan=""3"">Test 3 Header</td></tr>*<tr><td>col</td><td>col 2</td><td>col3</td></tr>*<tr><td></td><td></td><td></td></tr>|</body></html>"
+        Dim template As String = "<!DOCTYPE html><html><head><title>Test Template</title></head><body>|table:rubenstable|<tr><td colspan=""3"">Test 3 Header</td></tr>*<tr><td>col</td><td>col 2</td><td>col3</td></tr>*<tr><td>%column:rubenstale%</td><td>%column:ruthstale%</td><td></td></tr>|</body></html>"
         Dim templateHash As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(template, "|", "*")
 
-        Assert.IsTrue(templateHash.Contains("table:rubenstable"))
 
-        Dim tableOptions() As String = templateHash.Item("table:rubenstable")
+        Dim tableOptions As List(Of TableRow) = templateHash.Item("table:rubenstable")
 
-        Assert.IsTrue(tableOptions.Count() = 3)
+        Assert.True(tableOptions.Count = 3)
 
-        Assert.IsTrue(tableOptions.Contains("<tr><td colspan=""3"">Test 3 Header</td></tr>"))
-        Assert.IsTrue(tableOptions.Contains("<tr><td>col</td><td>col 2</td><td>col3</td></tr>"))
-        Assert.IsTrue(tableOptions.Contains("<tr><td></td><td></td><td></td></tr>"))
+        Assert.True(tableOptions(0).TemplateText.Equals("<tr><td colspan=""3"">Test 3 Header</td></tr>"))
+        Assert.True(tableOptions(0).TemplateFields.Count = 0)
 
+        Assert.True(tableOptions(1).TemplateText.Equals("<tr><td>col</td><td>col 2</td><td>col3</td></tr>"))
+        Assert.True(tableOptions(1).TemplateFields.Count = 0)
+
+        Assert.True(tableOptions(2).TemplateText.Equals("<tr><td>%column:rubenstale%</td><td>%column:ruthstale%</td><td></td></tr>"))
+        Assert.True(tableOptions(2).TemplateFields.Count = 2)
+        Assert.True(tableOptions(2).TemplateFields.Contains("column:rubenstale"))
+        Assert.True(tableOptions(2).TemplateFields.Contains("column:ruthstale"))
     End Sub
 
     <Test()>
-    Public Sub TestRegularExpressionsForTdElements()
+    Public Sub TestThatATablesFieldsAreParsedproperly()
         Dim preBreakUpTableRow As String = "<tr><td>%column:partnumber%</td><td>%column:cost%</td><td>%column:voltage%</td></tr>"
 
         Dim parsedFieldsIntoHashTable As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(preBreakUpTableRow, "%", "NotUsed")
