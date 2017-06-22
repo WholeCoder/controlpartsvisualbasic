@@ -7,6 +7,8 @@
 
         Dim parseInTableOptions = False
 
+        Dim tableFieldPostion As Integer = 1
+
         Dim temporaryHolderForTableId = ""
         Dim str = ""
         Dim foundReplacementIdentifier = False
@@ -18,7 +20,13 @@
             ElseIf c = characterToSplitFields Then
                 foundReplacementIdentifier = False
                 If str.StartsWith("field") Or str.StartsWith("column") Then
-                    configs.Add(str, str)
+                    If str.StartsWith("column") Then
+                        configs.Add(str, tableFieldPostion)
+                        tableFieldPostion = tableFieldPostion + 1
+                    Else
+                        configs.Add(str, str)
+                    End If
+
                     Console.WriteLine("Found field :  " & str)
                 ElseIf str.StartsWith("table") Then
                     Console.WriteLine("   Found Table")
