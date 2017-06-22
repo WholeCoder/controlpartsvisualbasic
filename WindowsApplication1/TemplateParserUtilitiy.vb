@@ -45,7 +45,16 @@
                         Dim tOptionRow As TableRow = New TableRow()
                         Dim toPFields As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tOp, "%", "notused")
 
-                        tOptionRow.TemplateFields() = toPFields
+                        Dim toPList As List(Of String) = New List(Of String)
+
+                        For index As Integer = 1 To toPFields.Count
+                            For Each ent As DictionaryEntry In toPFields
+                                If ent.Value = index Then
+                                    toPList.Add(ent.Key)
+                                End If
+                            Next
+                        Next
+                        tOptionRow.TemplateFields() = toPList
                         tOptionRow.TemplateText = tOp
 
 
