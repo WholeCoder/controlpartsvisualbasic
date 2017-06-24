@@ -1,9 +1,15 @@
-﻿Public Class TemplateParserUtilitiy
+﻿Imports System.Configuration
+
+Public Class TemplateParserUtilitiy
 
     Public Shared Function ParseHashTableOfElements(input As String, characterToSplitFields As String, tableCharToSplitFields As String)
         Console.WriteLine("Executing")
 
         Dim configs As Hashtable = New Hashtable()
+        Dim documentStructure As List(Of String) = New List(Of String)
+
+        Dim startRecordingDocumentStructure = False
+        Dim currentPieceOfDocument As String = ""
 
         Dim parseInTableOptions = False
 
@@ -15,6 +21,8 @@
         For Each c As Char In input
             If foundStartOfField(c, characterToSplitFields) And Not foundReplacementIdentifier And Not parseInTableOptions Then
                 foundReplacementIdentifier = True
+                documentStructure.Add(currentPieceOfDocument)
+                currentPieceOfDocument = ""
             ElseIf ShouldReadInFieldOptions(foundReplacementIdentifier, parseInTableOptions) And DidntFindEndOfOptionsField(c, characterToSplitFields) Then
                 str = str & c
             ElseIf c = characterToSplitFields Then
@@ -26,12 +34,17 @@
                     Else
                         configs.Add(str, str)
                     End If
+                    documentStructure.Add(str)
+                    currentPieceOfDocument = ""
 
                     Console.WriteLine("Found field :  " & str)
                 ElseIf str.StartsWith("table") Then
                     Console.WriteLine("   Found Table")
                     parseInTableOptions = True
                     temporaryHolderForTableId = str
+
+                    documentStructure.Add(str)
+                    currentPieceOfDocument = ""
                 Else
                     parseInTableOptions = False
                     Dim listOfTableOptionsI() As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlRows(str, tableCharToSplitFields)
@@ -49,9 +62,12 @@
 
                         For index As Integer = 1 To toPFields.Count
                             For Each ent As DictionaryEntry In toPFields
-                                If ent.Value = index Then
-                                    toPList.Add(ent.Key)
+                                If (Not (TypeOf (New List(Of String)) Is List(Of String))) Then
+                                    If ent.Value = index Then
+                                        toPList.Add(ent.Key)
+                                    End If
                                 End If
+
                             Next
                         Next
                         tOptionRow.TemplateFields() = toPList
@@ -66,9 +82,16 @@
                     temporaryHolderForTableId = ""
                 End If
                 str = ""
+            Else
+                currentPieceOfDocument = currentPieceOfDocument & c
             End If
 
         Next
+
+        If Not currentPieceOfDocument.Equals("") Then
+            documentStructure.Add(currentPieceOfDocument)
+        End If
+        configs.Add("documentstructure", documentStructure)
 
         Return configs
     End Function

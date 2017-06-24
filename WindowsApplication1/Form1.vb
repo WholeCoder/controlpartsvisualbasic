@@ -11,7 +11,7 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim input As String
-        input = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\a185.htm")
+        input = My.Computer.FileSystem.ReadAllText("../../a185.htm")
 
         Dim fieldSeparatorText = Me.fieldSeparatorTextBox.Text
         Dim tableSeparatorText = Me.tableSeparatorTextBox.Text
