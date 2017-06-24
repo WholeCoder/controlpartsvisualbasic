@@ -16,7 +16,7 @@ Public Class TestParser
     Public Sub EmptyListReturned()
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements("", "|", "*")
 
-        Assert.IsTrue(getListOfKeywordskeywordList.Count = 0)
+        Assert.IsTrue(getListOfKeywordskeywordList.Count = 1)
     End Sub
 
     <Test()>
@@ -24,7 +24,7 @@ Public Class TestParser
         Dim inputTemplate = "<!DOCTYPE html><html><head> <title>|field:title|</title></head><body> <h1>|field:header|</h1> <table> <tr> <th>Ruben Found This</th> <th></th> <th></th> </tr> <tr> <td></td> <td></td> <td></td> </tr> <tr> <td></td> <td></td> <td></td> </tr> </table></body></html>"
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate, "|", "*")
 
-        Assert.IsTrue(getListOfKeywordskeywordList.Count = 2)
+        Assert.IsTrue(getListOfKeywordskeywordList.Count = 3)
     End Sub
 
     <Test()>

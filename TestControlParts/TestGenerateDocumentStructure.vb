@@ -9,9 +9,9 @@ Public Class TestGenerateDocumentStructure
         Dim templateHash As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(template, "|", "*")
         Dim documentStructureList As List(Of String) = templateHash.Item("documentstructure")
 
-        Assert(documentStructureList.Count = 3)
-        '        Assert.True(documentStructureList(0).Equals("<!DOCTYPE html><html><head><title>Test Template</title></head><body><table>"))
-        '        Assert.True(documentStructureList(1).Equals("table:rubenstable"))
-        '        Assert.True(documentStructureList(2).Equals("</table></body></html>"))
+        Assert.True(3 = documentStructureList.Count)
+        Console.WriteLine("<!DOCTYPE html><html><head><title>Test Template</title></head><body><table>".Equals(documentStructureList(0)))
+        Console.WriteLine("table:rubenstable".Equals(documentStructureList(1)))
+        Console.WriteLine("</table></body></html>".Equals(documentStructureList(2)))
     End Sub
 End Class
