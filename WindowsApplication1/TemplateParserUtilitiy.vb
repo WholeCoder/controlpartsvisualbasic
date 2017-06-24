@@ -62,7 +62,7 @@ Public Class TemplateParserUtilitiy
 
                         For index As Integer = 1 To toPFields.Count
                             For Each ent As DictionaryEntry In toPFields
-                                If (Not (TypeOf (New List(Of String)) Is List(Of String))) Then
+                                If (Not (TypeOf (ent.Value) Is List(Of String))) Then
                                     If ent.Value = index Then
                                         toPList.Add(ent.Key)
                                     End If

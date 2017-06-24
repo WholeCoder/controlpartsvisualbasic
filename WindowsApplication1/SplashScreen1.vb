@@ -12,7 +12,7 @@
 
         'Application title
         If My.Application.Info.Title <> "" Then
-            ApplicationTitle.Text = My.Application.Info.Title
+            ApplicationTitle.Text = "The Lorax" 'My.Application.Info.Title
         Else
             'If the application title is missing, use the application name, without the extension
             ApplicationTitle.Text = System.IO.Path.GetFileNameWithoutExtension(My.Application.Info.AssemblyName)
@@ -33,6 +33,10 @@
     End Sub
 
     Private Sub Version_Click(sender As Object, e As EventArgs) Handles Version.Click
+
+    End Sub
+
+    Private Sub ApplicationTitle_Click(sender As Object, e As EventArgs) Handles ApplicationTitle.Click
 
     End Sub
 End Class
