@@ -47,7 +47,7 @@ Public Class TestParser2
         Dim preBreakUpTableRow As String = "<tr><td>%column:partnumber%</td><td>%column:cost%</td><td>%column:voltage%</td></tr>"
 
         Dim parsedFieldsIntoHashTable As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(preBreakUpTableRow, "%", "NotUsed")
-        Assert.IsTrue(parsedFieldsIntoHashTable.Count = 3)
+        Assert.IsTrue(parsedFieldsIntoHashTable.Count = 4)
     End Sub
 
     <Test()>
