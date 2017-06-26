@@ -25,7 +25,7 @@ Public Class Form1
         Dim documentStructure As List(Of String) = getListOfKeywordskeywordList.Item("documentstructure")
 
         Dim x = 50
-        Dim y As Integer = 200
+        Dim y As Integer = 100
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
                 Dim str = ""
@@ -33,7 +33,7 @@ Public Class Form1
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
                     If de.Key.ToString().Equals(dEl) Then
                         Dim tableRowList As List(Of TableRow) = de.Value
-                        Dim x2 = 50
+                        Dim x2 = 100
 
                         For Each ent As TableRow In tableRowList
                             For Each e2 As String In ent.TemplateFields
@@ -49,7 +49,7 @@ Public Class Form1
                 Dim newTL As TextBox = New TextBox()
                 newTL.Text = dEl
                 newTL.Width = 300
-                newTL.Location = New Point(10, y)
+                newTL.Location = New Point(100, y)
                 y = y + newTL.Height
                 My.Forms.Form2.Controls.Add(newTL)
             End If
