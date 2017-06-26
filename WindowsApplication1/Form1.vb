@@ -6,7 +6,7 @@ Public Class Form1
         newTB2.Name = name
         'Set location, size and so on if you like
         newTB2.Location = New Point(x, y)
-        Me.Controls.Add(newTB2)
+        My.Forms.Form2.Controls.Add(newTB2)
         newTB2.Text = name
         Return newTB2
     End Function
@@ -14,6 +14,9 @@ Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim input As String
         input = My.Computer.FileSystem.ReadAllText("../../a185.htm")
+
+        My.Forms.Form2.Text = Now.ToString
+        My.Forms.Form2.Show()
 
         Dim fieldSeparatorText = Me.fieldSeparatorTextBox.Text
         Dim tableSeparatorText = Me.tableSeparatorTextBox.Text
@@ -25,7 +28,6 @@ Public Class Form1
         Dim y As Integer = 200
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
-                MsgBox("Found table:  " & dEl)
                 Dim str = ""
                 Dim textBoxHeight = 0
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
@@ -49,7 +51,7 @@ Public Class Form1
                 newTL.Width = 300
                 newTL.Location = New Point(10, y)
                 y = y + newTL.Height
-                Me.Controls.Add(newTL)
+                My.Forms.Form2.Controls.Add(newTL)
             End If
 
         Next
@@ -58,9 +60,6 @@ Public Class Form1
 
         Me.TextBox1.Text = input
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
-
-        '        My.Forms.Form2.Text = Now.ToString
-        '        My.Forms.Form2.Show()
     End Sub
 
 
