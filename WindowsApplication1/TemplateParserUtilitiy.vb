@@ -28,6 +28,12 @@ Public Class TemplateParserUtilitiy
             ElseIf c = characterToSplitFields Then
                 foundReplacementIdentifier = False
                 If str.StartsWith("field") Or str.StartsWith("column") Then
+                    ' if no datatype was found then default to string
+                    Dim sString() As String = str.Split(":")
+                    If sString.Length < 3 Then
+                        str = str & ":string"
+                    End If
+
                     If str.StartsWith("column") Then
                         configs.Add(str, tableFieldPostion)
                         tableFieldPostion = tableFieldPostion + 1

@@ -36,9 +36,9 @@ Public Class TestParser2
 
         Assert.True(tableOptions(2).TemplateText.Equals("<tr><td>%column:rubenstale%</td><td>%column:ruthstale%</td><td></td></tr>"))
         Assert.True(tableOptions(2).TemplateFields.Count = 2)
-        Assert.True(tableOptions(2).TemplateFields.Contains("column:rubenstale"))
+        Assert.True(tableOptions(2).TemplateFields.Contains("column:rubenstale:string"))
         '        Assert.True(tableOptions(2).TemplateFields.Item("column:rubenstale").Equals(1))
-        Assert.True(tableOptions(2).TemplateFields.Contains("column:ruthstale"))
+        Assert.True(tableOptions(2).TemplateFields.Contains("column:ruthstale:string"))
         '        Assert.True(tableOptions(2).TemplateFields.Item("column:ruthstale").Equals(2))
     End Sub
 
@@ -52,16 +52,16 @@ Public Class TestParser2
 
     <Test()>
     Public Sub TestThatWeCanSortTableFields()
-        Dim preBreakUpTableRow As String = "|table:rubenstable|<tr><td>%column:partnumber%</td><td>%column:cost%</td><td>%column:voltage%</td></tr>|"
+        Dim preBreakUpTableRow As String = "|table:rubenstable|<tr><td>%column:partnumber:number%</td><td>%column:cost:number%</td><td>%column:voltage:string%</td></tr>|"
 
         Dim hashOfTemplete As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(preBreakUpTableRow, "|", "*")
 
         Dim tableParameterRowList As List(Of TableRow) = hashOfTemplete.Item("table:rubenstable")
         Assert.True(tableParameterRowList.Item(0).TemplateFields.Count = 3)
 
-        Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(0).Equals("column:partnumber"))
-        Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(1).Equals("column:cost"))
-        Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(2).Equals("column:voltage"))
+        Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(0).Equals("column:partnumber:number"))
+        Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(1).Equals("column:cost:number"))
+        Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(2).Equals("column:voltage:string"))
     End Sub
 
 End Class
