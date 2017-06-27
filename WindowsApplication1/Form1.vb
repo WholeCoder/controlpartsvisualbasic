@@ -25,7 +25,7 @@ Public Class Form1
         Dim documentStructure As List(Of String) = getListOfKeywordskeywordList.Item("documentstructure")
 
         Dim x = 50
-        Dim y As Integer = 100
+        Dim y As Integer = 40
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
                 Dim str = ""
@@ -45,13 +45,27 @@ Public Class Form1
                     End If
                 Next de
                 y = y + textBoxHeight
+            ElseIf dEl.StartsWith("field") Then
+                Dim newTL As TextBox = New TextBox()
+                newTL.Multiline = True
+                newTL.ScrollBars = ScrollBars.Both
+                newTL.Text = dEl
+                newTL.Width = 600
+                newTL.Height = 20
+                newTL.Location = New Point(100, y)
+                My.Forms.Form2.Controls.Add(newTL)
+                y = y + newTL.Height
             Else
                 Dim newTL As TextBox = New TextBox()
+                newTL.BackColor = Color.LightGray
+                newTL.Multiline = True
+                newTL.ScrollBars = ScrollBars.Both
                 newTL.Text = dEl
-                newTL.Width = 300
+                newTL.Width = 600
+                newTL.Height = 100
                 newTL.Location = New Point(100, y)
-                y = y + newTL.Height
                 My.Forms.Form2.Controls.Add(newTL)
+                y = y + newTL.Height
             End If
 
         Next

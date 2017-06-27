@@ -56,7 +56,7 @@ Public Class TemplateParserUtilitiy
                     Dim listOfTableOptionsI() As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlRows(str, tableCharToSplitFields)
 
                     Console.WriteLine("Filling up table options hashes")
-                    Dim listOfTableColumns As List(Of TableRow) = New List(Of TableRow)
+                    Dim listOfTableRows As List(Of TableRow) = New List(Of TableRow)
 
                     For Each tOp As String In listOfTableOptionsI
                         Console.WriteLine("   parsing tableOption " & tOp)
@@ -80,10 +80,10 @@ Public Class TemplateParserUtilitiy
                         tOptionRow.TemplateText = tOp
 
 
-                        listOfTableColumns.Add(tOptionRow)
+                        listOfTableRows.Add(tOptionRow)
                     Next
 
-                    configs.Add(temporaryHolderForTableId, listOfTableColumns)
+                    configs.Add(temporaryHolderForTableId, listOfTableRows)
 
                     temporaryHolderForTableId = ""
                 End If

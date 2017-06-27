@@ -12,6 +12,11 @@ Public Class TestGenerateDocumentStructure
         Assert.True(3 = documentStructureList.Count)
         Console.WriteLine("<!DOCTYPE html><html><head><title>Test Template</title></head><body><table>".Equals(documentStructureList(0)))
         Console.WriteLine("table:rubenstable".Equals(documentStructureList(1)))
+        Dim tableDocumentStructure As List(Of TableRow) = templateHash.Item("table:rubenstable")
+        Assert.True(tableDocumentStructure.Count = 3)
+
+        Dim listOfThirdRow As TableRow = tableDocumentStructure(2)
+        Assert.True(listOfThirdRow.TemplateFields(0).Equals("column:rubenstale:string"))
         Console.WriteLine("</table></body></html>".Equals(documentStructureList(2)))
     End Sub
 End Class
