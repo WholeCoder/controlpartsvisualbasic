@@ -1,22 +1,14 @@
 ﻿Imports System.Diagnostics.Eventing.Reader
 
 Public Class Form1
-    Private Function AddButton(name As String, x As Int64, y As Int64)
-        Dim newTB2 As New TextBox
-        newTB2.Name = name
-        'Set location, size and so on if you like
-        newTB2.Location = New Point(x, y)
-        My.Forms.Form2.Controls.Add(newTB2)
-        newTB2.Text = name
-        Return newTB2
-    End Function
-
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim input As String
         input = My.Computer.FileSystem.ReadAllText("../../a185.htm")
 
         My.Forms.Form2.Text = Now.ToString
         My.Forms.Form2.Show()
+
+        '        My.Forms.Form3.Show()
 
         Dim fieldSeparatorText = Me.fieldSeparatorTextBox.Text
         Dim tableSeparatorText = Me.tableSeparatorTextBox.Text
@@ -30,21 +22,43 @@ Public Class Form1
             If dEl.StartsWith("table") Then
                 Dim str = ""
                 Dim textBoxHeight = 0
+                Dim tlPanel As TableLayoutPanel = New TableLayoutPanel()
+
+                tlPanel.Location = New Point(x, y)
+                tlPanel.BorderStyle = BorderStyle.FixedSingle
+                tlPanel.BackColor = Color.Aqua
+                tlPanel.Width = 600
+               
+
+                My.Forms.Form2.Controls.Add(tlPanel)
+
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
                     If de.Key.ToString().Equals(dEl) Then
                         Dim tableRowList As List(Of TableRow) = de.Value
                         Dim x2 = x
 
+                        tlPanel.ColumnCount = maxNumberOfColument(tableRowList)
+                        tlPanel.RowCount = tableRowList.Count
+
+                        Dim colCounter As Integer = 0
                         For Each ent As TableRow In tableRowList
                             For Each e2 As String In ent.TemplateFields
-                                Dim but As TextBox = Me.AddButton(e2, x2, y)
+
+                                Dim newTB2 As New TextBox
+                                newTB2.Name = e2
+                                '                                newTB2.Location = New Point(x2, y)
+                                '                                My.Forms.Form2.Controls.Add(newTB2)
+                                newTB2.Text = e2
+                                Dim but As TextBox = newTB2
+                                tlPanel.Controls.Add(but, colCounter, 0)
                                 textBoxHeight = but.Height
+                                colCounter = colCounter + 1
                                 x2 = x2 + but.Width
                             Next
                         Next
                     End If
                 Next de
-                y = y + textBoxHeight
+                y = y + tlPanel.Height
             ElseIf dEl.StartsWith("field") Then
                 Dim newTL As TextBox = New TextBox()
                 newTL.Multiline = True
@@ -74,10 +88,19 @@ Public Class Form1
         Next
 
 
-
         Me.TextBox1.Text = input
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
     End Sub
+
+    Private Function maxNumberOfColument(tableRowList As List(Of TableRow)) As Integer
+        Dim maxNumberOfCols As Integer = Integer.MinValue
+        For Each tr As TableRow In tableRowList
+            If tr.TemplateFields.Count > maxNumberOfCols Then
+                maxNumberOfCols = tr.TemplateFields.Count
+            End If
+        Next
+        Return maxNumberOfCols
+    End Function
 
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
