@@ -28,7 +28,6 @@ Public Class Form1
                 tlPanel.BorderStyle = BorderStyle.FixedSingle
                 tlPanel.BackColor = Color.Aqua
                 tlPanel.Width = 600
-               
 
                 My.Forms.Form2.Controls.Add(tlPanel)
 
@@ -39,21 +38,24 @@ Public Class Form1
 
                         tlPanel.ColumnCount = maxNumberOfColument(tableRowList)
                         tlPanel.RowCount = tableRowList.Count
+                        tlPanel.AutoScroll = True
 
-                        Dim colCounter As Integer = 0
-                        For Each ent As TableRow In tableRowList
-                            For Each e2 As String In ent.TemplateFields
+                        For index As Integer = 0 To 5
+                            Dim colCounter As Integer = 0
+                            For Each ent As TableRow In tableRowList
+                                For Each e2 As String In ent.TemplateFields
 
-                                Dim newTB2 As New TextBox
-                                newTB2.Name = e2
-                                '                                newTB2.Location = New Point(x2, y)
-                                '                                My.Forms.Form2.Controls.Add(newTB2)
-                                newTB2.Text = e2
-                                Dim but As TextBox = newTB2
-                                tlPanel.Controls.Add(but, colCounter, 0)
-                                textBoxHeight = but.Height
-                                colCounter = colCounter + 1
-                                x2 = x2 + but.Width
+                                    Dim newTB2 As New TextBox
+                                    newTB2.Name = e2
+                                    '                                newTB2.Location = New Point(x2, y)
+                                    '                                My.Forms.Form2.Controls.Add(newTB2)
+                                    newTB2.Text = e2
+                                    Dim but As TextBox = newTB2
+                                    tlPanel.Controls.Add(but, colCounter, index)
+                                    textBoxHeight = but.Height
+                                    colCounter = colCounter + 1
+                                    x2 = x2 + but.Width
+                                Next
                             Next
                         Next
                     End If
