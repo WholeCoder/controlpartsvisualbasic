@@ -64,7 +64,7 @@ Partial Class Form2
         'HelpGuideToolStripMenuItem
         '
         Me.HelpGuideToolStripMenuItem.Name = "HelpGuideToolStripMenuItem"
-        Me.HelpGuideToolStripMenuItem.Size = New System.Drawing.Size(159, 26)
+        Me.HelpGuideToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
         Me.HelpGuideToolStripMenuItem.Text = "Help Guide"
         '
         'AboutToolStripMenuItem

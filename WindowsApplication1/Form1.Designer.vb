@@ -28,12 +28,12 @@ Partial Class Form1
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HelpGuideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.fieldSeparatorTextBox = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tableSeparatorTextBox = New System.Windows.Forms.TextBox()
-        Me.HelpGuideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -75,7 +75,7 @@ Partial Class Form1
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(108, 26)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'HelpToolStripMenuItem
@@ -84,6 +84,12 @@ Partial Class Form1
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
         Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(53, 24)
         Me.HelpToolStripMenuItem.Text = "Help"
+        '
+        'HelpGuideToolStripMenuItem
+        '
+        Me.HelpGuideToolStripMenuItem.Name = "HelpGuideToolStripMenuItem"
+        Me.HelpGuideToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.HelpGuideToolStripMenuItem.Text = "Help Guide"
         '
         'AboutToolStripMenuItem
         '
@@ -125,12 +131,6 @@ Partial Class Form1
         Me.tableSeparatorTextBox.Size = New System.Drawing.Size(100, 22)
         Me.tableSeparatorTextBox.TabIndex = 7
         Me.tableSeparatorTextBox.Text = "*"
-        '
-        'HelpGuideToolStripMenuItem
-        '
-        Me.HelpGuideToolStripMenuItem.Name = "HelpGuideToolStripMenuItem"
-        Me.HelpGuideToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
-        Me.HelpGuideToolStripMenuItem.Text = "Help Guide"
         '
         'Form1
         '
