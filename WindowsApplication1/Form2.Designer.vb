@@ -26,8 +26,8 @@ Partial Class Form2
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpGuideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -61,17 +61,17 @@ Partial Class Form2
         Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(53, 24)
         Me.HelpToolStripMenuItem.Text = "Help"
         '
-        'AboutToolStripMenuItem
-        '
-        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
-        Me.AboutToolStripMenuItem.Text = "About"
-        '
         'HelpGuideToolStripMenuItem
         '
         Me.HelpGuideToolStripMenuItem.Name = "HelpGuideToolStripMenuItem"
-        Me.HelpGuideToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.HelpGuideToolStripMenuItem.Size = New System.Drawing.Size(159, 26)
         Me.HelpGuideToolStripMenuItem.Text = "Help Guide"
+        '
+        'AboutToolStripMenuItem
+        '
+        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(159, 26)
+        Me.AboutToolStripMenuItem.Text = "About"
         '
         'Form2
         '

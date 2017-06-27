@@ -24,7 +24,7 @@ Public Class Form1
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(input, fieldSeparatorText, tableSeparatorText)
         Dim documentStructure As List(Of String) = getListOfKeywordskeywordList.Item("documentstructure")
 
-        Dim x = 50
+        Dim x = 100
         Dim y As Integer = 40
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
@@ -33,7 +33,7 @@ Public Class Form1
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
                     If de.Key.ToString().Equals(dEl) Then
                         Dim tableRowList As List(Of TableRow) = de.Value
-                        Dim x2 = 100
+                        Dim x2 = x
 
                         For Each ent As TableRow In tableRowList
                             For Each e2 As String In ent.TemplateFields
@@ -52,7 +52,7 @@ Public Class Form1
                 newTL.Text = dEl
                 newTL.Width = 600
                 newTL.Height = 20
-                newTL.Location = New Point(100, y)
+                newTL.Location = New Point(x, y)
                 My.Forms.Form2.Controls.Add(newTL)
                 y = y + newTL.Height
             Else
@@ -62,12 +62,15 @@ Public Class Form1
                 newTL.ScrollBars = ScrollBars.Both
                 newTL.Text = dEl
                 newTL.Width = 600
-                newTL.Height = 100
-                newTL.Location = New Point(100, y)
+                newTL.Height = 150
+                newTL.Location = New Point(x, y)
                 My.Forms.Form2.Controls.Add(newTL)
                 y = y + newTL.Height
             End If
-
+            If y > My.Forms.Form2.Height Then
+                y = 40
+                x = 600 + x
+            End If
         Next
 
 
