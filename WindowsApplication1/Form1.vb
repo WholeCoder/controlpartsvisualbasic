@@ -40,24 +40,35 @@ Public Class Form1
                         tlPanel.RowCount = tableRowList.Count
                         tlPanel.AutoScroll = True
 
-                        For index As Integer = 0 To 5
-                            Dim colCounter As Integer = 0
-                            For Each ent As TableRow In tableRowList
-                                For Each e2 As String In ent.TemplateFields
 
-                                    Dim newTB2 As New TextBox
-                                    newTB2.Name = e2
-                                    '                                newTB2.Location = New Point(x2, y)
-                                    '                                My.Forms.Form2.Controls.Add(newTB2)
-                                    newTB2.Text = e2
-                                    Dim but As TextBox = newTB2
-                                    tlPanel.Controls.Add(but, colCounter, index)
-                                    textBoxHeight = but.Height
-                                    colCounter = colCounter + 1
-                                    x2 = x2 + but.Width
-                                Next
+                        ' This loop is for the headers
+
+
+                        Dim colCounter As Integer = 0
+                        For Each ent As TableRow In tableRowList
+
+                            Dim templateFields = ent.TemplateFields
+                            Dim tableTemplateText = ent.TemplateText
+                            Dim stringsForHeaders As String = ""
+
+                            Dim ht As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tableTemplateText, "%", "NotUsed")
+                            Dim st2 = ht.Item("documentstructure")
+
+                            For Each e2 As String In st2
+
+                                Dim newTB2 As New TextBox
+                                newTB2.Name = e2
+                                '                                newTB2.Location = New Point(x2, y)
+                                '                                My.Forms.Form2.Controls.Add(newTB2)
+                                newTB2.Text = e2
+                                Dim but As TextBox = newTB2
+                                tlPanel.Controls.Add(but, colCounter, 0)
+                                textBoxHeight = but.Height
+                                colCounter = colCounter + 1
+                                x2 = x2 + but.Width
                             Next
                         Next
+
                     End If
                 Next de
                 y = y + tlPanel.Height
