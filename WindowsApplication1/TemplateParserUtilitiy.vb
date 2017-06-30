@@ -2,7 +2,7 @@
 
 Public Class TemplateParserUtilitiy
 
-    Public Shared Function ParseHashTableOfElements(input As String, characterToSplitFields As String, tableCharToSplitFields As String)
+    Public Shared Function ParseHashTableOfElements(input As String, characterToSplitFields As String, tableCharToSplitFields As String, tableColumnSeparatorText As String)
         Console.WriteLine("Executing")
 
         Dim configs As Hashtable = New Hashtable()
@@ -62,7 +62,7 @@ Public Class TemplateParserUtilitiy
                         Console.WriteLine("   parsing tableOption " & tOp)
 
                         Dim tOptionRow As TableRow = New TableRow()
-                        Dim toPFields As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tOp, "%", "notused")
+                        Dim toPFields As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tOp, tableColumnSeparatorText, "notused", "notused")
 
                         Dim toPList As List(Of String) = New List(Of String)
 

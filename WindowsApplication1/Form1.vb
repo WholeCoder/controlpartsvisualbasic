@@ -12,8 +12,9 @@ Public Class Form1
 
         Dim fieldSeparatorText = Me.fieldSeparatorTextBox.Text
         Dim tableSeparatorText = Me.tableSeparatorTextBox.Text
+        Dim tableColumnSeparatorText = Me.tableColumnSeparator.Text
 
-        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(input, fieldSeparatorText, tableSeparatorText)
+        Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(input, fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText)
         Dim documentStructure As List(Of String) = getListOfKeywordskeywordList.Item("documentstructure")
 
         Dim x = 100
@@ -51,7 +52,7 @@ Public Class Form1
                             Dim tableTemplateText = ent.TemplateText
                             Dim stringsForHeaders As String = ""
 
-                            Dim ht As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tableTemplateText, "%", "NotUsed")
+                            Dim ht As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tableTemplateText, tableColumnSeparatorText, "NotUsed", "Notused")
                             Dim st2 = ht.Item("documentstructure")
 
                             For Each e2 As String In st2

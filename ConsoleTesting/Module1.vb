@@ -5,7 +5,7 @@ Module Module1
      Sub Main()
         Dim preBreakUpTableRow As String = "<tr><td>%column:partnumber%</td><td>%column:cost%</td><td>%column:voltage%</td></tr>"
 
-        Dim parsedFieldsIntoHashTable As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(preBreakUpTableRow, "%", "NotUsed")
+        Dim parsedFieldsIntoHashTable As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(preBreakUpTableRow, "%", "NotUsed", "NotUsed")
         Console.WriteLine(parsedFieldsIntoHashTable.Count)
 
         For Each Item In parsedFieldsIntoHashTable

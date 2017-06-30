@@ -34,6 +34,8 @@ Partial Class Form1
         Me.fieldSeparatorTextBox = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tableSeparatorTextBox = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tableColumnSeparator = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -75,7 +77,7 @@ Partial Class Form1
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(108, 26)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'HelpToolStripMenuItem
@@ -88,19 +90,19 @@ Partial Class Form1
         'HelpGuideToolStripMenuItem
         '
         Me.HelpGuideToolStripMenuItem.Name = "HelpGuideToolStripMenuItem"
-        Me.HelpGuideToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.HelpGuideToolStripMenuItem.Size = New System.Drawing.Size(159, 26)
         Me.HelpGuideToolStripMenuItem.Text = "Help Guide"
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(159, 26)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(13, 55)
+        Me.Label1.Location = New System.Drawing.Point(14, 59)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(105, 17)
         Me.Label1.TabIndex = 4
@@ -108,7 +110,7 @@ Partial Class Form1
         '
         'fieldSeparatorTextBox
         '
-        Me.fieldSeparatorTextBox.Location = New System.Drawing.Point(125, 49)
+        Me.fieldSeparatorTextBox.Location = New System.Drawing.Point(185, 59)
         Me.fieldSeparatorTextBox.Name = "fieldSeparatorTextBox"
         Me.fieldSeparatorTextBox.Size = New System.Drawing.Size(100, 22)
         Me.fieldSeparatorTextBox.TabIndex = 5
@@ -126,11 +128,28 @@ Partial Class Form1
         '
         'tableSeparatorTextBox
         '
-        Me.tableSeparatorTextBox.Location = New System.Drawing.Point(125, 86)
+        Me.tableSeparatorTextBox.Location = New System.Drawing.Point(185, 87)
         Me.tableSeparatorTextBox.Name = "tableSeparatorTextBox"
         Me.tableSeparatorTextBox.Size = New System.Drawing.Size(100, 22)
         Me.tableSeparatorTextBox.TabIndex = 7
         Me.tableSeparatorTextBox.Text = "*"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(8, 115)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(162, 17)
+        Me.Label3.TabIndex = 8
+        Me.Label3.Text = "Table Column Separator"
+        '
+        'tableColumnSeparator
+        '
+        Me.tableColumnSeparator.Location = New System.Drawing.Point(185, 115)
+        Me.tableColumnSeparator.Name = "tableColumnSeparator"
+        Me.tableColumnSeparator.Size = New System.Drawing.Size(100, 22)
+        Me.tableColumnSeparator.TabIndex = 9
+        Me.tableColumnSeparator.Text = "%"
         '
         'Form1
         '
@@ -138,6 +157,8 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1155, 596)
+        Me.Controls.Add(Me.tableColumnSeparator)
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.tableSeparatorTextBox)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.fieldSeparatorTextBox)
@@ -166,5 +187,7 @@ Partial Class Form1
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents tableSeparatorTextBox As System.Windows.Forms.TextBox
     Friend WithEvents HelpGuideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents tableColumnSeparator As System.Windows.Forms.TextBox
 
 End Class
