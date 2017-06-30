@@ -9,7 +9,6 @@ Public Class TestParser
 
     <SetUp()>
     Protected Sub SetUp()
-        fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\WindowsApplication1\a185.htm.template")
     End Sub
 
     <Test()>
@@ -39,7 +38,7 @@ Public Class TestParser
     <Test()>
     Public Sub EnsureCorrectTableIsExtracted()
         Dim inputTemplate As String
-        inputTemplate = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\EnsureCorrectTableIsExtracted.template.html")
+        inputTemplate = "<!DOCTYPE html><html><head> <title>|field:title|</title></head><body> <h1>|field:header|</h1> |table:rubenstable|<tr><td colspan=""3"">Test 3 Header</td></tr>*<tr> <td>col</td> <td>col 2</td><td>col3</td></tr>|</body></html>"
 
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate, "|", "*", "%")
 
@@ -69,7 +68,7 @@ Public Class TestParser
     Public Sub TransformTableWithHeaderToHtmlyTableArgumentsIntoEmptyTable()
 
         Dim extractedTableTemplateOptions As String
-        extractedTableTemplateOptions = My.Computer.FileSystem.ReadAllText("C:\Users\rpierich\Documents\Visual Studio 2013\Projects\controlpartsvisualbasic\TestControlParts\TestTemplates\ParsTableWithItsCongigurationOptionsHeaders.template.html")
+        extractedTableTemplateOptions = "<tr><td colspan=""3"">Test 3 Header</td></tr><tr> <td>col</td> <td>col 2</td> <td>col3</td></tr>"
 
 
         Dim tableWithheaders As String = TemplateParserUtilitiy.ConvertTableLanguageToHtmlTable(extractedTableTemplateOptions, "*")
