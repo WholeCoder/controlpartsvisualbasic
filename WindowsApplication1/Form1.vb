@@ -36,7 +36,7 @@ Public Class Form1
                         Dim tableRowList As List(Of TableRow) = de.Value
                         Dim x2 = x
 
-                        tlPanel.ColumnCount = maxNumberOfColument(tableRowList)
+                        tlPanel.ColumnCount = 10 ' maxNumberOfColument(tableRowList)
                         tlPanel.RowCount = tableRowList.Count
                         tlPanel.AutoScroll = True
 
@@ -62,13 +62,13 @@ Public Class Form1
                                 '                                My.Forms.Form2.Controls.Add(newTB2)
                                 newTB2.Text = e2
                                 Dim but As TextBox = newTB2
-                                tlPanel.Controls.Add(but, colCounter, 0)
-                                textBoxHeight = but.Height
+                                tlPanel.Controls.Add(newTB2, colCounter, 0)
+                                textBoxHeight = newTB2.Height
                                 colCounter = colCounter + 1
-                                x2 = x2 + but.Width
+                                x2 = x2 + newTB2.Width
                             Next
                         Next
-
+                        colCounter = colCounter + 1
                     End If
                 Next de
                 y = y + tlPanel.Height
