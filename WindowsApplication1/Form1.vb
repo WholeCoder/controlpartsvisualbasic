@@ -62,14 +62,22 @@ Public Class Form1
                                         tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                         colCounter = colCounter + 1
                                     Else
-                                        Dim newTB2 As New TextBox
-                                        newTB2.Name = e2
-                                        '                                    newTB2.Text = e2
-
-                                        tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
-                                        colCounter = colCounter + 1
                                         If Not e2.Contains(":") Then
-                                            newTB2.BackColor = Color.Aqua
+
+                                            '                                            Dim newTB2 As New TextBox
+                                            '                                            newTB2.Name = e2
+                                            '
+                                            '                                            tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
+                                            colCounter = colCounter + 1
+                                            '                                            newTB2.BackColor = Color.Aqua
+                                        Else
+
+                                            Dim newTB2 As New TextBox
+                                            newTB2.Name = e2
+
+                                            tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
+                                            colCounter = colCounter + 1
+                                            '                                            newTB2.BackColor = Color.Aqua
                                         End If
                                     End If
                                 Next
