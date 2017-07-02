@@ -131,7 +131,8 @@ Public Class Form1
 
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        MsgBox("Copyright 2017", , "About The Lorax")
+        '        MsgBox("Copyright 2017", , "About The Lorax")
+        My.Forms.AboutBox1.Show()
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
