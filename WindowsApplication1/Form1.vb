@@ -22,7 +22,6 @@ Public Class Form1
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
                 Dim str = ""
-                Dim textBoxHeight = 0
                 Dim tlPanel As TableLayoutPanel = New TableLayoutPanel()
 
                 tlPanel.Location = New Point(x, y)
@@ -35,7 +34,6 @@ Public Class Form1
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
                     If de.Key.ToString().Equals(dEl) Then
                         Dim tableRowList As List(Of TableRow) = de.Value
-                        Dim x2 = x
 
                         tlPanel.ColumnCount = 10 ' maxNumberOfColument(tableRowList)
                         tlPanel.RowCount = tableRowList.Count
@@ -44,8 +42,6 @@ Public Class Form1
 
                         ' This loop is for the headers
 
-
-                        Dim colCounter As Integer = 0
                         For Each ent As TableRow In tableRowList
 
                             Dim templateFields = ent.TemplateFields
@@ -55,21 +51,30 @@ Public Class Form1
                             Dim ht As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tableTemplateText, tableColumnSeparatorText, "NotUsed", "Notused")
                             Dim st2 = ht.Item("documentstructure")
 
-                            For Each e2 As String In st2
+                            For currentTableRow As Integer = 0 To 5
+                                Dim colCounter As Integer = 0
+                                For Each e2 As String In st2
+                                    If currentTableRow = 0 Then
+                                        Dim newTB2 As New TextBox
+                                        newTB2.Name = e2
+                                        newTB2.Text = e2
 
-                                Dim newTB2 As New TextBox
-                                newTB2.Name = e2
-                                '                                newTB2.Location = New Point(x2, y)
-                                '                                My.Forms.Form2.Controls.Add(newTB2)
-                                newTB2.Text = e2
-                                Dim but As TextBox = newTB2
-                                tlPanel.Controls.Add(newTB2, colCounter, 0)
-                                textBoxHeight = newTB2.Height
-                                colCounter = colCounter + 1
-                                x2 = x2 + newTB2.Width
+                                        tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
+                                        colCounter = colCounter + 1
+                                    Else
+                                        Dim newTB2 As New TextBox
+                                        newTB2.Name = e2
+                                        '                                    newTB2.Text = e2
+
+                                        tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
+                                        colCounter = colCounter + 1
+                                        If Not e2.Contains(":") Then
+                                            newTB2.BackColor = Color.Aqua
+                                        End If
+                                    End If
+                                Next
                             Next
                         Next
-                        colCounter = colCounter + 1
                     End If
                 Next de
                 y = y + tlPanel.Height
