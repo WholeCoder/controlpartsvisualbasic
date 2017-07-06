@@ -1,6 +1,15 @@
-﻿Imports System.Diagnostics.Eventing.Reader
+﻿Imports System.Data.SqlClient
+Imports System.Diagnostics.Eventing.Reader
 
 Public Class Form1
+
+    Private Sub ReadSingleRow(ByVal record As IDataRecord)
+        Console.WriteLine(String.Format("{0}", record(0), record(1)))
+        MsgBox(String.Format("{0}", record(0), record(1)), , String.Format("{0}", record(0), record(1)))
+
+    End Sub
+
+
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim input As String
         input = My.Computer.FileSystem.ReadAllText("../../a185.htm")
@@ -9,6 +18,46 @@ Public Class Form1
         My.Forms.Form2.Show()
 
         '        My.Forms.Form3.Show()
+        Dim tableName As String = Me.tableTextBox.Text
+        Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
+                            "User ID=sa;Password=ssGood&Plenty;"
+        Dim queryString As String =
+                "Select * From sys.tables Where name = 'a185' AND type = 'U';"
+
+        Using connection As New SqlConnection(connectionString)
+            Dim command As New SqlCommand(queryString, connection)
+            connection.Open()
+
+            Dim reader As SqlDataReader = command.ExecuteReader()
+            While reader.Read()
+                ReadSingleRow(CType(reader, IDataRecord))
+            End While
+
+
+            '            Dim obj As SqlCommand
+            '            Dim strSQL As String
+            '            obj = connection.CreateCommand()
+            '            strSQL = "CREATE TABLE " & "ControlParts" & "  (" &
+            '                     "Id int NOT NULL PRIMARY KEY, " &
+            '                     "LastName  VARCHAR(30), " &
+            '                     "FirstName VARCHAR(20), " &
+            '                     "Address   VARCHAR(50) " &
+            '                     ") "
+
+            reader.Close()
+
+            '            obj.CommandText = strSQL
+            '            obj.ExecuteNonQuery()
+            connection.Close()
+
+
+        End Using
+
+
+
+
+
+
 
         Dim fieldSeparatorText = Me.fieldSeparatorTextBox.Text
         Dim tableSeparatorText = Me.tableSeparatorTextBox.Text

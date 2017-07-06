@@ -36,6 +36,8 @@ Partial Class Form1
         Me.tableSeparatorTextBox = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.tableColumnSeparator = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.tableTextBox = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -151,12 +153,31 @@ Partial Class Form1
         Me.tableColumnSeparator.TabIndex = 9
         Me.tableColumnSeparator.Text = "%"
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(11, 146)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(150, 17)
+        Me.Label4.TabIndex = 10
+        Me.Label4.Text = "Database Table Name"
+        '
+        'tableTextBox
+        '
+        Me.tableTextBox.Location = New System.Drawing.Point(185, 146)
+        Me.tableTextBox.Name = "tableTextBox"
+        Me.tableTextBox.Size = New System.Drawing.Size(100, 22)
+        Me.tableTextBox.TabIndex = 11
+        Me.tableTextBox.Text = "a185"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1155, 596)
+        Me.Controls.Add(Me.tableTextBox)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.tableColumnSeparator)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.tableSeparatorTextBox)
@@ -189,5 +210,6 @@ Partial Class Form1
     Friend WithEvents HelpGuideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents tableColumnSeparator As System.Windows.Forms.TextBox
-
+    Friend WithEvents Label4 As Label
+    Friend WithEvents tableTextBox As TextBox
 End Class
