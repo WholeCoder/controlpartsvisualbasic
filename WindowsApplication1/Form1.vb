@@ -1,14 +1,15 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Diagnostics.Eventing.Reader
+Imports System.Runtime.InteropServices
 
 Public Class Form1
 
     Private Sub ReadSingleRow(ByVal record As IDataRecord)
-        Console.WriteLine(String.Format("{0}", record(0), record(1)))
-        MsgBox(String.Format("{0}", record(0), record(1)), , String.Format("{0}", record(0), record(1)))
-
+        Console.WriteLine(String.Format("{0}", record(0)))
+        Me.TableName = String.Format("{0}", record(0))
     End Sub
 
+    Private TableName As String = ""
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim input As String
@@ -33,24 +34,32 @@ Public Class Form1
                 ReadSingleRow(CType(reader, IDataRecord))
             End While
 
+            Dim style = MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or
+                        MsgBoxStyle.Critical
 
-            '            Dim obj As SqlCommand
-            '            Dim strSQL As String
-            '            obj = connection.CreateCommand()
-            '            strSQL = "CREATE TABLE " & "ControlParts" & "  (" &
-            '                     "Id int NOT NULL PRIMARY KEY, " &
-            '                     "LastName  VARCHAR(30), " &
-            '                     "FirstName VARCHAR(20), " &
-            '                     "Address   VARCHAR(50) " &
-            '                     ") "
+            If Me.TableName.Equals("") Then
+                Dim response = MsgBox("a185" & " doesn't exist, Should we create it?", style, "Create the table")
+                If response = MsgBoxResult.Yes Then
+                    reader.Close()
+                    Dim obj As SqlCommand
+                    Dim strSQL As String
+                    obj = connection.CreateCommand()
+                    strSQL = "CREATE TABLE " & "a185" & "  (" &
+                                     "Id int NOT NULL PRIMARY KEY, " &
+                                     "LastName  VARCHAR(30), " &
+                                     "FirstName VARCHAR(20), " &
+                                     "Address   VARCHAR(50) " &
+                                     ") "
 
-            reader.Close()
+                    obj.CommandText = strSQL
+                    obj.ExecuteNonQuery()
 
-            '            obj.CommandText = strSQL
-            '            obj.ExecuteNonQuery()
+                End If
+
+            End If
+
+            '                reader.Close()
             connection.Close()
-
-
         End Using
 
 
