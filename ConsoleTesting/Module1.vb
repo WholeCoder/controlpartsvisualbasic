@@ -8,10 +8,13 @@ Imports System.Data.SqlClient
 Module Module1
 
     Sub Main()
-        Dim str As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
-                                      "User ID=sa;Password=ssGood&Plenty;"
-        ReadOrderData(str)
+        '        Dim str As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
+        '                                      "User ID=sa;Password=ssGood&Plenty;"
+        '        ReadOrderData(str)
 
+        Dim str As String = "table:rubenstale:straing"
+        Console.WriteLine(Split(str, ":")(1))
+        Console.ReadLine()
     End Sub
 
     Private Sub ReadOrderData(ByVal connectionString As String)

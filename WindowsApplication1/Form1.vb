@@ -18,54 +18,7 @@ Public Class Form1
         My.Forms.Form2.Text = Now.ToString
         My.Forms.Form2.Show()
 
-        '        My.Forms.Form3.Show()
-        Dim tableName As String = Me.tableTextBox.Text
-        Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
-                            "User ID=sa;Password=ssGood&Plenty;"
-        Dim queryString As String =
-                "Select * From sys.tables Where name = 'a185' AND type = 'U';"
-
-        Using connection As New SqlConnection(connectionString)
-            Dim command As New SqlCommand(queryString, connection)
-            connection.Open()
-
-            Dim reader As SqlDataReader = command.ExecuteReader()
-            While reader.Read()
-                ReadSingleRow(CType(reader, IDataRecord))
-            End While
-
-            Dim style = MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or
-                        MsgBoxStyle.Critical
-
-            If Me.TableName.Equals("") Then
-                Dim response = MsgBox("a185" & " doesn't exist, Should we create it?", style, "Create the table")
-                If response = MsgBoxResult.Yes Then
-                    reader.Close()
-                    Dim obj As SqlCommand
-                    Dim strSQL As String
-                    obj = connection.CreateCommand()
-                    strSQL = "CREATE TABLE " & "a185" & "  (" &
-                                     "Id int NOT NULL PRIMARY KEY, " &
-                                     "LastName  VARCHAR(30), " &
-                                     "FirstName VARCHAR(20), " &
-                                     "Address   VARCHAR(50) " &
-                                     ") "
-
-                    obj.CommandText = strSQL
-                    obj.ExecuteNonQuery()
-
-                End If
-
-            End If
-
-            '                reader.Close()
-            connection.Close()
-        End Using
-
-
-
-
-
+        Dim tablePrefixName As String = Me.tableTextBox.Text
 
 
         Dim fieldSeparatorText = Me.fieldSeparatorTextBox.Text
@@ -79,6 +32,9 @@ Public Class Form1
         Dim y As Integer = 40
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
+
+                IfTableDoesNotExistThenAskIfShouldCreate(tablePrefixName, dEl)
+
                 Dim str = ""
                 Dim tlPanel As TableLayoutPanel = New TableLayoutPanel()
 
@@ -177,6 +133,54 @@ Public Class Form1
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
     End Sub
 
+    Private Sub IfTableDoesNotExistThenAskIfShouldCreate(tablePrefix As String, tableName As String)
+
+        Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
+                                         "User ID=sa;Password=ssGood&Plenty;"
+        Dim tableNameSuffix As String = Split(tableName, ":")(1)
+
+        Dim queryString As String =
+                "Select * From sys.tables Where name = '" & tablePrefix & tableNameSuffix & "' AND type = 'U';"
+
+        Using connection As New SqlConnection(connectionString)
+            Dim command As New SqlCommand(queryString, connection)
+            connection.Open()
+
+            Dim reader As SqlDataReader = command.ExecuteReader()
+            While reader.Read()
+                ReadSingleRow(CType(reader, IDataRecord))
+            End While
+
+            Dim style = MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or
+                        MsgBoxStyle.Critical
+
+            If Me.TableName.Equals("") Then
+                Dim response = MsgBox(tablePrefix & tableNameSuffix & " doesn't exist, Should we create it?", style, "Create the table")
+                If response = MsgBoxResult.Yes Then
+                    reader.Close()
+                    Dim obj As SqlCommand
+                    Dim strSQL As String
+                    obj = connection.CreateCommand()
+                    strSQL = "CREATE TABLE " & tablePrefix & tableNameSuffix & "  (" &
+                             "Id int NOT NULL PRIMARY KEY, " &
+                             "LastName  VARCHAR(30), " &
+                             "FirstName VARCHAR(20), " &
+                             "Address   VARCHAR(50) " &
+                             ") "
+
+                    obj.CommandText = strSQL
+                    obj.ExecuteNonQuery()
+
+                End If
+
+            End If
+
+            '                reader.Close()
+            connection.Close()
+        End Using
+
+    End Sub
+
     Private Function maxNumberOfColument(tableRowList As List(Of TableRow)) As Integer
         Dim maxNumberOfCols As Integer = Integer.MinValue
         For Each tr As TableRow In tableRowList
@@ -199,5 +203,9 @@ Public Class Form1
 
     Private Sub HelpGuideToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HelpGuideToolStripMenuItem.Click
         My.Forms.Form3.Show()
+    End Sub
+
+    Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
+
     End Sub
 End Class

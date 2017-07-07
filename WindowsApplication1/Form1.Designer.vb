@@ -112,7 +112,7 @@ Partial Class Form1
         '
         'fieldSeparatorTextBox
         '
-        Me.fieldSeparatorTextBox.Location = New System.Drawing.Point(185, 59)
+        Me.fieldSeparatorTextBox.Location = New System.Drawing.Point(206, 59)
         Me.fieldSeparatorTextBox.Name = "fieldSeparatorTextBox"
         Me.fieldSeparatorTextBox.Size = New System.Drawing.Size(100, 22)
         Me.fieldSeparatorTextBox.TabIndex = 5
@@ -130,7 +130,7 @@ Partial Class Form1
         '
         'tableSeparatorTextBox
         '
-        Me.tableSeparatorTextBox.Location = New System.Drawing.Point(185, 87)
+        Me.tableSeparatorTextBox.Location = New System.Drawing.Point(206, 87)
         Me.tableSeparatorTextBox.Name = "tableSeparatorTextBox"
         Me.tableSeparatorTextBox.Size = New System.Drawing.Size(100, 22)
         Me.tableSeparatorTextBox.TabIndex = 7
@@ -147,7 +147,7 @@ Partial Class Form1
         '
         'tableColumnSeparator
         '
-        Me.tableColumnSeparator.Location = New System.Drawing.Point(185, 115)
+        Me.tableColumnSeparator.Location = New System.Drawing.Point(206, 118)
         Me.tableColumnSeparator.Name = "tableColumnSeparator"
         Me.tableColumnSeparator.Size = New System.Drawing.Size(100, 22)
         Me.tableColumnSeparator.TabIndex = 9
@@ -158,13 +158,13 @@ Partial Class Form1
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(11, 146)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(150, 17)
+        Me.Label4.Size = New System.Drawing.Size(189, 17)
         Me.Label4.TabIndex = 10
-        Me.Label4.Text = "Database Table Name"
+        Me.Label4.Text = "Database Table Name Prefix"
         '
         'tableTextBox
         '
-        Me.tableTextBox.Location = New System.Drawing.Point(185, 146)
+        Me.tableTextBox.Location = New System.Drawing.Point(206, 146)
         Me.tableTextBox.Name = "tableTextBox"
         Me.tableTextBox.Size = New System.Drawing.Size(100, 22)
         Me.tableTextBox.TabIndex = 11
