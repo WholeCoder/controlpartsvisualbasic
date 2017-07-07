@@ -100,13 +100,13 @@ Public Class Form1
                                     End If
                                 Next
                             Next
+                            IfTableDoesNotExistThenAskIfShouldCreate(tablePrefixName, dEl, columnsForTableCreation)
+                            columnsForTableCreation.Clear()
+                            Me.TableName = ""
                         Next
                     End If
                     '                    For Each cftc As String In columnsForTableCreation
-                    IfTableDoesNotExistThenAskIfShouldCreate(tablePrefixName, dEl, columnsForTableCreation)
                     '                    Next
-                    columnsForTableCreation.Clear()
-                    Me.TableName = ""
                 Next de
                 y = y + tlPanel.Height
             ElseIf dEl.StartsWith("field") Then
@@ -172,8 +172,8 @@ Public Class Form1
                     Dim obj As SqlCommand
                     Dim strSQL As String
                     obj = connection.CreateCommand()
-                    strSQL = "CREATE TABLE " & tablePrefix & "_" & tableNameSuffix & "  (" &
-                        "Id int NOT NULL PRIMARY KEY, "
+                    strSQL = "CREATE TABLE " & tablePrefix & "_" & tableNameSuffix & "  ("
+
                     For Each e As String In columnsForTableCreation
                         Dim sStringCol As String() = Split(e, ":")
                         If e.Contains(":") And sStringCol(2).Equals("string") Then
@@ -181,16 +181,13 @@ Public Class Form1
                         ElseIf e.Contains(":") And sStringCol(2).Equals("datetime") Then
                             strSQL += sStringCol(1) & " DATETIME, "
                         End If
-                        If strSQL.LastIndexOf(",") = strSQL.Length Then
-                            strSQL = strSQL.Substring(0, strSQL.Length - 1)
-                        End If
                     Next
                     '                             "LastName  VARCHAR(30), " &
                     '                             "FirstName VARCHAR(20), " &
                     '                             "Address   VARCHAR(50) " &
 
 
-                    strSQL += ") "
+                    strSQL += "Id int NOT NULL PRIMARY KEY, " & ") "
 
                     obj.CommandText = strSQL
                     obj.ExecuteNonQuery()
