@@ -33,7 +33,7 @@ Public Class Form1
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
 
-                IfTableDoesNotExistThenAskIfShouldCreate(tablePrefixName, dEl)
+
 
                 Dim str = ""
                 Dim tlPanel As TableLayoutPanel = New TableLayoutPanel()
@@ -46,6 +46,7 @@ Public Class Form1
                 My.Forms.Form2.Controls.Add(tlPanel)
 
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
+                    Dim columnsForTableCreation As List(Of String) = New List(Of String)()
                     If de.Key.ToString().Equals(dEl) Then
                         Dim tableRowList As List(Of TableRow) = de.Value
 
@@ -62,21 +63,21 @@ Public Class Form1
                             Dim tableTemplateText = ent.TemplateText
                             Dim stringsForHeaders As String = ""
 
-                            Dim ht As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tableTemplateText, tableColumnSeparatorText, "NotUsed", "Notused")
-                            Dim st2 = ht.Item("documentstructure")
+                            Dim hashTableOfParsedDocumentElements As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tableTemplateText, tableColumnSeparatorText, "NotUsed", "Notused")
+                            Dim docStructure = hashTableOfParsedDocumentElements.Item("documentstructure")
 
                             For currentTableRow As Integer = 0 To 5
                                 Dim colCounter As Integer = 0
-                                For Each e2 As String In st2
+                                For Each elementInDocumentStructure As String In docStructure
                                     If currentTableRow = 0 Then
                                         Dim newTB2 As New TextBox
-                                        newTB2.Name = e2
-                                        newTB2.Text = e2
+                                        newTB2.Name = elementInDocumentStructure
+                                        newTB2.Text = elementInDocumentStructure
 
                                         tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                         colCounter = colCounter + 1
                                     Else
-                                        If Not e2.Contains(":") Then
+                                        If Not elementInDocumentStructure.Contains(":") Then
 
                                             '                                            Dim newTB2 As New TextBox
                                             '                                            newTB2.Name = e2
@@ -84,10 +85,13 @@ Public Class Form1
                                             '                                            tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                             colCounter = colCounter + 1
                                             '                                            newTB2.BackColor = Color.Aqua
-                                        Else
 
+                                        Else
+                                            If elementInDocumentStructure.Contains(":") And currentTableRow = 1 Then
+                                                columnsForTableCreation.Add(elementInDocumentStructure)
+                                            End If
                                             Dim newTB2 As New TextBox
-                                            newTB2.Name = e2
+                                            newTB2.Name = elementInDocumentStructure
 
                                             tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                             colCounter = colCounter + 1
@@ -98,6 +102,11 @@ Public Class Form1
                             Next
                         Next
                     End If
+                    '                    For Each cftc As String In columnsForTableCreation
+                    IfTableDoesNotExistThenAskIfShouldCreate(tablePrefixName, dEl, columnsForTableCreation)
+                    '                    Next
+                    columnsForTableCreation.Clear()
+                    Me.TableName = ""
                 Next de
                 y = y + tlPanel.Height
             ElseIf dEl.StartsWith("field") Then
@@ -133,14 +142,16 @@ Public Class Form1
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
     End Sub
 
-    Private Sub IfTableDoesNotExistThenAskIfShouldCreate(tablePrefix As String, tableName As String)
+    Private Sub IfTableDoesNotExistThenAskIfShouldCreate(tablePrefix As String, tableName As String, columnsForTableCreation As List(Of String))
+
+        Console.WriteLine("Saving table:  " & tablePrefix & tableName)
 
         Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
                                          "User ID=sa;Password=ssGood&Plenty;"
         Dim tableNameSuffix As String = Split(tableName, ":")(1)
 
         Dim queryString As String =
-                "Select * From sys.tables Where name = '" & tablePrefix & tableNameSuffix & "' AND type = 'U';"
+                "Select * From sys.tables Where name = '" & tablePrefix & "_" & tableNameSuffix & "' AND type = 'U';"
 
         Using connection As New SqlConnection(connectionString)
             Dim command As New SqlCommand(queryString, connection)
@@ -155,18 +166,31 @@ Public Class Form1
                         MsgBoxStyle.Critical
 
             If Me.TableName.Equals("") Then
-                Dim response = MsgBox(tablePrefix & tableNameSuffix & " doesn't exist, Should we create it?", style, "Create the table")
+                Dim response = MsgBox(tablePrefix & "_" & tableNameSuffix & " doesn't exist, Should we create it?", style, "Create the table")
                 If response = MsgBoxResult.Yes Then
                     reader.Close()
                     Dim obj As SqlCommand
                     Dim strSQL As String
                     obj = connection.CreateCommand()
-                    strSQL = "CREATE TABLE " & tablePrefix & tableNameSuffix & "  (" &
-                             "Id int NOT NULL PRIMARY KEY, " &
-                             "LastName  VARCHAR(30), " &
-                             "FirstName VARCHAR(20), " &
-                             "Address   VARCHAR(50) " &
-                             ") "
+                    strSQL = "CREATE TABLE " & tablePrefix & "_" & tableNameSuffix & "  (" &
+                        "Id int NOT NULL PRIMARY KEY, "
+                    For Each e As String In columnsForTableCreation
+                        Dim sStringCol As String() = Split(e, ":")
+                        If e.Contains(":") And sStringCol(2).Equals("string") Then
+                            strSQL += sStringCol(1) & " VARCHAR(30), "
+                        ElseIf e.Contains(":") And sStringCol(2).Equals("datetime") Then
+                            strSQL += sStringCol(1) & " DATETIME, "
+                        End If
+                        If strSQL.LastIndexOf(",") = strSQL.Length Then
+                            strSQL = strSQL.Substring(0, strSQL.Length - 1)
+                        End If
+                    Next
+                    '                             "LastName  VARCHAR(30), " &
+                    '                             "FirstName VARCHAR(20), " &
+                    '                             "Address   VARCHAR(50) " &
+
+
+                    strSQL += ") "
 
                     obj.CommandText = strSQL
                     obj.ExecuteNonQuery()
