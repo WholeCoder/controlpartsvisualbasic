@@ -6,11 +6,17 @@ Imports NUnit.Framework
 Public Class TestDatabase
     <Test()>
     Public Sub testTemplateExists()
+        Dim doesarr12exist As Boolean = DoesTemplateExist("arr12")
         '        Dim str As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
         '                                      "User ID=sa;Password=ssGood&Plenty;"
         '        ReadOrderData(str)
+        Assert.True(doesarr12exist)
+    End Sub
+
+    Private Function DoesTemplateExist(tName As String) As Boolean
+
         Dim queryString As String =
-                "Select * from templates Where name = 'arr12';"
+                "Select * from templates Where name = '" & tName & "';"
         Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlPartsTest;" & "User ID=sa;Password=ssGood&Plenty;"
         Dim tableName As String = ""
         Using connection As New SqlConnection(connectionString)
@@ -28,8 +34,8 @@ Public Class TestDatabase
 
             connection.Close()
         End Using
-        Assert.True(tableName.Equals("arr12"))
-    End Sub
+        Return tName.Equals(tableName)
+    End Function
 
     Private Function ReadSingleRow(ByVal record As IDataRecord) As String
         Return String.Format("{0}", record(0), record(1))
