@@ -16,6 +16,7 @@ Public Class Form1
         input = My.Computer.FileSystem.ReadAllText("../../a185.htm")
 
         My.Forms.Form2.Text = Now.ToString
+        My.Forms.Form2.AutoScroll = True
         My.Forms.Form2.Show()
 
         Dim tablePrefixName As String = Me.tableTextBox.Text
@@ -132,8 +133,8 @@ Public Class Form1
                 y = y + newTL.Height
             End If
             If y > My.Forms.Form2.Height Then
-                y = 40
-                x = 600 + x
+                '                y = 40
+                '                x = 600 + x
             End If
         Next
 
