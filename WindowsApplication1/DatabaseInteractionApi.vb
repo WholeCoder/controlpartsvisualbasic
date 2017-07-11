@@ -6,7 +6,7 @@ Namespace TestControlParts
 
             Dim queryString As String =
                     "Select * from templates Where name = '" & tName & "';"
-            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlPartsTest;" & "User ID=sa;Password=ssGood&Plenty;"
+            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
             Dim tableName As String = ""
             Using connection As New SqlConnection(connectionString)
                 Dim command As New SqlCommand(queryString, connection)
@@ -26,30 +26,136 @@ Namespace TestControlParts
             Return tName.Equals(tableName)
         End Function
 
-        Public Shared Sub CreateNewTemplate(tName As String, tText As String, tbls As List(Of String), cls As List(Of String), flds As List(Of String))
+        Public Shared Sub CreateNewTemplate(field_separtor As String, table_separator As String, table_column_separator As String, tName As String, tText As String, tbls As List(Of String), cls As Hashtable, flds As List(Of String))
 
             Dim templateName As String = tName
             Dim templateText As String = tText
             Dim tables As List(Of String) = tbls
-            Dim cols As List(Of String) = cls
+            Dim colsHash As Hashtable = cls
             Dim fields As List(Of String) = flds
-
-            Dim templateInsertString As String = "INSERT INTO templates (name, template_text) VALUES ('" & templateName & "','" & templateText & "')"
+            Dim template_id As Integer = InsertTemplateAndReturnTemplateId(field_separtor, table_separator, table_column_separator, templateName, templateText)
 
             For Each table As String In tables
-                Dim tablesInsertString As String = "INSERT INTO tables (templatenameandfields, template_id) VALUES ('" & table & "',1)"
+                Dim tRay() As String = table.Split(table_column_separator)
+                Dim tableName As String = tRay(1)
 
+                Dim colsForThisTable As List(Of String) = colsHash(table)
+                Dim table_id = InsertTableIntoDatabaseAndReturnTableId(table, template_id)
 
-                Dim colInsertString As String = "INSERT INTO col VALUES ('rubenstable:string', 1)"
-                Dim colInsertSTring2 As String = "INSERT INTO col VALUES ('ruthstable:string', 1)"
-
-                cols.Add(colInsertString)
-                cols.Add(colInsertSTring2)
+                For Each col As String In colsForThisTable
+                    InsertTableColumnsIntoDatabase(col, table_id)
+                Next
 
 
             Next
 
         End Sub
+
+        Public Shared Sub InsertTableColumnsIntoDatabase(col As String, table_id As Integer)
+
+            Dim colInsertString As String = "INSERT INTO col VALUES ('" & col & "', " & table_id & ")"
+            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
+            Using connection As New SqlConnection(connectionString)
+                connection.Open()
+
+
+                Dim obj As SqlCommand
+                obj = connection.CreateCommand()
+
+
+                obj.CommandText = colInsertString
+                obj.ExecuteNonQuery()
+                connection.Close()
+
+            End Using
+
+        End Sub
+
+        Private Shared Function InsertTableIntoDatabaseAndReturnTableId(table As String, templateId As String) As Integer
+            Dim tablesInsertString As String = "INSERT INTO tables (templatenameandfields, template_id) VALUES ('" & table & "'," & templateId & ")"
+            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
+            Using connection As New SqlConnection(connectionString)
+                connection.Open()
+
+
+                Dim obj As SqlCommand
+                obj = connection.CreateCommand()
+
+
+                obj.CommandText = tablesInsertString
+                obj.ExecuteNonQuery()
+                connection.Close()
+
+            End Using
+
+            Dim teble_id As Integer = -1
+
+            Dim queryTemplateString As String =
+                    "Select id From tables Where template_id = " & templateId & " AND templatenameandfields = '" & table & "';"
+            Using connection As New SqlConnection(connectionString)
+                Dim command As New SqlCommand(queryTemplateString, connection)
+                connection.Open()
+
+                Dim reader As SqlDataReader = command.ExecuteReader()
+
+                ' Call Read before accessing data.
+
+                While reader.Read()
+                    teble_id = reader(0)
+                End While
+
+                connection.Close()
+
+
+            End Using
+            Return teble_id
+
+        End Function
+
+        Private Shared Function InsertTemplateAndReturnTemplateId(field_separtor As String, table_separator As String, table_column_separator As String, templateName As String, templateText As String) As Integer
+
+            Dim templateInsertString As String = "INSERT INTO templates (field_separator,table_separator,table_column_separator,name, template_text) VALUES ('" &
+                                                 field_separtor & "," & table_separator & ", " & table_column_separator & ", " & templateName & "','" & templateText & "')"
+            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
+            Using connection As New SqlConnection(connectionString)
+                connection.Open()
+
+
+                Dim obj As SqlCommand
+                obj = connection.CreateCommand()
+
+
+                obj.CommandText = templateInsertString
+                obj.ExecuteNonQuery()
+                connection.Close()
+
+            End Using
+
+
+            Dim queryTemplateString As String =
+                    "Select id From templates Where name = '" & templateName & "' AND type = 'U';"
+            Dim template_id As Integer = -1
+            Using connection As New SqlConnection(connectionString)
+                Dim command As New SqlCommand(queryTemplateString, connection)
+                connection.Open()
+
+                Dim reader As SqlDataReader = command.ExecuteReader()
+
+                ' Call Read before accessing data.
+
+                While reader.Read()
+                    template_id = reader(0)
+                End While
+
+                connection.Close()
+
+
+            End Using
+            Return template_id
+        End Function
 
         Private Sub createNewDatabaseTable(connectionString As String, tableName As String, tableColumnNames As List(Of String))
 
@@ -98,5 +204,31 @@ Namespace TestControlParts
             Return String.Format("{0}", record(0), record(1))
 
         End Function
+
+        Public Shared Function ReturnTemplateIdIfTemplateExists(connectionString As String, ByRef tableName As String) As Integer
+
+            Dim queryString As String =
+                    "Select id from templates Where name = '" & tableName & "';"
+            Using connection As New SqlConnection(connectionString)
+                Dim command As New SqlCommand(queryString, connection)
+                connection.Open()
+
+                Dim reader As SqlDataReader = command.ExecuteReader()
+
+                Dim template_id As Integer = -1
+                ' Call Read before accessing data.
+                While reader.Read()
+                    '                tableName = ReadSingleRow(CType(reader, IDataRecord))
+                    template_id = reader.GetInt32(reader.GetOrdinal("id"))
+                    Console.WriteLine(reader(0))
+                End While
+                reader.Close()
+
+                connection.Close()
+
+                Return template_id
+            End Using
+        End Function
+
     End Class
 End NameSpace

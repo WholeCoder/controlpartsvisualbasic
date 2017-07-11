@@ -60,6 +60,8 @@ Public Class Form1
 
                         For Each ent As TableRow In tableRowList
 
+                            Dim templateSavers As List(Of SaveToDatabaseObject)
+
                             Dim templateFields = ent.TemplateFields
                             Dim tableTemplateText = ent.TemplateText
                             Dim stringsForHeaders As String = ""
@@ -74,6 +76,8 @@ Public Class Form1
                                         Dim newTB2 As New TextBox
                                         newTB2.Name = elementInDocumentStructure
                                         newTB2.Text = elementInDocumentStructure
+
+                                        templateSavers.Add(New TextBoxSaver(newTB2))
 
                                         tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                         colCounter = colCounter + 1
@@ -93,6 +97,9 @@ Public Class Form1
                                             End If
                                             Dim newTB2 As New TextBox
                                             newTB2.Name = elementInDocumentStructure
+
+                                            '                                            templateSavers.Add(New TableRowSaver(dEl, tableId))
+
 
                                             tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                             colCounter = colCounter + 1
@@ -198,6 +205,35 @@ Public Class Form1
             End If
 
             '                reader.Close()
+            connection.Close()
+        End Using
+
+    End Sub
+    Private Sub GetTemplateId(templateName As String)
+
+        '        Console.WriteLine("Saving table:  " & tablePrefix & TableName)
+
+        Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
+                                         "User ID=sa;Password=ssGood&Plenty;"
+        Dim tableNameSuffix As String = Split(TableName, ":")(1)
+
+        Dim queryString As String =
+                "Select * From temples Where name = '" & templateName & ";"
+
+        Using connection As New SqlConnection(connectionString)
+            Dim command As New SqlCommand(queryString, connection)
+            connection.Open()
+
+            Dim reader As SqlDataReader = command.ExecuteReader()
+            While reader.Read()
+                ReadSingleRow(CType(reader, IDataRecord))
+            End While
+
+            Dim style = MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or
+                        MsgBoxStyle.Critical
+
+            reader.Close()
+
             connection.Close()
         End Using
 
