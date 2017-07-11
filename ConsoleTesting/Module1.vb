@@ -45,6 +45,10 @@ Module Module1
                                          "FirstName VARCHAR(20), " &
                                          "Address   VARCHAR(50) " &
                                          ") "
+        createNewDatabaseTable(connectionString, queryString)
+    End Sub
+
+    Private Sub createNewDatabaseTable(connectionString As String, queryString As String)
 
         Using connection As New SqlConnection(connectionString)
             Dim command As New SqlCommand(queryString, connection)
