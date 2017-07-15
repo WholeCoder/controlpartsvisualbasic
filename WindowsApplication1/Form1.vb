@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Diagnostics.Eventing.Reader
 Imports System.Runtime.InteropServices
+Imports WindowsApplication1.TestControlParts
 
 Public Class Form1
 
@@ -31,10 +32,11 @@ Public Class Form1
 
         Dim x = 100
         Dim y As Integer = 40
+
+        Dim templateSavers As List(Of SaveToDatabaseObject) = New List(Of SaveToDatabaseObject)
+
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
-
-
 
                 Dim str = ""
                 Dim tlPanel As TableLayoutPanel = New TableLayoutPanel()
@@ -59,8 +61,6 @@ Public Class Form1
                         ' This loop is for the headers
 
                         For Each ent As TableRow In tableRowList
-
-                            Dim templateSavers As List(Of SaveToDatabaseObject)
 
                             Dim templateFields = ent.TemplateFields
                             Dim tableTemplateText = ent.TemplateText
@@ -108,7 +108,7 @@ Public Class Form1
                                     End If
                                 Next
                             Next
-                            IfTableDoesNotExistThenAskIfShouldCreate(tablePrefixName, dEl, columnsForTableCreation)
+                            CreateTemplateAndNewTablesForNewTemplate(tablePrefixName, dEl, tableTemplateText, columnsForTableCreation, fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText)
                             columnsForTableCreation.Clear()
                             Me.TableName = ""
                         Next
@@ -150,16 +150,31 @@ Public Class Form1
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
     End Sub
 
-    Private Sub IfTableDoesNotExistThenAskIfShouldCreate(tablePrefix As String, tableName As String, columnsForTableCreation As List(Of String))
+    Private Sub CreateTemplateAndNewTablesForNewTemplate(templateName As String, tableNameWithTablePrefixAndColumns As String, templateText As String, columnsForTableCreation As List(Of String), field_separator As String, table_separator As String, table_column_separator As String)
 
-        Console.WriteLine("Saving table:  " & tablePrefix & tableName)
+        Dim template_id As Integer = DatabaseInteractionApi.InsertTemplateAndReturnTemplateId(field_separator, table_separator, table_column_separator, templateName, templateText)
+
+        Console.WriteLine("Saving table:  " & templateName & tableNameWithTablePrefixAndColumns)
 
         Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
                                          "User ID=sa;Password=ssGood&Plenty;"
-        Dim tableNameSuffix As String = Split(tableName, ":")(1)
+        Dim tableNameSuffix As String = Split(tableNameWithTablePrefixAndColumns, ":")(1)
+
+        Dim table_id As Integer = DatabaseInteractionApi.InsertTableIntoDatabaseAndReturnTableId(templateName & "_" & tableNameSuffix, template_id)
+
+        For Each e As String In columnsForTableCreation
+            Dim sStringCol As String() = Split(e, ":")
+            If e.Contains(":") And sStringCol(2).Equals("string") Then
+                DatabaseInteractionApi.InsertTableColumnsIntoDatabase(sStringCol(1), table_id, "string")
+            ElseIf e.Contains(":") And sStringCol(2).Equals("datetime") Then
+                DatabaseInteractionApi.InsertTableColumnsIntoDatabase(sStringCol(1), table_id, "datetime")
+            End If
+        Next
 
         Dim queryString As String =
-                "Select * From sys.tables Where name = '" & tablePrefix & "_" & tableNameSuffix & "' AND type = 'U';"
+                "Select * From sys.tables Where name = '" & templateName & "_" & tableNameSuffix & "' AND type = 'U';"
+
+
 
         Using connection As New SqlConnection(connectionString)
             Dim command As New SqlCommand(queryString, connection)
@@ -174,13 +189,13 @@ Public Class Form1
                         MsgBoxStyle.Critical
 
             If Me.TableName.Equals("") Then
-                Dim response = MsgBox(tablePrefix & "_" & tableNameSuffix & " doesn't exist, Should we create it?", style, "Create the table")
+                Dim response = MsgBox(templateName & "_" & tableNameSuffix & " doesn't exist, Should we create it?", style, "Create the table")
                 If response = MsgBoxResult.Yes Then
                     reader.Close()
                     Dim obj As SqlCommand
                     Dim strSQL As String
                     obj = connection.CreateCommand()
-                    strSQL = "CREATE TABLE " & tablePrefix & "_" & tableNameSuffix & "  ("
+                    strSQL = "CREATE TABLE " & templateName & "_" & tableNameSuffix & "  ("
 
                     For Each e As String In columnsForTableCreation
                         Dim sStringCol As String() = Split(e, ":")
@@ -209,9 +224,11 @@ Public Class Form1
         End Using
 
     End Sub
+
+
     Private Sub GetTemplateId(templateName As String)
 
-        '        Console.WriteLine("Saving table:  " & tablePrefix & TableName)
+        '        Console.WriteLine("Saving table:  " & templateName & TableName)
 
         Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
                                          "User ID=sa;Password=ssGood&Plenty;"

@@ -1,13 +1,14 @@
 -- noinspection SqlDialectInspectionForFile
 
-use ControlPartsTest
+use ControlParts
 
 create table templates
 (
 	name varchar(30) NOT NULL UNIQUE,
 	field_separator varchar(25),
 	table_separator varchar(25),
-	template_text text not null,
+	template_text text not NULL ,
+	table_column_separator VARCHAR(50) NULL,
 	Id int not null
 		primary key identity(1,1)
 )
@@ -37,8 +38,6 @@ create table fields
 (
 	columnnamedatatype varchar(255),
 	Id int not null
-		primary key IDENTITY(1,1),
-	tablee_id int
-		references templates
+		primary key IDENTITY(1,1)
 )
 

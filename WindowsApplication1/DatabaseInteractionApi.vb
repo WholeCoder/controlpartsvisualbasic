@@ -1,5 +1,6 @@
 Imports System.Data.SqlClient
 
+
 Namespace TestControlParts
     Public Class DatabaseInteractionApi
         Public Shared Function DoesTemplateExist(tName As String) As Boolean
@@ -43,7 +44,10 @@ Namespace TestControlParts
                 Dim table_id = InsertTableIntoDatabaseAndReturnTableId(table, template_id)
 
                 For Each col As String In colsForThisTable
-                    InsertTableColumnsIntoDatabase(col, table_id)
+                    Dim datatype As String = col.Split(":")(2)
+                    Dim colName As String = col.Split(":")(1)
+
+                    InsertTableColumnsIntoDatabase(colName, table_id, datatype)
                 Next
 
 
@@ -51,9 +55,9 @@ Namespace TestControlParts
 
         End Sub
 
-        Public Shared Sub InsertTableColumnsIntoDatabase(col As String, table_id As Integer)
+        Public Shared Sub InsertTableColumnsIntoDatabase(col As String, table_id As Integer, datatype As String)
 
-            Dim colInsertString As String = "INSERT INTO col VALUES ('" & col & "', " & table_id & ")"
+            Dim colInsertString As String = "INSERT INTO col (columnnamedatatype, table_id, datatype )VALUES ('" & col & "', " & table_id & ",'" & datatype & "')"
             Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
 
             Using connection As New SqlConnection(connectionString)
@@ -72,7 +76,7 @@ Namespace TestControlParts
 
         End Sub
 
-        Private Shared Function InsertTableIntoDatabaseAndReturnTableId(table As String, templateId As String) As Integer
+        Public Shared Function InsertTableIntoDatabaseAndReturnTableId(table As String, templateId As String) As Integer
             Dim tablesInsertString As String = "INSERT INTO tables (templatenameandfields, template_id) VALUES ('" & table & "'," & templateId & ")"
             Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
 
@@ -114,10 +118,10 @@ Namespace TestControlParts
 
         End Function
 
-        Private Shared Function InsertTemplateAndReturnTemplateId(field_separtor As String, table_separator As String, table_column_separator As String, templateName As String, templateText As String) As Integer
+        Public Shared Function InsertTemplateAndReturnTemplateId(field_separtor As String, table_separator As String, table_column_separator As String, templateName As String, templateText As String) As Integer
 
             Dim templateInsertString As String = "INSERT INTO templates (field_separator,table_separator,table_column_separator,name, template_text) VALUES ('" &
-                                                 field_separtor & "," & table_separator & ", " & table_column_separator & ", " & templateName & "','" & templateText & "')"
+                                                 field_separtor & "','" & table_separator & "','" & table_column_separator & "', '" & templateName & "','" & templateText & "')"
             Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
 
             Using connection As New SqlConnection(connectionString)
@@ -136,7 +140,7 @@ Namespace TestControlParts
 
 
             Dim queryTemplateString As String =
-                    "Select id From templates Where name = '" & templateName & "' AND type = 'U';"
+                    "Select id From templates Where name = '" & templateName & "';"
             Dim template_id As Integer = -1
             Using connection As New SqlConnection(connectionString)
                 Dim command As New SqlCommand(queryTemplateString, connection)
@@ -231,4 +235,4 @@ Namespace TestControlParts
         End Function
 
     End Class
-End NameSpace
+End Namespace

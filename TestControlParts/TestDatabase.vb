@@ -20,12 +20,15 @@ Public Class TestDatabase
         Dim templateText As String = "<!DOCTYPE html><html><head> <title>|field:title|</title></head><body> <h1>|field:header|</h1> <table> <tr> <th>Ruben Found This</th> <th></th> <th></th> </tr> <tr> <td></td> <td></td> <td></td> </tr> <tr> <td></td> <td></td> <td></td> </tr> </table></body></html>"
 
         Dim tables As List(Of String) = New List(Of String)
-        tables.Add("table|<tr><td>%column:rubenstale:string%column:ruthstale:string%")
+        tables.Add("table|rubenstable|<tr><td>%column:rubenstale:string%column:ruthstale:string%")
         Dim cols As List(Of String) = New List(Of String)
         cols.Add("column:rubenstale:string")
         cols.Add("column:ruthstale:string")
         Dim fields As List(Of String) = New List(Of String)
+        Dim colHash As Hashtable = New Hashtable()
 
-        DatabaseInteractionApi.CreateNewTemplate(templateName, templateText, tables, cols, fields)
+        colHash.Add("rubenstable", cols)
+
+        DatabaseInteractionApi.CreateNewTemplate("|", "*", "%", templateName, templateText, tables, colHash, fields)
     End Sub
 End Class
