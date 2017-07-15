@@ -209,10 +209,12 @@ Namespace TestControlParts
 
         End Function
 
-        Public Shared Function ReturnTemplateIdIfTemplateExists(connectionString As String, ByRef tableName As String) As Integer
+        Public Shared Function ReturnTemplateIdIfTemplateExists(ByRef tableName As String) As Integer
 
             Dim queryString As String =
                     "Select id from templates Where name = '" & tableName & "';"
+            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
             Using connection As New SqlConnection(connectionString)
                 Dim command As New SqlCommand(queryString, connection)
                 connection.Open()

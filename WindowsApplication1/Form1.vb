@@ -46,6 +46,8 @@ Public Class Form1
                 tlPanel.BackColor = Color.Aqua
                 tlPanel.Width = 600
 
+                Dim template_id As Integer = -1
+
                 My.Forms.Form2.Controls.Add(tlPanel)
 
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
@@ -108,7 +110,12 @@ Public Class Form1
                                     End If
                                 Next
                             Next
-                            CreateTemplateAndNewTablesForNewTemplate(tablePrefixName, dEl, tableTemplateText, columnsForTableCreation, fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText)
+                            If DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName) = -1 Then
+                                template_id = DatabaseInteractionApi.InsertTemplateAndReturnTemplateId(fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText, tablePrefixName, tableTemplateText)
+                            Else
+                                template_id = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName)
+                            End If
+                            CreateTemplateAndNewTablesForNewTemplate(template_id, tablePrefixName, dEl, columnsForTableCreation)
                             columnsForTableCreation.Clear()
                             Me.TableName = ""
                         Next
@@ -150,11 +157,7 @@ Public Class Form1
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
     End Sub
 
-    Private Sub CreateTemplateAndNewTablesForNewTemplate(templateName As String, tableNameWithTablePrefixAndColumns As String, templateText As String, columnsForTableCreation As List(Of String), field_separator As String, table_separator As String, table_column_separator As String)
-
-        Dim template_id As Integer = DatabaseInteractionApi.InsertTemplateAndReturnTemplateId(field_separator, table_separator, table_column_separator, templateName, templateText)
-
-        Console.WriteLine("Saving table:  " & templateName & tableNameWithTablePrefixAndColumns)
+    Private Sub CreateTemplateAndNewTablesForNewTemplate(template_id As Integer, templateName As String, tableNameWithTablePrefixAndColumns As String, columnsForTableCreation As List(Of String))
 
         Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
                                          "User ID=sa;Password=ssGood&Plenty;"
