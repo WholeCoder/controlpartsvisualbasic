@@ -158,9 +158,9 @@ Partial Class Form1
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(11, 146)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(189, 17)
+        Me.Label4.Size = New System.Drawing.Size(108, 17)
         Me.Label4.TabIndex = 10
-        Me.Label4.Text = "Database Table Name Prefix"
+        Me.Label4.Text = "Template Name"
         '
         'tableTextBox
         '

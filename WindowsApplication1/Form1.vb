@@ -16,12 +16,18 @@ Public Class Form1
         Dim input As String
         input = My.Computer.FileSystem.ReadAllText("../../a185.htm")
 
+        Dim tablePrefixName As String = Me.tableTextBox.Text
+
+        Dim templateIdForCheckTemplateAlreadyExists = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName)
+
+        If templateIdForCheckTemplateAlreadyExists <> -1 Then
+            MsgBox("This template already exists.  Please use a new name for your template", , "Template already exists")
+            Return
+        End If
+
         My.Forms.Form2.Text = Now.ToString
         My.Forms.Form2.AutoScroll = True
         My.Forms.Form2.Show()
-
-        Dim tablePrefixName As String = Me.tableTextBox.Text
-
 
         Dim fieldSeparatorText = Me.fieldSeparatorTextBox.Text
         Dim tableSeparatorText = Me.tableSeparatorTextBox.Text
@@ -111,7 +117,7 @@ Public Class Form1
                                 Next
                             Next
                             If DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName) = -1 Then
-                                template_id = DatabaseInteractionApi.InsertTemplateAndReturnTemplateId(fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText, tablePrefixName, tableTemplateText)
+                                template_id = DatabaseInteractionApi.InsertTemplateAndReturnTemplateId(fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText, tablePrefixName, input)
                             Else
                                 template_id = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName)
                             End If

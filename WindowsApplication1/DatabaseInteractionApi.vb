@@ -120,9 +120,31 @@ Namespace TestControlParts
 
         Public Shared Function InsertTemplateAndReturnTemplateId(field_separtor As String, table_separator As String, table_column_separator As String, templateName As String, templateText As String) As Integer
 
-            Dim templateInsertString As String = "INSERT INTO templates (field_separator,table_separator,table_column_separator,name, template_text) VALUES ('" &
-                                                 field_separtor & "','" & table_separator & "','" & table_column_separator & "', '" & templateName & "','" & templateText & "')"
             Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+            Dim templateInsertString As String = "INSERT INTO templates (field_separator,table_separator,table_column_separator,name, template_text) VALUES (" &
+                " @fSeparator, @tSeparator, @tcSeparator, @tName, @tText)"
+
+            Dim fParam As SqlParameter =
+                    New SqlParameter("@fSeparator", SqlDbType.VarChar, 100)
+
+            Dim tbParam As SqlParameter =
+                    New SqlParameter("@tSeparator", SqlDbType.VarChar, 100.0R)
+
+            Dim tbcParam As SqlParameter =
+                    New SqlParameter("@tcSeparator", SqlDbType.VarChar, 100)
+            Dim tNameParam As SqlParameter =
+                    New SqlParameter("@tName", SqlDbType.VarChar, 100)
+            Dim tTextParam As SqlParameter =
+                    New SqlParameter("@tText", SqlDbType.VarChar, 50000)
+
+
+            fParam.Value = field_separtor
+            tbParam.Value = table_separator
+            tbcParam.Value = table_column_separator
+            tNameParam.Value = templateName
+            tTextParam.Value = templateText
+
+            ' field_separtor & "','" & table_separator & "','" & table_column_separator & "', '" & templateName & "','" & templateText & "')"            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
 
             Using connection As New SqlConnection(connectionString)
                 connection.Open()
@@ -131,8 +153,15 @@ Namespace TestControlParts
                 Dim obj As SqlCommand
                 obj = connection.CreateCommand()
 
+                obj.Parameters.Add(fParam)
+                obj.Parameters.Add(tbParam)
+                obj.Parameters.Add(tbcParam)
+                obj.Parameters.Add(tNameParam)
+                obj.Parameters.Add(tTextParam)
 
                 obj.CommandText = templateInsertString
+
+                obj.Prepare()
                 obj.ExecuteNonQuery()
                 connection.Close()
 
