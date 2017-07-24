@@ -194,37 +194,31 @@ Public Class Form1
                 ReadSingleRow(CType(reader, IDataRecord))
             End While
 
-            Dim style = MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or
-                        MsgBoxStyle.Critical
-
             If Me.TableName.Equals("") Then
-                Dim response = MsgBox(templateName & "_" & tableNameSuffix & " doesn't exist, Should we create it?", style, "Create the table")
-                If response = MsgBoxResult.Yes Then
-                    reader.Close()
-                    Dim obj As SqlCommand
-                    Dim strSQL As String
-                    obj = connection.CreateCommand()
-                    strSQL = "CREATE TABLE " & templateName & "_" & tableNameSuffix & "  ("
+                reader.Close()
+                Dim obj As SqlCommand
+                Dim strSQL As String
+                obj = connection.CreateCommand()
+                strSQL = "CREATE TABLE " & templateName & "_" & tableNameSuffix & "  ("
 
-                    For Each e As String In columnsForTableCreation
-                        Dim sStringCol As String() = Split(e, ":")
-                        If e.Contains(":") And sStringCol(2).Equals("string") Then
-                            strSQL += sStringCol(1) & " VARCHAR(30), "
-                        ElseIf e.Contains(":") And sStringCol(2).Equals("datetime") Then
-                            strSQL += sStringCol(1) & " DATETIME, "
-                        End If
-                    Next
-                    '                             "LastName  VARCHAR(30), " &
-                    '                             "FirstName VARCHAR(20), " &
-                    '                             "Address   VARCHAR(50) " &
+                For Each e As String In columnsForTableCreation
+                    Dim sStringCol As String() = Split(e, ":")
+                    If e.Contains(":") And sStringCol(2).Equals("string") Then
+                        strSQL += sStringCol(1) & " VARCHAR(30), "
+                    ElseIf e.Contains(":") And sStringCol(2).Equals("datetime") Then
+                        strSQL += sStringCol(1) & " DATETIME, "
+                    End If
+                Next
+                '                             "LastName  VARCHAR(30), " &
+                '                             "FirstName VARCHAR(20), " &
+                '                             "Address   VARCHAR(50) " &
 
 
-                    strSQL += "Id int NOT NULL PRIMARY KEY, " & ") "
+                strSQL += "Id int NOT NULL PRIMARY KEY, " & ") "
 
-                    obj.CommandText = strSQL
-                    obj.ExecuteNonQuery()
+                obj.CommandText = strSQL
+                obj.ExecuteNonQuery()
 
-                End If
 
             End If
 
