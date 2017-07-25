@@ -160,7 +160,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TableRow.vb" />
-    <Compile Include="TableRowSaver.vb" />
+    <Compile Include="TableSaver.vb" />
     <Compile Include="TemplateParserUtilitiy.vb" />
     <Compile Include="TextBoxFieldSaver.vb" />
     <Compile Include="TextBoxSaver.vb" />

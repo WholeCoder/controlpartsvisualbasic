@@ -20,10 +20,10 @@ Public Class Form1
 
         Dim templateIdForCheckTemplateAlreadyExists = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName)
 
-        If templateIdForCheckTemplateAlreadyExists <> -1 Then
-            MsgBox("This template already exists.  Please use a new name for your template", , "Template already exists")
-            Return
-        End If
+        '        If templateIdForCheckTemplateAlreadyExists <> -1 Then
+        '            MsgBox("This template already exists.  Please use a new name for your template", , "Template already exists")
+        '            Return
+        '        End If
 
         My.Forms.Form2.Text = Now.ToString
         My.Forms.Form2.AutoScroll = True
@@ -40,9 +40,22 @@ Public Class Form1
         Dim y As Integer = 40
 
         Dim templateSavers As List(Of SaveToDatabaseObject) = New List(Of SaveToDatabaseObject)
+        Dim shouldCreateTableMetadata = False
+
+        Dim template_id As Integer
+        If DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName) = -1 Then
+            template_id = DatabaseInteractionApi.InsertTemplateAndReturnTemplateId(fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText, tablePrefixName, input)
+            shouldCreateTableMetadata = True
+        Else
+            '            template_id = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName)
+
+        End If
+
 
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
+
+
 
                 Dim str = ""
                 Dim tlPanel As TableLayoutPanel = New TableLayoutPanel()
@@ -51,8 +64,6 @@ Public Class Form1
                 tlPanel.BorderStyle = BorderStyle.FixedSingle
                 tlPanel.BackColor = Color.Aqua
                 tlPanel.Width = 600
-
-                Dim template_id As Integer = -1
 
                 My.Forms.Form2.Controls.Add(tlPanel)
 
@@ -106,7 +117,7 @@ Public Class Form1
                                             Dim newTB2 As New TextBox
                                             newTB2.Name = elementInDocumentStructure
 
-                                            '                                            templateSavers.Add(New TableRowSaver(dEl, tableId))
+                                            '                                            templateSavers.Add(New TableSaver(dEl, tableId))
 
 
                                             tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
@@ -116,12 +127,10 @@ Public Class Form1
                                     End If
                                 Next
                             Next
-                            If DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName) = -1 Then
-                                template_id = DatabaseInteractionApi.InsertTemplateAndReturnTemplateId(fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText, tablePrefixName, input)
-                            Else
-                                template_id = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName)
+                            If shouldCreateTableMetadata Then
+                                CreateNewTableAndcolumsForNewTemplate(template_id, tablePrefixName, dEl, columnsForTableCreation)
                             End If
-                            CreateTemplateAndNewTablesForNewTemplate(template_id, tablePrefixName, dEl, columnsForTableCreation)
+
                             columnsForTableCreation.Clear()
                             Me.TableName = ""
                         Next
@@ -163,7 +172,7 @@ Public Class Form1
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
     End Sub
 
-    Private Sub CreateTemplateAndNewTablesForNewTemplate(template_id As Integer, templateName As String, tableNameWithTablePrefixAndColumns As String, columnsForTableCreation As List(Of String))
+    Private Sub CreateNewTableAndcolumsForNewTemplate(template_id As Integer, templateName As String, tableNameWithTablePrefixAndColumns As String, columnsForTableCreation As List(Of String))
 
         Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
                                          "User ID=sa;Password=ssGood&Plenty;"
