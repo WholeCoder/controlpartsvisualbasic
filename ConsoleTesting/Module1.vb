@@ -15,7 +15,7 @@ Module Module1
         Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlPartsTest;" & "User ID=sa;Password=ssGood&Plenty;"
 
         Dim tableName As String = "arr123"
-        Dim tableId As Integer = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(connectionString, tableName)
+        Dim tableId As Integer = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tableName)
         Console.WriteLine("table Id == " & tableId)
         Console.ReadLine()
     End Sub

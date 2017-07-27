@@ -93,6 +93,12 @@ Namespace TestControlParts
                 connection.Close()
 
             End Using
+            Return ReturnTableIdIfTableExists(table, templateId)
+        End Function
+
+        Public Shared Function ReturnTableIdIfTableExists(table As String, templateId As String) As Integer
+            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
 
             Dim teble_id As Integer = -1
 
@@ -115,7 +121,6 @@ Namespace TestControlParts
 
             End Using
             Return teble_id
-
         End Function
 
         Public Shared Function InsertTemplateAndReturnTemplateId(field_separtor As String, table_separator As String, table_column_separator As String, templateName As String, templateText As String) As Integer

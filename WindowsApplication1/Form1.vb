@@ -39,7 +39,8 @@ Public Class Form1
         Dim x = 100
         Dim y As Integer = 40
 
-        Dim templateSavers As List(Of SaveToDatabaseObject) = New List(Of SaveToDatabaseObject)
+        My.Forms.Form2.myObjectSavers = New List(Of SaveToDatabaseObject)
+
         Dim shouldCreateTableMetadata = False
 
         Dim template_id As Integer
@@ -55,10 +56,10 @@ Public Class Form1
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
 
-
-
                 Dim str = ""
                 Dim tlPanel As TableLayoutPanel = New TableLayoutPanel()
+
+                Dim tSaver As TableSaver = New TableSaver()
 
                 tlPanel.Location = New Point(x, y)
                 tlPanel.BorderStyle = BorderStyle.FixedSingle
@@ -90,13 +91,16 @@ Public Class Form1
 
                             For currentTableRow As Integer = 0 To 5
                                 Dim colCounter As Integer = 0
+                                Dim listOfTextBoxes As List(Of TextBox) = New List(Of TextBox)
+
                                 For Each elementInDocumentStructure As String In docStructure
                                     If currentTableRow = 0 Then
                                         Dim newTB2 As New TextBox
                                         newTB2.Name = elementInDocumentStructure
                                         newTB2.Text = elementInDocumentStructure
 
-                                        templateSavers.Add(New TextBoxSaver(newTB2))
+                                        '                                        templateSavers.Add(New TextBoxSaver(newTB2))
+                                        tSaver.AddTableFormatString(elementInDocumentStructure)
 
                                         tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                         colCounter = colCounter + 1
@@ -118,7 +122,7 @@ Public Class Form1
                                             newTB2.Name = elementInDocumentStructure
 
                                             '                                            templateSavers.Add(New TableSaver(dEl, tableId))
-
+                                            listOfTextBoxes.Add(newTB2)
 
                                             tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                             colCounter = colCounter + 1
@@ -126,10 +130,17 @@ Public Class Form1
                                         End If
                                     End If
                                 Next
+                                tSaver.Add(listOfTextBoxes)
                             Next
                             If shouldCreateTableMetadata Then
-                                CreateNewTableAndcolumsForNewTemplate(template_id, tablePrefixName, dEl, columnsForTableCreation)
+                                CreateNewTableAndcolumsForNewTemplateAndReturnTableId(template_id, tablePrefixName, dEl, columnsForTableCreation)
                             End If
+                            Dim table_id As Integer = DatabaseInteractionApi.ReturnTableIdIfTableExists(tablePrefixName & "_" & dEl, template_id)
+
+                            tSaver.tableFormatString = tableTemplateText
+                            tSaver.table_id = table_id
+
+                            My.Forms.Form2.myObjectSavers.Add(tSaver)
 
                             columnsForTableCreation.Clear()
                             Me.TableName = ""
@@ -172,7 +183,7 @@ Public Class Form1
         Me.TextBox1.ScrollBars = ScrollBars.Vertical
     End Sub
 
-    Private Sub CreateNewTableAndcolumsForNewTemplate(template_id As Integer, templateName As String, tableNameWithTablePrefixAndColumns As String, columnsForTableCreation As List(Of String))
+    Public Sub CreateNewTableAndcolumsForNewTemplateAndReturnTableId(template_id As Integer, templateName As String, tableNameWithTablePrefixAndColumns As String, columnsForTableCreation As List(Of String))
 
         Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" &
                                          "User ID=sa;Password=ssGood&Plenty;"
