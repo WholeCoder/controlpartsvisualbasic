@@ -22,7 +22,11 @@
     End Sub
 
     Public Overrides Sub SaveToDatabase()
-        MessageBox.Show("Saved to database (mock).", "The Lorax",
+        MessageBox.Show(tableFormatString & "      " & table_id, "The Lorax",
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
+    End Sub
+
+    Public Overrides Sub LoadFromDatabase()
+        Throw New NotImplementedException
     End Sub
 End Class

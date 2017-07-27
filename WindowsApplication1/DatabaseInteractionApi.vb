@@ -100,10 +100,11 @@ Namespace TestControlParts
             Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
 
 
-            Dim teble_id As Integer = -1
+            Dim table_id As Integer = -1
 
             Dim queryTemplateString As String =
                     "Select id From tables Where template_id = " & templateId & " AND templatenameandfields = '" & table & "';"
+
             Using connection As New SqlConnection(connectionString)
                 Dim command As New SqlCommand(queryTemplateString, connection)
                 connection.Open()
@@ -113,14 +114,13 @@ Namespace TestControlParts
                 ' Call Read before accessing data.
 
                 While reader.Read()
-                    teble_id = reader(0)
+                    table_id = reader(0)
                 End While
 
                 connection.Close()
 
-
             End Using
-            Return teble_id
+            Return table_id
         End Function
 
         Public Shared Function InsertTemplateAndReturnTemplateId(field_separtor As String, table_separator As String, table_column_separator As String, templateName As String, templateText As String) As Integer

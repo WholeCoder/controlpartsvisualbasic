@@ -48,7 +48,7 @@ Public Class Form1
             template_id = DatabaseInteractionApi.InsertTemplateAndReturnTemplateId(fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText, tablePrefixName, input)
             shouldCreateTableMetadata = True
         Else
-            '            template_id = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName)
+            template_id = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName)
 
         End If
 
@@ -135,7 +135,9 @@ Public Class Form1
                             If shouldCreateTableMetadata Then
                                 CreateNewTableAndcolumsForNewTemplateAndReturnTableId(template_id, tablePrefixName, dEl, columnsForTableCreation)
                             End If
-                            Dim table_id As Integer = DatabaseInteractionApi.ReturnTableIdIfTableExists(tablePrefixName & "_" & dEl, template_id)
+
+                            Dim tempRay() As String = dEl.Split(":")
+                            Dim table_id As Integer = DatabaseInteractionApi.ReturnTableIdIfTableExists(tablePrefixName & "_" & tempRay(1), template_id)
 
                             tSaver.tableFormatString = tableTemplateText
                             tSaver.table_id = table_id

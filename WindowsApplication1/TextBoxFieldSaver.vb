@@ -12,4 +12,8 @@
     Public Overrides Sub SaveToDatabase()
         Throw New NotImplementedException
     End Sub
+
+    Public Overrides Sub LoadFromDatabase()
+        Throw New NotImplementedException
+    End Sub
 End Class
