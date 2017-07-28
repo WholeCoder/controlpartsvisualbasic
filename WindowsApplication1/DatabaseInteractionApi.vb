@@ -270,5 +270,33 @@ Namespace TestControlParts
             End Using
         End Function
 
+        Public Shared Function ReturnTableNameFromId(ByRef tableId As Integer) As String
+
+            ' templatenameandfields is actually the name of the table
+            Dim queryString As String =
+                    "Select templatenameandfields from tables Where id = '" & tableId & "';"
+            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
+            Using connection As New SqlConnection(connectionString)
+                Dim command As New SqlCommand(queryString, connection)
+                connection.Open()
+
+                Dim reader As SqlDataReader = command.ExecuteReader()
+
+                Dim table_id As String = ""
+                ' Call Read before accessing data.
+                While reader.Read()
+                    '                tableName = ReadSingleRow(CType(reader, IDataRecord))
+                    table_id = reader.GetString(0)
+                    '                    Console.WriteLine(reader(0))
+                End While
+                reader.Close()
+
+                connection.Close()
+
+                Return table_id
+            End Using
+        End Function
+
     End Class
 End Namespace

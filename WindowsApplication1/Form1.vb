@@ -100,8 +100,9 @@ Public Class Form1
                                         newTB2.Text = elementInDocumentStructure
 
                                         '                                        templateSavers.Add(New TextBoxSaver(newTB2))
-                                        tSaver.AddTableFormatString(elementInDocumentStructure)
-
+                                        If elementInDocumentStructure.Contains(":") Then
+                                            tSaver.AddTableFormatString(elementInDocumentStructure)
+                                        End If
                                         tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                         colCounter = colCounter + 1
                                     Else
@@ -115,13 +116,15 @@ Public Class Form1
                                             '                                            newTB2.BackColor = Color.Aqua
 
                                         Else
-                                            If elementInDocumentStructure.Contains(":") And currentTableRow = 1 Then
-                                                columnsForTableCreation.Add(elementInDocumentStructure)
-                                            End If
+                                            '                                            If elementInDocumentStructure.Contains(":") And currentTableRow = 1 Then
+                                            columnsForTableCreation.Add(elementInDocumentStructure)
+                                            '                                            End If
                                             Dim newTB2 As New TextBox
                                             newTB2.Name = elementInDocumentStructure
 
                                             '                                            templateSavers.Add(New TableSaver(dEl, tableId))
+                                            newTB2.Text = "Debugging Code"
+
                                             listOfTextBoxes.Add(newTB2)
 
                                             tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
@@ -130,6 +133,7 @@ Public Class Form1
                                         End If
                                     End If
                                 Next
+
                                 tSaver.Add(listOfTextBoxes)
                             Next
                             If shouldCreateTableMetadata Then
@@ -139,7 +143,11 @@ Public Class Form1
                             Dim tempRay() As String = dEl.Split(":")
                             Dim table_id As Integer = DatabaseInteractionApi.ReturnTableIdIfTableExists(tablePrefixName & "_" & tempRay(1), template_id)
 
-                            tSaver.tableFormatString = tableTemplateText
+                            tSaver.tBoxs = tSaver.tBoxs.GetRange(1, tSaver.tBoxs.Count - 1)
+                            '                            MessageBox.Show(tSaver.tBoxs.Count & " tSaver.tBoxs exist - ", "The Lorax",
+                            '                                            MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
+
+                            tSaver.tableFormatString = dEl
                             tSaver.table_id = table_id
 
                             My.Forms.Form2.myObjectSavers.Add(tSaver)

@@ -1,4 +1,6 @@
-﻿Public Class TableSaver
+﻿Imports WindowsApplication1.TestControlParts
+
+Public Class TableSaver
     Inherits SaveToDatabaseObject
 
     Public tBoxs As List(Of List(Of TextBox))
@@ -22,7 +24,35 @@
     End Sub
 
     Public Overrides Sub SaveToDatabase()
-        MessageBox.Show(tableFormatString & "      " & table_id, "The Lorax",
+        Dim str As String = "INSERT INTO " & DatabaseInteractionApi.ReturnTableNameFromId(table_id) & " "
+        str &= "("
+        Dim count As Integer = 0
+        For Each ent As String In textBoxTypeStrings
+            str &= textBoxTypeStrings(count).Split(":")(1) & ","
+            count = count + 1
+        Next
+
+        If str.LastIndexOf(",") = str.Length - 1 Then
+            str = str.Substring(0, str.Length - 1)
+        End If
+        str &= ") VALUES ("
+        count = 0
+        Dim listOfTextBoxes As List(Of TextBox) = tBoxs.Item(0)
+        For Each ent As String In textBoxTypeStrings
+
+            If textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
+                str &= "'" & listOfTextBoxes.Item(count).Text & "',"
+            ElseIf textBoxTypeStrings(count).Split(":")(2).Equals("datetime") Then
+                str &= "'" & listOfTextBoxes.Item(count).Text & "',"
+            End If
+
+            count = count + 1
+        Next
+        If str.LastIndexOf(",") = str.Length - 1 Then
+            str = str.Substring(0, str.Length - 1)
+        End If
+        str &= ");"
+        MessageBox.Show(str, "The Lorax",
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
     End Sub
 
