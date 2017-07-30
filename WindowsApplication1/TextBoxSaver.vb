@@ -1,5 +1,5 @@
 ﻿Public Class TextBoxSaver
-    Inherits SaveToDatabaseObject
+    Inherits SaveOrLoadFromToDatabaseObject
 
     Public tBox As TextBox
 

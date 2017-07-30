@@ -1,5 +1,5 @@
 ﻿Public Class TextBoxFieldSaver
-    Inherits SaveToDatabaseObject
+    Inherits SaveOrLoadFromToDatabaseObject
 
     Public tBox As TextBox
     Public textBoxTypeString As String
