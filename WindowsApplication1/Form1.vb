@@ -102,6 +102,7 @@ Public Class Form1
                                         '                                        templateSavers.Add(New TextBoxSaver(newTB2))
                                         If elementInDocumentStructure.Contains(":") Then
                                             tSaver.AddTableFormatString(elementInDocumentStructure)
+                                            columnsForTableCreation.Add(elementInDocumentStructure)
                                         End If
                                         tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                         colCounter = colCounter + 1
@@ -117,7 +118,7 @@ Public Class Form1
 
                                         Else
                                             '                                            If elementInDocumentStructure.Contains(":") And currentTableRow = 1 Then
-                                            columnsForTableCreation.Add(elementInDocumentStructure)
+
                                             '                                            End If
                                             Dim newTB2 As New TextBox
                                             newTB2.Name = elementInDocumentStructure
@@ -244,7 +245,7 @@ Public Class Form1
                 '                             "Address   VARCHAR(50) " &
 
 
-                strSQL += "Id int NOT NULL PRIMARY KEY, " & ") "
+                strSQL += "Id int NOT NULL PRIMARY KEY IDENTITY(1,1) " & ") "
 
                 obj.CommandText = strSQL
                 obj.ExecuteNonQuery()

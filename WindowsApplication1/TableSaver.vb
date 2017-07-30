@@ -1,4 +1,5 @@
-﻿Imports WindowsApplication1.TestControlParts
+﻿Imports System.Data.SqlClient
+Imports WindowsApplication1.TestControlParts
 
 Public Class TableSaver
     Inherits SaveToDatabaseObject
@@ -24,6 +25,45 @@ Public Class TableSaver
     End Sub
 
     Public Overrides Sub SaveToDatabase()
+        Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
+        Dim str As String = CreateInsertIntoTable(tBoxs.Item(0))
+
+        Dim listOfTextBoxes = tBoxs.Item(0)
+
+        Using connection As New SqlConnection(connectionString)
+            connection.Open()
+
+
+            Dim obj As SqlCommand
+            obj = connection.CreateCommand()
+
+            Dim count As Integer = 0
+            For Each ent As String In textBoxTypeStrings
+
+                Dim fParam As SqlParameter
+                If textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
+                    fParam = New SqlParameter("@" & textBoxTypeStrings(count).Split(":")(1), SqlDbType.VarChar, 100)
+                ElseIf textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
+                    fParam = New SqlParameter("@" & textBoxTypeStrings(count).Split(":")(1), SqlDbType.DateTime, 100)
+                End If
+                fParam.Value = listOfTextBoxes.Item(count).Text
+                obj.Parameters.Add(fParam)
+                count = count + 1
+            Next
+
+            obj.CommandText = str
+
+            obj.Prepare()
+            obj.ExecuteNonQuery()
+            connection.Close()
+
+        End Using
+
+    End Sub
+
+    Private Function CreateInsertIntoTable(listOfTextBoxes As List(Of TextBox)) As String
+
         Dim str As String = "INSERT INTO " & DatabaseInteractionApi.ReturnTableNameFromId(table_id) & " "
         str &= "("
         Dim count As Integer = 0
@@ -37,13 +77,13 @@ Public Class TableSaver
         End If
         str &= ") VALUES ("
         count = 0
-        Dim listOfTextBoxes As List(Of TextBox) = tBoxs.Item(0)
+
         For Each ent As String In textBoxTypeStrings
 
             If textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
-                str &= "'" & listOfTextBoxes.Item(count).Text & "',"
+                str &= "@" & textBoxTypeStrings(count).Split(":")(1) & ","
             ElseIf textBoxTypeStrings(count).Split(":")(2).Equals("datetime") Then
-                str &= "'" & listOfTextBoxes.Item(count).Text & "',"
+                str &= "@" & textBoxTypeStrings(count).Split(":")(1) & ","
             End If
 
             count = count + 1
@@ -54,7 +94,8 @@ Public Class TableSaver
         str &= ");"
         MessageBox.Show(str, "The Lorax",
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
-    End Sub
+        Return str
+    End Function
 
     Public Overrides Sub LoadFromDatabase()
         Throw New NotImplementedException

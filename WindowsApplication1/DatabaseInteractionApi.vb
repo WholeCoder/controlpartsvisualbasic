@@ -207,7 +207,7 @@ Namespace TestControlParts
                 obj = connection.CreateCommand()
                 Dim tbl() As String = tableName.Split("|")
                 strSQL = "CREATE TABLE " & tbl(1) & "  (" &
-                         "Id int NOT NULL PRIMARY KEY IDENTITY(1,1), "
+                         "ID int NOT NULL IDENTITY(1,1), "
 
                 For Each colName As String In tableColumnNames
                     Dim colNameSplit() As String = colName.Split(":")
@@ -234,7 +234,8 @@ Namespace TestControlParts
                 obj.ExecuteNonQuery()
                 connection.Close()
 
-
+                MessageBox.Show(strSQL, "To create the db table",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
             End Using
         End Sub
 
