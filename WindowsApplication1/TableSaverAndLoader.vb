@@ -1,8 +1,8 @@
 ﻿Imports System.Data.SqlClient
 Imports WindowsApplication1.TestControlParts
 
-Public Class TableSaver
-    Inherits SaveToDatabaseObject
+Public Class TableSaverAndLoader
+    Inherits SaveOrLoadFromToDatabaseObject
 
     Public tBoxs As List(Of List(Of TextBox))
     Public textBoxTypeStrings As List(Of String)
@@ -98,6 +98,19 @@ Public Class TableSaver
     End Function
 
     Public Overrides Sub LoadFromDatabase()
-        Throw New NotImplementedException
+        Dim queryString As String = "SELECT "
+
+        Dim count As Integer = 0
+
+        For Each ent As String In textBoxTypeStrings
+            queryString &= ent.Split(":")(1) + ","
+        Next
+
+        queryString = queryString.Substring(0, queryString.Count - 1)
+
+        queryString &= " FROM " & DatabaseInteractionApi.ReturnTableNameFromId(table_id)
+
+        MessageBox.Show(queryString, "The Lorax",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
     End Sub
 End Class

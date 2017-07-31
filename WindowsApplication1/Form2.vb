@@ -1,6 +1,6 @@
 ﻿Public Class Form2
 
-    Public myObjectSavers As List(Of SaveToDatabaseObject)
+    Public myObjectSavers As List(Of SaveOrLoadFromToDatabaseObject)
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
@@ -28,8 +28,14 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        For Each oSaver As SaveToDatabaseObject In myObjectSavers
+        For Each oSaver As SaveOrLoadFromToDatabaseObject In myObjectSavers
             oSaver.SaveToDatabase()
+        Next
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        For Each oSaver As SaveOrLoadFromToDatabaseObject In myObjectSavers
+            oSaver.LoadFromDatabase()
         Next
     End Sub
 End Class

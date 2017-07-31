@@ -39,7 +39,7 @@ Public Class Form1
         Dim x = 100
         Dim y As Integer = 40
 
-        My.Forms.Form2.myObjectSavers = New List(Of SaveToDatabaseObject)
+        My.Forms.Form2.myObjectSavers = New List(Of SaveOrLoadFromToDatabaseObject)
 
         Dim shouldCreateTableMetadata = False
 
@@ -59,7 +59,7 @@ Public Class Form1
                 Dim str = ""
                 Dim tlPanel As TableLayoutPanel = New TableLayoutPanel()
 
-                Dim tSaver As TableSaver = New TableSaver()
+                Dim tSaver As TableSaverAndLoader = New TableSaverAndLoader()
 
                 tlPanel.Location = New Point(x, y)
                 tlPanel.BorderStyle = BorderStyle.FixedSingle
@@ -124,7 +124,7 @@ Public Class Form1
                                             newTB2.Name = elementInDocumentStructure
 
                                             '                                            templateSavers.Add(New TableSaver(dEl, tableId))
-                                            newTB2.Text = "Debugging Code"
+                                            newTB2.Text = ""
 
                                             listOfTextBoxes.Add(newTB2)
 
