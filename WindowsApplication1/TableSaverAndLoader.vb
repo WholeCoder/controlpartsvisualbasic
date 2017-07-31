@@ -110,6 +110,31 @@ Public Class TableSaverAndLoader
 
         queryString &= " FROM " & DatabaseInteractionApi.ReturnTableNameFromId(table_id)
 
+        Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
+        Using connection As New SqlConnection(connectionString)
+            Dim command As New SqlCommand(queryString, connection)
+            connection.Open()
+
+            Dim reader As SqlDataReader = command.ExecuteReader()
+
+            ' Call Read before accessing data.
+            Dim c As Integer = 0
+            While reader.Read()
+
+                Dim cc As Integer = 0
+                Dim listOfTextBoxes = tBoxs.Item(c)
+                For Each ent As String In textBoxTypeStrings
+                    listOfTextBoxes(cc).Text = reader(cc)
+                    cc += 1
+                Next
+                c += 1
+            End While
+
+            connection.Close()
+
+
+        End Using
         MessageBox.Show(queryString, "The Lorax",
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
     End Sub
