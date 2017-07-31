@@ -89,7 +89,9 @@ Public Class Form1
                             Dim hashTableOfParsedDocumentElements As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tableTemplateText, tableColumnSeparatorText, "NotUsed", "Notused")
                             Dim docStructure = hashTableOfParsedDocumentElements.Item("documentstructure")
 
-                            For currentTableRow As Integer = 0 To 5
+                            Dim howManyRowsToCreate = DatabaseInteractionApi.GetNumberOfRowsForTable(tablePrefixName & "_" & dEl.Split(":")(1))
+
+                            For currentTableRow As Integer = 0 To howManyRowsToCreate
                                 Dim colCounter As Integer = 0
                                 Dim listOfTextBoxes As List(Of TextBox) = New List(Of TextBox)
 
@@ -134,7 +136,6 @@ Public Class Form1
                                         End If
                                     End If
                                 Next
-
                                 tSaver.Add(listOfTextBoxes)
                             Next
                             If shouldCreateTableMetadata Then

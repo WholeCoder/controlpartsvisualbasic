@@ -299,5 +299,33 @@ Namespace TestControlParts
             End Using
         End Function
 
+        Public Shared Function GetNumberOfRowsForTable(tableName As String) As Integer
+            Dim queryString As String = "Select count(*) from " & tableName
+            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
+            Dim count As Integer
+            Using connection As New SqlConnection(connectionString)
+                Dim command As New SqlCommand(queryString, connection)
+                connection.Open()
+
+                Dim reader As SqlDataReader = command.ExecuteReader()
+
+                ' Call Read before accessing data.
+                While reader.Read()
+                    '                tableName = ReadSingleRow(CType(reader, IDataRecord))
+                    count = reader.GetInt32(0)
+                    '                    Console.WriteLine(reader(0))
+                End While
+                reader.Close()
+
+                connection.Close()
+
+            End Using
+            If count < 5 Then
+                Return 5
+            Else
+                Return count
+            End If
+        End Function
     End Class
 End Namespace

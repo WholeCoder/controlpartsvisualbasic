@@ -99,18 +99,7 @@ Public Class TableSaverAndLoader
     End Function
 
     Public Overrides Sub LoadFromDatabase()
-        Dim queryString As String = "SELECT "
-
-        Dim count As Integer = 0
-
-        For Each ent As String In textBoxTypeStrings
-            queryString &= ent.Split(":")(1) + ","
-        Next
-
-        queryString = queryString.Substring(0, queryString.Count - 1)
-
-        queryString &= " FROM " & DatabaseInteractionApi.ReturnTableNameFromId(table_id)
-
+        Dim queryString As String = GetQueryString()
         Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
 
         Using connection As New SqlConnection(connectionString)
@@ -139,4 +128,18 @@ Public Class TableSaverAndLoader
         MessageBox.Show(queryString, "The Lorax",
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
     End Sub
+
+    Private Function GetQueryString() As String
+
+        Dim queryString As String = "SELECT "
+
+        For Each ent As String In textBoxTypeStrings
+            queryString &= ent.Split(":")(1) + ","
+        Next
+
+        queryString = queryString.Substring(0, queryString.Count - 1)
+
+        queryString &= " FROM " & DatabaseInteractionApi.ReturnTableNameFromId(table_id)
+        Return queryString
+    End Function
 End Class
