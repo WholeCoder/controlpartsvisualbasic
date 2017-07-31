@@ -29,36 +29,37 @@ Public Class TableSaverAndLoader
 
         Dim str As String = CreateInsertIntoTable(tBoxs.Item(0))
 
-        Dim listOfTextBoxes = tBoxs.Item(0)
+        For Each listOfTextBoxes As List(Of TextBox) In tBoxs
 
-        Using connection As New SqlConnection(connectionString)
-            connection.Open()
+            Using connection As New SqlConnection(connectionString)
+                connection.Open()
 
 
-            Dim obj As SqlCommand
-            obj = connection.CreateCommand()
+                Dim obj As SqlCommand
+                obj = connection.CreateCommand()
 
-            Dim count As Integer = 0
-            For Each ent As String In textBoxTypeStrings
+                Dim count As Integer = 0
+                For Each ent As String In textBoxTypeStrings
 
-                Dim fParam As SqlParameter
-                If textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
-                    fParam = New SqlParameter("@" & textBoxTypeStrings(count).Split(":")(1), SqlDbType.VarChar, 100)
-                ElseIf textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
-                    fParam = New SqlParameter("@" & textBoxTypeStrings(count).Split(":")(1), SqlDbType.DateTime, 100)
-                End If
-                fParam.Value = listOfTextBoxes.Item(count).Text
-                obj.Parameters.Add(fParam)
-                count = count + 1
-            Next
+                    Dim fParam As SqlParameter
+                    If textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
+                        fParam = New SqlParameter("@" & textBoxTypeStrings(count).Split(":")(1), SqlDbType.VarChar, 100)
+                    ElseIf textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
+                        fParam = New SqlParameter("@" & textBoxTypeStrings(count).Split(":")(1), SqlDbType.DateTime, 100)
+                    End If
+                    fParam.Value = listOfTextBoxes.Item(count).Text
+                    obj.Parameters.Add(fParam)
+                    count = count + 1
+                Next
 
-            obj.CommandText = str
+                obj.CommandText = str
 
-            obj.Prepare()
-            obj.ExecuteNonQuery()
-            connection.Close()
+                obj.Prepare()
+                obj.ExecuteNonQuery()
+                connection.Close()
 
-        End Using
+            End Using
+        Next
 
     End Sub
 
