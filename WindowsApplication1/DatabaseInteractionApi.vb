@@ -27,6 +27,31 @@ Namespace TestControlParts
             Return tName.Equals(tableName)
         End Function
 
+        Public Shared Function TableExistsMethod(tName As String) As Boolean
+
+            Dim queryString As String = "Select * From SYS.objects where Type = 'U' and name= '" & tName & "';"
+
+            Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+            Dim tableName As String = ""
+            Dim tableExists = False
+            Using connection As New SqlConnection(connectionString)
+                Dim command As New SqlCommand(queryString, connection)
+                connection.Open()
+
+                Dim reader As SqlDataReader = command.ExecuteReader()
+
+                ' Call Read before accessing data.
+                While reader.Read()
+                    tableName = ReadSingleRow(CType(reader, IDataRecord))
+                    tableExists = True
+                End While
+                reader.Close()
+
+                connection.Close()
+            End Using
+            Return tableExists
+        End Function
+
         Public Shared Sub CreateNewTemplate(field_separtor As String, table_separator As String, table_column_separator As String, tName As String, tText As String, tbls As List(Of String), cls As Hashtable, flds As List(Of String))
 
             Dim templateName As String = tName
@@ -300,6 +325,9 @@ Namespace TestControlParts
         End Function
 
         Public Shared Function GetNumberOfRowsForTable(tableName As String) As Integer
+            If Not TableExistsMethod(tableName) Then
+                Return 5
+            End If
             Dim queryString As String = "Select count(*) from " & tableName
             Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
 
