@@ -1,4 +1,5 @@
 Imports System.Data.SqlClient
+Imports Xunit.Sdk
 
 
 Namespace TestControlParts
@@ -300,6 +301,10 @@ Namespace TestControlParts
         End Function
 
         Public Shared Function GetNumberOfRowsForTable(tableName As String) As Integer
+
+            If DoesTemplateExist(tableName.Split("_")(0)) = False Then
+                Return 5
+            End If
             Dim queryString As String = "Select count(*) from " & tableName
             Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
 
