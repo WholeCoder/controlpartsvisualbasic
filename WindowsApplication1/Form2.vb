@@ -1,6 +1,7 @@
 ﻿Public Class Form2
 
     Public myObjectSavers As List(Of SaveOrLoadFromToDatabaseObject)
+    Public myHTMLObjectSavers As List(Of SaveOrLoadFromToDatabaseObject)
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
@@ -37,5 +38,15 @@
         For Each oSaver As SaveOrLoadFromToDatabaseObject In myObjectSavers
             oSaver.LoadFromDatabase()
         Next
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim htmlString As String = ""
+
+        For Each oSaver As SaveOrLoadFromToDatabaseObject In myHTMLObjectSavers
+            htmlString &= oSaver.ConvertToHTMLDocument() & "                   "
+        Next
+        My.Forms.Form4.htmlTextBox.Text = htmlString
+        My.Forms.Form4.Show()
     End Sub
 End Class

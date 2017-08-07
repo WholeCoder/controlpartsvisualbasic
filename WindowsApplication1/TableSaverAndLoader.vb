@@ -45,6 +45,8 @@ Public Class TableSaverAndLoader
                     If textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
                         fParam = New SqlParameter("@" & textBoxTypeStrings(count).Split(":")(1), SqlDbType.VarChar, 100)
                     ElseIf textBoxTypeStrings(count).Split(":")(2).Equals("string") Then
+                        fParam = New SqlParameter("@" & textBoxTypeStrings(count).Split(":")(1), SqlDbType.VarChar, 100)
+                    Else
                         fParam = New SqlParameter("@" & textBoxTypeStrings(count).Split(":")(1), SqlDbType.DateTime, 100)
                     End If
                     fParam.Value = listOfTextBoxes.Item(count).Text
@@ -125,8 +127,8 @@ Public Class TableSaverAndLoader
 
 
         End Using
-        MessageBox.Show(queryString, "The Lorax",
-                        MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
+        '        MessageBox.Show(queryString, "The Lorax",
+        '                        MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
     End Sub
 
     Private Function GetQueryString() As String
@@ -141,5 +143,19 @@ Public Class TableSaverAndLoader
 
         queryString &= " FROM " & DatabaseInteractionApi.ReturnTableNameFromId(table_id)
         Return queryString
+    End Function
+
+    Public Overrides Function ConvertToHTMLDocument() As String
+
+        Dim strng As String = ""
+
+        For Each listOfTextBoxes As List(Of TextBox) In tBoxs
+            For Each textBx As TextBox In listOfTextBoxes
+                strng &= ", " & textBx.Text
+            Next
+        Next
+        strng &= "                             "
+
+        Return strng
     End Function
 End Class

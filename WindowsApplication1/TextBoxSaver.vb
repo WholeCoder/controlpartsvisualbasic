@@ -14,4 +14,8 @@
     Public Overrides Sub LoadFromDatabase()
         Throw New NotImplementedException
     End Sub
+
+    Public Overrides Function ConvertToHTMLDocument() As String
+        Throw New NotImplementedException
+    End Function
 End Class

@@ -40,6 +40,7 @@ Public Class Form1
         Dim y As Integer = 40
 
         My.Forms.Form2.myObjectSavers = New List(Of SaveOrLoadFromToDatabaseObject)
+        My.Forms.Form2.myHTMLObjectSavers = New List(Of SaveOrLoadFromToDatabaseObject)
 
         Dim shouldCreateTableMetadata = False
 
@@ -60,6 +61,7 @@ Public Class Form1
                 Dim tlPanel As TableLayoutPanel = New TableLayoutPanel()
 
                 Dim tSaver As TableSaverAndLoader = New TableSaverAndLoader()
+                My.Forms.Form2.myHTMLObjectSavers.Add(tSaver)
 
                 tlPanel.Location = New Point(x, y)
                 tlPanel.BorderStyle = BorderStyle.FixedSingle
