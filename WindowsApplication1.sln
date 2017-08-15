@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WindowsApplication1", "WindowsApplication1\WindowsApplication1.vbproj", "{2B98B6C8-5299-4097-A465-DC6E594A31D8}"
 EndProject
@@ -11,6 +11,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestControlParts", "TestCon
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ConsoleTesting", "ConsoleTesting\ConsoleTesting.vbproj", "{876BF874-065F-499F-85A2-8B88ED660075}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WpfControlPartsApplication", "WpfControlPartsApplication\WpfControlPartsApplication.vbproj", "{D20A13BA-6E8E-4D1D-A4ED-FF5507BAB106}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{876BF874-065F-499F-85A2-8B88ED660075}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{876BF874-065F-499F-85A2-8B88ED660075}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{876BF874-065F-499F-85A2-8B88ED660075}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D20A13BA-6E8E-4D1D-A4ED-FF5507BAB106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D20A13BA-6E8E-4D1D-A4ED-FF5507BAB106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D20A13BA-6E8E-4D1D-A4ED-FF5507BAB106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D20A13BA-6E8E-4D1D-A4ED-FF5507BAB106}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

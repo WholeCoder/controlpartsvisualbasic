@@ -41,6 +41,10 @@
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        For Each oSaver As SaveOrLoadFromToDatabaseObject In myObjectSavers
+            oSaver.LoadFromDatabase()
+        Next
+
         Dim htmlString As String = ""
 
         For Each oSaver As SaveOrLoadFromToDatabaseObject In myHTMLObjectSavers

@@ -36,7 +36,7 @@ Public Class Form1
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(input, fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText)
         Dim documentStructure As List(Of String) = getListOfKeywordskeywordList.Item("documentstructure")
 
-        Dim x = 100
+        Const x As Integer = 100
         Dim y As Integer = 40
 
         My.Forms.Form2.myObjectSavers = New List(Of SaveOrLoadFromToDatabaseObject)
