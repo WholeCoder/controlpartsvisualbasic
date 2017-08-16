@@ -1,5 +1,6 @@
 ﻿Class MainWindow
-    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+
+    Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
         Dim input As String
         input = My.Computer.FileSystem.ReadAllText("../../a185.htm")
 

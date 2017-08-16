@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfControlPartsApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Canvas x:Name="grd">
-        <TextBox x:Name="TextBox1" HorizontalAlignment="Left" Height="72" Margin="102,59,0,0" TextWrapping="Wrap" Text="Textbox" VerticalAlignment="Top" Width="375" VerticalScrollBarVisibility="Auto"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="126,187,0,0" VerticalAlignment="Top" Width="248" Height="87" Click="Button_Click"/>
-
+        Title="MainWindow" Height="643" Width="1173">
+    <Canvas Name="grd" HorizontalAlignment="Left" Height="595" Margin="10,10,0,0" VerticalAlignment="Top" Width="1153">
+        <TextBox Name="TextBox1" Height="464" Canvas.Left="117" TextWrapping="Wrap" Text="TextBox" Canvas.Top="22" Width="1026"/>
+        <Button Content="Button" Canvas.Left="117" Canvas.Top="500" Width="75" Click="Button_Click_1"/>
     </Canvas>
+
 </Window>
