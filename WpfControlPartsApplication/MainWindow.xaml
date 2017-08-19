@@ -7,8 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="643" Width="1173">
     <Canvas Name="grd" HorizontalAlignment="Left" Height="595" Margin="10,10,0,0" VerticalAlignment="Top" Width="1153">
-        <TextBox Name="TextBox1" Height="464" Canvas.Left="117" TextWrapping="Wrap" Text="TextBox" Canvas.Top="22" Width="1026"/>
+        <TextBox Name="TextBox1" Height="462" Canvas.Left="250" TextWrapping="Wrap" Text="TextBox" Canvas.Top="24" Width="893"/>
         <Button Content="Button" Canvas.Left="117" Canvas.Top="500" Width="75" Click="Button_Click_1"/>
+        <TextBlock Canvas.Left="13" TextWrapping="Wrap" Canvas.Top="61" Height="27"><Run Text="Table Separator"/><LineBreak/><Run/></TextBlock>
+        <TextBlock Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="88" Height="18" Width="130"><Run Text="Table Column Separator"/><LineBreak/><Run/></TextBlock>
+        <TextBlock Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="115"><Run Text="Template Name"/><LineBreak/><Run/></TextBlock>
+        <TextBlock Canvas.Left="13" TextWrapping="Wrap" Canvas.Top="33" Height="17"><Run Text="Field Separator"/><LineBreak/><Run/></TextBlock>
+        <TextBox Height="23" Canvas.Left="154" TextWrapping="Wrap" Text="|" Canvas.Top="24" Width="38" RenderTransformOrigin="-1.27,0.351" Name="fieldSeparatorTextBox"/>
+        <TextBox Height="23" Canvas.Left="154" TextWrapping="Wrap" Text="*" Canvas.Top="55" Width="38" RenderTransformOrigin="-1.27,0.351" Name="tableSeparatorTextBox"/>
+        <TextBox Height="23" Canvas.Left="154" TextWrapping="Wrap" Text="%" Canvas.Top="83" Width="38" RenderTransformOrigin="-1.27,0.351" Name="tableColumnSeparator"/>
+        <TextBox Height="23" Canvas.Left="154" TextWrapping="Wrap" Text="a185" Canvas.Top="115" Width="38" RenderTransformOrigin="-1.27,0.351" Name="tableTextBox"/>
     </Canvas>
 
 </Window>

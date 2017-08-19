@@ -1,6 +1,6 @@
 ﻿Imports System.CodeDom.Compiler
-Imports WindowsApplication1
 Imports NUnit.Framework
+Imports WpfControlPartsApplication.WpfControlPartsApplication
 
 Public Class TestParser2
 
@@ -24,7 +24,7 @@ Public Class TestParser2
         Dim templateHash As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(template, "|", "*", "%")
 
 
-        Dim tableOptions As List(Of TableRow) = templateHash.Item("table:rubenstable")
+        Dim tableOptions As List(Of TableRw) = templateHash.Item("table:rubenstable")
 
         Assert.True(tableOptions.Count = 3)
 
@@ -56,7 +56,7 @@ Public Class TestParser2
 
         Dim hashOfTemplete As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(preBreakUpTableRow, "|", "*", "%")
 
-        Dim tableParameterRowList As List(Of TableRow) = hashOfTemplete.Item("table:rubenstable")
+        Dim tableParameterRowList As List(Of TableRw) = hashOfTemplete.Item("table:rubenstable")
         Assert.True(tableParameterRowList.Item(0).TemplateFields.Count = 3)
 
         Assert.True(tableParameterRowList.Item(0).TemplateFields.Item(0).Equals("column:partnumber:number"))

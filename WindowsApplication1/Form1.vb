@@ -2,6 +2,7 @@
 Imports System.Diagnostics.Eventing.Reader
 Imports System.Runtime.InteropServices
 Imports WindowsApplication1.TestControlParts
+Imports RubensWPFClasses
 
 Public Class Form1
 

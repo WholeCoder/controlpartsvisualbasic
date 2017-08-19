@@ -105,12 +105,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WindowsApplication1\WindowsApplication1.vbproj">
-      <Project>{2b98b6c8-5299-4097-a465-dc6e594a31d8}</Project>
-      <Name>WindowsApplication1</Name>
+    <ProjectReference Include="..\WpfControlPartsApplication\WpfControlPartsApplication.vbproj">
+      <Project>{d20a13ba-6e8e-4d1d-a4ed-ff5507bab106}</Project>
+      <Name>WpfControlPartsApplication</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

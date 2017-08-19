@@ -117,7 +117,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="DatabaseInteractionApi.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -158,16 +157,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SaveOrLoadFromToDatabaseObject.vb" />
     <Compile Include="SplashScreen1.Designer.vb">
       <DependentUpon>SplashScreen1.vb</DependentUpon>
     </Compile>
     <Compile Include="SplashScreen1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TableRow.vb" />
-    <Compile Include="TableSaverAndLoader.vb" />
-    <Compile Include="TemplateParserUtilitiy.vb" />
     <Compile Include="TextBoxFieldSaver.vb" />
     <Compile Include="TextBoxSaver.vb" />
   </ItemGroup>

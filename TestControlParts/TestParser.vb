@@ -1,6 +1,7 @@
 ﻿Imports System.CodeDom.Compiler
-Imports WindowsApplication1
 Imports NUnit.Framework
+Imports WpfControlPartsApplication
+Imports WpfControlPartsApplication.WpfControlPartsApplication
 
 <TestFixture()>
 Public Class TestParser
@@ -50,7 +51,7 @@ Public Class TestParser
         Dim inputTemplate As String
         inputTemplate = "<!DOCTYPE html><html><head> <title>|field:title|</title></head><body> <h1>|field:header|</h1> |table:rubenstable|<tr><td colspan=""3"">Test 3 Header</td></tr>*<tr> <td>col</td> <td>col 2</td><td>col3</td></tr>|</body></html>"
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(inputTemplate, "|", "*", "%")
-        Dim listOfTableColumns As List(Of TableRow) = getListOfKeywordskeywordList.Item("table:rubenstable")
+        Dim listOfTableColumns As List(Of TableRw) = getListOfKeywordskeywordList.Item("table:rubenstable")
 
         Assert.IsTrue(listOfTableColumns.Count = 2)
         Assert.IsTrue(listOfTableColumns(0).TemplateText.Equals("<tr><td colspan=""3"">Test 3 Header</td></tr>"))
@@ -76,4 +77,4 @@ Public Class TestParser
         Assert.IsTrue(tableWithheaders.Equals("<table>" & extractedTableTemplateOptions & "</table>"))
     End Sub
 
- End Class
+End Class
