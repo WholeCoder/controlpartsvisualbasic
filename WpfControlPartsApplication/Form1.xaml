@@ -1,0 +1,10 @@
+﻿<Window x:Class="Form1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfControlPartsApplication"
+        mc:Ignorable="d"
+        Title="Form1" Height="1487.06" Width="801.232">
+    <Canvas Name="grd" HorizontalAlignment="Left" Height="1407" Margin="10,21,0,0" VerticalAlignment="Top" Width="751"/>
+</Window>
