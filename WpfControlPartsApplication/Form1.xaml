@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfControlPartsApplication"
         mc:Ignorable="d"
-        Title="Form1" Height="1487.06" Width="801.232">
-    <Canvas Name="grd" HorizontalAlignment="Left" Height="1407" Margin="10,21,0,0" VerticalAlignment="Top" Width="751"/>
+        Title="Form1" Height="1487.06" Width="801.232" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+    <Canvas Name="grd" HorizontalAlignment="Left" Margin="10,21,0,182.6" Width="751" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"/>
 </Window>

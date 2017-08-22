@@ -133,7 +133,7 @@ Class MainWindow
                                         '                                        tlPanel.SetRow(newTB2, currentTableRow)
                                         '                                        tlPanel.SetColumn(newTB2, colCounter)
                                         Grid.SetRow(newTB2, currentTableRow)
-                                        Grid.SetRow(newTB2, colCounter)
+                                        Grid.SetColumn(newTB2, colCounter)
                                         tlPanel.Children.Add(newTB2)
 
                                         colCounter = colCounter + 1
@@ -206,7 +206,7 @@ Class MainWindow
                 Canvas.SetTop(newTL, y)
                 Canvas.SetLeft(newTL, x)
 
-                y = y + newTL.ActualHeight
+                y = y + newTL.Height
             Else
                 Dim newTL As Controls.TextBox = New Controls.TextBox()
                 '                newTL.BackColor = Media.Color.LightGray
@@ -219,7 +219,7 @@ Class MainWindow
                 window.grd.Children.Add(newTL)
                 Canvas.SetTop(newTL, y)
                 Canvas.SetLeft(newTL, x)
-                y = y + newTL.ActualHeight
+                y = y + newTL.Height
             End If
 
         Next
