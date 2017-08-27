@@ -5,6 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfControlPartsApplication"
         mc:Ignorable="d"
-        Title="Form1" Height="1487.06" Width="801.232" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
-    <Canvas Name="grd" HorizontalAlignment="Left" Margin="10,21,0,182.6" Width="751" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"/>
+        Title="Form1" Height="663.116" Width="955.457" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
+    <ScrollViewer Margin="0,0,19.8,-0.4">
+        <Canvas Name="grd" HorizontalAlignment="Left" Margin="10,21,0,0" Width="751" ScrollViewer.CanContentScroll="True" Height="2570" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+            <Button Content="Save Tables&#xD;&#xA;" Canvas.Left="784" Canvas.Top="218" Width="75" RenderTransformOrigin="0.514,4.237" Click="Button_Click" AutomationProperties.Name="SaveToDatabase" Height="19"/>
+            <Button Content="Generate HTML&#xD;&#xA;" Canvas.Left="784" Canvas.Top="254" Width="75" Click="Button_Click_1" Height="23"/>
+            <Button Content="Load Data&#xD;&#xA;" Canvas.Left="784" Canvas.Top="296" Width="75" AutomationProperties.Name="LoadFromDatabase" Click="Button_Click_2" Height="25"/>
+        </Canvas>
+    </ScrollViewer>
 </Window>
