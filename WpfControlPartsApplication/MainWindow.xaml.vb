@@ -66,10 +66,11 @@ Class MainWindow
 
                 Dim str = ""
                 Dim tlPanel As Grid = New Grid()
-                tlPanel.Height = 500
+                tlPanel.Height = 700
 
-                Canvas.SetTop(tlPanel, y)
-                Canvas.SetLeft(tlPanel, x)
+
+                '                Canvas.SetTop(tlPanel, y)
+                '                Canvas.SetLeft(tlPanel, x)
 
                 Dim tSaver As TableSaverAndLoader = New TableSaverAndLoader()
                 window.myHTMLObjectSavers.Add(tSaver)
@@ -79,7 +80,15 @@ Class MainWindow
                 '                tlPanel.BackColor = Color.Aqua
                 tlPanel.Width = 600
 
-                window.grd.Children.Add(tlPanel)
+                Dim sv As ScrollViewer = New ScrollViewer()
+                sv.Height = 300
+                sv.Width = tlPanel.Width
+
+                sv.Content = tlPanel
+                window.grd.Children.Add(sv)
+
+                Canvas.SetTop(sv, y)
+                Canvas.SetLeft(sv, x)
 
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
                     Dim columnsForTableCreation As List(Of String) = New List(Of String)()
@@ -193,7 +202,7 @@ Class MainWindow
                     '                    Next
                 Next de
 
-                y = y + tlPanel.Height
+                y = y + sv.Height
             ElseIf dEl.StartsWith("field") Then
                 Dim newTL As Controls.TextBox = New Controls.TextBox()
                 '                newTL.Multiline = True
