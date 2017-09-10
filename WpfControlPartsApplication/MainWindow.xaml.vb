@@ -202,6 +202,20 @@ Class MainWindow
                     '                    Next
                 Next de
 
+                Dim plusButton As New Button
+                window.grd.Children.Add(plusButton)
+                plusButton.Content = "+"
+                plusButton.Width = 50
+                Canvas.SetLeft(plusButton, tlPanel.Width + x)
+                Canvas.SetTop(plusButton, y)
+
+                Dim minusButton As New Button
+                window.grd.Children.Add(minusButton)
+                minusButton.Width = plusButton.Width
+                minusButton.Content = "-"
+                Canvas.SetLeft(minusButton, tlPanel.Width + x + plusButton.Width)
+                Canvas.SetTop(minusButton, y)
+
                 y = y + sv.Height
             ElseIf dEl.StartsWith("field") Then
                 Dim newTL As Controls.TextBox = New Controls.TextBox()
