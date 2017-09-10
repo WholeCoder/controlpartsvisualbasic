@@ -235,6 +235,8 @@ Class MainWindow
 
 
         Me.TextBox1.Text = input
+
+        window.Load_Tables_From_Datase()
         '        Me.TextBox1.VerticalScrollBarVisibility = True
     End Sub
 

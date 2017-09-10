@@ -26,6 +26,10 @@ Public Class Form1
     End Sub
 
     Private Sub Button_Click_2(sender As Object, e As RoutedEventArgs)
+        Me.Load_Tables_From_Datase()
+    End Sub
+
+    Public Sub Load_Tables_From_Datase()
         For Each oSaver As SaveOrLoadFromToDatabaseObject In myObjectSavers
             oSaver.LoadFromDatabase()
         Next

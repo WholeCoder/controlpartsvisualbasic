@@ -8,7 +8,7 @@
         Title="MainWindow" Height="643" Width="1173">
     <Canvas Name="grd" HorizontalAlignment="Left" Height="595" Margin="10,10,0,0" VerticalAlignment="Top" Width="1153">
         <TextBox Name="TextBox1" Height="462" Canvas.Left="250" TextWrapping="Wrap" Text="TextBox" Canvas.Top="24" Width="893"/>
-        <Button Content="Button" Canvas.Left="117" Canvas.Top="500" Width="75" Click="Button_Click_1"/>
+        <Button Content="Load Template" Canvas.Left="250" Canvas.Top="501" Width="100" Click="Button_Click_1"/>
         <TextBlock Canvas.Left="13" TextWrapping="Wrap" Canvas.Top="61" Height="27"><Run Text="Table Separator"/><LineBreak/><Run/></TextBlock>
         <TextBlock Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="88" Height="18" Width="130"><Run Text="Table Column Separator"/><LineBreak/><Run/></TextBlock>
         <TextBlock Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="115"><Run Text="Template Name"/><LineBreak/><Run/></TextBlock>
