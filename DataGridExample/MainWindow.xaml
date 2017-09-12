@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Canvas Name="cnvs">
-        <Button Content="Button" Canvas.Left="195" Canvas.Top="35" Width="75" Click="Button_Click" />
+        <Button Content="Button" Canvas.Left="197" Canvas.Top="54" Width="75" Click="Button_Click" RenderTransformOrigin="0.494,1.278" />
 
     </Canvas>
 </Window>
