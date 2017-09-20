@@ -1,5 +1,6 @@
 ﻿Class MainWindow
-    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+
+    Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
         Dim dGrid As New DataGrid
         '        dGrid.Width = 400
 
@@ -10,13 +11,13 @@
         '        dGrid.Items.Add("Jill")
 
         Dim col1 As DataGridTextColumn =
-            New DataGridTextColumn()
+                New DataGridTextColumn()
         col1.Width = 200
         col1.Binding = New Binding("Name")
         col1.Header = "Name"
 
         Dim col2 As DataGridTextColumn =
-            New DataGridTextColumn()
+                New DataGridTextColumn()
         col2.Width = 200
         col2.Binding = New Binding("Age")
         col2.Header = "Age"
@@ -45,5 +46,6 @@
         cnvs.Children.Add(dGrid)
         Canvas.SetTop(dGrid, 100.0)
         Canvas.SetLeft(dGrid, 100.0)
+
     End Sub
 End Class

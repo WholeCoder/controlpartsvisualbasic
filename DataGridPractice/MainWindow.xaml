@@ -1,0 +1,12 @@
+﻿<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataGridPractice"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="638.426" Width="707.778">
+    <Canvas Name="cnvs" HorizontalAlignment="Left" Height="398" VerticalAlignment="Top" Width="667">
+        <Button Content="Button" Canvas.Left="251" Canvas.Top="450" Width="75" Click="Button_Click_1"/>
+    </Canvas>
+</Window>

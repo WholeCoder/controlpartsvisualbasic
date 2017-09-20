@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CB2B2FBD-CD4C-4590-B39A-0F48259CF317}</ProjectGuid>
+    <ProjectGuid>{2804D52C-AD5E-4F2A-8A05-1AA49A10617C}</ProjectGuid>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>DataGridExample</RootNamespace>
-    <AssemblyName>DataGridExample</AssemblyName>
+    <RootNamespace>DataGridPractice</RootNamespace>
+    <AssemblyName>DataGridPractice</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -20,7 +20,7 @@
     <DefineTrace>true</DefineTrace>
     <IncrementalBuild>true</IncrementalBuild>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>DataGridExample.xml</DocumentationFile>
+    <DocumentationFile>DataGridPractice.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <IncrementalBuild>false</IncrementalBuild>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>DataGridExample.xml</DocumentationFile>
+    <DocumentationFile>DataGridPractice.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -67,10 +67,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Gender.vb" />
     <Compile Include="MyData.vb" />
-    <Compile Include="Record.vb" />
-    <Page Include="TestMainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -78,8 +76,8 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TestMainWindow.xaml.vb">
-      <DependentUpon>TestMainWindow.xaml</DependentUpon>
+    <Compile Include="MainWindow.xaml.vb">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
