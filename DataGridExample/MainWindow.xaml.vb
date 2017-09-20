@@ -13,11 +13,13 @@
             New DataGridTextColumn()
         col1.Width = 200
         col1.Binding = New Binding("Name")
+        col1.Header = "Name"
 
         Dim col2 As DataGridTextColumn =
             New DataGridTextColumn()
         col2.Width = 200
         col2.Binding = New Binding("Age")
+        col2.Header = "Age"
 
         dGrid.Columns.Add(col1)
         dGrid.Columns.Add(col2)
