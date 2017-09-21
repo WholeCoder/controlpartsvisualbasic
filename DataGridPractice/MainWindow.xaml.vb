@@ -13,6 +13,23 @@ Class MainWindow
         '
         '        dGrid.Items.Add("John")
         '        dGrid.Items.Add("Jill")
+        Dim properties As Dictionary(Of String, Type) = New Dictionary(Of String, Type)
+        properties.Add("Name", GetType(String))
+        properties.Add("Age", GetType(String))
+        Dim myClazz As Type = CreateClass("MyClazz", properties)
+
+        Dim args() As Object = {}
+
+        Dim o As Object = Activator.CreateInstance(myClazz, args)
+        o.Name = "Ruben"
+        o.Age = "38"
+
+        Dim o1 As Object = Activator.CreateInstance(myClazz, args)
+        o1.Name = "Ruth"
+        o1.Age = "35"
+
+
+
 
         Dim col1 As DataGridTextColumn =
                 New DataGridTextColumn()
@@ -32,7 +49,7 @@ Class MainWindow
         Dim dta1 = New With {.Name = "John", .Age = "25"}
         Dim dta2 = New With {.Name = "Jill", .Age = "29"}
 
-        Dim dataList = {dta1, dta2}.ToList()
+        Dim dataList = {o, o1}.ToList()
 
         dGrid.ItemsSource = dataList
 
@@ -49,14 +66,6 @@ Class MainWindow
         Canvas.SetTop(dGrid, 100.0)
         Canvas.SetLeft(dGrid, 100.0)
 
-        Dim properties As Dictionary(Of String, Type) = New Dictionary(Of String, Type)
-        properties.Add("Name", GetType(String))
-        Dim myClazz As Type = CreateClass("MyClazz", properties)
-
-        Dim args() As Object = {}
-
-        Dim o As Object = Activator.CreateInstance(myClazz, args)
-        o.Name = "Ruben"
 
     End Sub
 
