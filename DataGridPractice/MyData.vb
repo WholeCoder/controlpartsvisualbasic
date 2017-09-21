@@ -1,4 +1,4 @@
 ﻿Public Class MyData
-    Public Name As String
-    Public Age As Integer
+    Public Property Name As String
+    Public Property Age As String
 End Class

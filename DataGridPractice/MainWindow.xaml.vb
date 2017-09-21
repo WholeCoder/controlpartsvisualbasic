@@ -2,6 +2,7 @@
 
     Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
         Dim dGrid As New DataGrid
+        dGrid.AutoGenerateColumns = False
         '        dGrid.Width = 400
 
         '        dGrid.Columns.Add(
@@ -25,8 +26,8 @@
         dGrid.Columns.Add(col1)
         dGrid.Columns.Add(col2)
 
-        Dim dta1 As New MyData() With {.Name = "John", .Age = 25}
-        Dim dta2 As New MyData() With {.Name = "Jill", .Age = 29}
+        Dim dta1 As New MyData() With {.Name = "John", .Age = "25"}
+        Dim dta2 As New MyData() With {.Name = "Jill", .Age = "29"}
 
         Dim dataList As List(Of MyData) = New List(Of MyData)
         dataList.Add(dta1)
