@@ -65,8 +65,8 @@ Class MainWindow
             If dEl.StartsWith("table") Then
 
                 Dim str = ""
-                Dim tlPanel As Grid = New Grid()
-                tlPanel.Height = 700
+                Dim dGrid As DataGrid = New DataGrid()
+                dGrid.Height = 700
 
 
                 '                Canvas.SetTop(tlPanel, y)
@@ -78,13 +78,13 @@ Class MainWindow
                 '                tlPanel.Location = New System.Drawing.Point(x, y)
                 '                tlPanel.BorderStyle = BorderStyle.FixedSingle
                 '                tlPanel.BackColor = Color.Aqua
-                tlPanel.Width = 600
+                dGrid.Width = 600
 
                 Dim sv As ScrollViewer = New ScrollViewer()
                 sv.Height = 300
-                sv.Width = tlPanel.Width
+                sv.Width = dGrid.Width
 
-                sv.Content = tlPanel
+                sv.Content = dGrid
                 window.grd.Children.Add(sv)
 
                 Canvas.SetTop(sv, y)
@@ -95,9 +95,9 @@ Class MainWindow
                     If de.Key.ToString().Equals(dEl) Then
                         Dim tableRowList As List(Of TableRw) = de.Value
 
-                        For i As Integer = 1 To 10
-                            Dim colDef1 As ColumnDefinition = New ColumnDefinition()
-                            tlPanel.ColumnDefinitions.Add(colDef1)
+                        For i As Integer = 1 To tableRowList(0).TemplateFields.Count
+                            Dim colDef1 As DataGridTextColumn = New DataGridTextColumn()
+                            dGrid.Columns.Add(colDef1)
                         Next
 
                         '                        tlPanel.ColumnCount = 10 ' maxNumberOfColument(tableRowList)
@@ -118,10 +118,10 @@ Class MainWindow
 
                             Dim howManyRowsToCreate = DatabaseInteractionApi.GetNumberOfRowsForTable(tablePrefixName & "_" & dEl.Split(":")(1))
 
-                            For j As Integer = 1 To howManyRowsToCreate
-                                Dim rowDef4 As RowDefinition = New RowDefinition()
-                                tlPanel.RowDefinitions.Add(rowDef4)
-                            Next
+                            '                            For j As Integer = 1 To howManyRowsToCreate
+                            '                                Dim rowDef4 As RowDefinition = New RowDefinition()
+                            '                                dGrid.RowDefinitions.Add(rowDef4)
+                            '                            Next
 
 
                             For currentTableRow As Integer = 0 To howManyRowsToCreate
@@ -143,7 +143,7 @@ Class MainWindow
                                         '                                        tlPanel.SetColumn(newTB2, colCounter)
                                         Grid.SetRow(newTB2, currentTableRow)
                                         Grid.SetColumn(newTB2, colCounter)
-                                        tlPanel.Children.Add(newTB2)
+                                        ' dGrid.ItemsSource.Add(newTB2)
 
                                         colCounter = colCounter + 1
                                     Else
@@ -169,7 +169,7 @@ Class MainWindow
                                             listOfTextBoxes.Add(newTB2)
                                             Grid.SetRow(newTB2, currentTableRow)
                                             Grid.SetColumn(newTB2, colCounter)
-                                            tlPanel.Children.Add(newTB2)
+                                            '                                            dGrid.Children.Add(newTB2)
                                             '                                                tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                             colCounter = colCounter + 1
                                             '                                            newTB2.BackColor = Color.Aqua
@@ -206,14 +206,14 @@ Class MainWindow
                 window.grd.Children.Add(plusButton)
                 plusButton.Content = "+"
                 plusButton.Width = 50
-                Canvas.SetLeft(plusButton, tlPanel.Width + x)
+                Canvas.SetLeft(plusButton, dGrid.Width + x)
                 Canvas.SetTop(plusButton, y)
 
                 Dim minusButton As New Button
                 window.grd.Children.Add(minusButton)
                 minusButton.Width = plusButton.Width
                 minusButton.Content = "-"
-                Canvas.SetLeft(minusButton, tlPanel.Width + x + plusButton.Width)
+                Canvas.SetLeft(minusButton, dGrid.Width + x + plusButton.Width)
                 Canvas.SetTop(minusButton, y)
 
                 y = y + sv.Height

@@ -1,4 +1,7 @@
-﻿Class MainWindow
+﻿Imports System.Reflection
+Imports System.Reflection.Emit
+
+Class MainWindow
 
     Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
         Dim dGrid As New DataGrid
@@ -26,12 +29,10 @@
         dGrid.Columns.Add(col1)
         dGrid.Columns.Add(col2)
 
-        Dim dta1 As New MyData() With {.Name = "John", .Age = "25"}
-        Dim dta2 As New MyData() With {.Name = "Jill", .Age = "29"}
+        Dim dta1 = New With {.Name = "John", .Age = "25"}
+        Dim dta2 = New With {.Name = "Jill", .Age = "29"}
 
-        Dim dataList As List(Of MyData) = New List(Of MyData)
-        dataList.Add(dta1)
-        dataList.Add(dta2)
+        Dim dataList = {dta1, dta2}.ToList()
 
         dGrid.ItemsSource = dataList
 
@@ -48,5 +49,54 @@
         Canvas.SetTop(dGrid, 100.0)
         Canvas.SetLeft(dGrid, 100.0)
 
+        Dim properties As Dictionary(Of String, Type) = New Dictionary(Of String, Type)
+        properties.Add("Name", GetType(String))
+        Dim myClazz As Type = CreateClass("MyClazz", properties)
+
+        Dim args() As Object = {}
+
+        Dim o As Object = Activator.CreateInstance(myClazz, args)
+        o.Name = "Ruben"
+
     End Sub
+
+    Public Shared Function CreateClass(ByVal className As String, ByVal properties As Dictionary(Of String, Type)) As Type
+
+        Dim myDomain As AppDomain = AppDomain.CurrentDomain
+        Dim myAsmName As New AssemblyName("MyAssembly")
+        Dim myAssembly As AssemblyBuilder = myDomain.DefineDynamicAssembly(myAsmName, AssemblyBuilderAccess.Run)
+
+        Dim myModule As ModuleBuilder = myAssembly.DefineDynamicModule("MyModule")
+
+        Dim myType As TypeBuilder = myModule.DefineType(className, TypeAttributes.Public)
+
+        myType.DefineDefaultConstructor(MethodAttributes.Public)
+
+        For Each o In properties
+
+            Dim prop As PropertyBuilder = myType.DefineProperty(o.Key, PropertyAttributes.HasDefault, o.Value, Nothing)
+
+            Dim field As FieldBuilder = myType.DefineField("_" + o.Key, o.Value, FieldAttributes.[Private])
+
+            Dim getter As MethodBuilder = myType.DefineMethod("get_" + o.Key, MethodAttributes.[Public] Or MethodAttributes.SpecialName Or MethodAttributes.HideBySig, o.Value, Type.EmptyTypes)
+            Dim getterIL As ILGenerator = getter.GetILGenerator()
+            getterIL.Emit(OpCodes.Ldarg_0)
+            getterIL.Emit(OpCodes.Ldfld, field)
+            getterIL.Emit(OpCodes.Ret)
+
+            Dim setter As MethodBuilder = myType.DefineMethod("set_" + o.Key, MethodAttributes.[Public] Or MethodAttributes.SpecialName Or MethodAttributes.HideBySig, Nothing, New Type() {o.Value})
+            Dim setterIL As ILGenerator = setter.GetILGenerator()
+            setterIL.Emit(OpCodes.Ldarg_0)
+            setterIL.Emit(OpCodes.Ldarg_1)
+            setterIL.Emit(OpCodes.Stfld, field)
+            setterIL.Emit(OpCodes.Ret)
+
+            prop.SetGetMethod(getter)
+            prop.SetSetMethod(setter)
+
+        Next
+
+        Return myType.CreateType()
+
+    End Function
 End Class
