@@ -1,5 +1,9 @@
 ﻿Imports System.Data
 Imports System.Data.SqlClient
+Imports System
+Imports System.Reflection
+Imports System.Reflection.Emit
+Imports Microsoft.VisualBasic
 
 Imports WpfControlPartsApplication.WpfControlPartsApplication
 
@@ -18,6 +22,7 @@ Class MainWindow
         Dim lbl As New Controls.TextBox
         lbl.Text = "New TextBox@@@"
         Me.grd.Children.Add(lbl)
+
         ' Create a window from the page you need to show
         Dim window As New Form1()
 
@@ -67,7 +72,7 @@ Class MainWindow
                 Dim str = ""
                 Dim dGrid As DataGrid = New DataGrid()
                 dGrid.Height = 700
-
+                dGrid.AutoGenerateColumns = False
 
                 '                Canvas.SetTop(tlPanel, y)
                 '                Canvas.SetLeft(tlPanel, x)
@@ -96,8 +101,15 @@ Class MainWindow
                         Dim tableRowList As List(Of TableRw) = de.Value
 
                         For i As Integer = 1 To tableRowList(0).TemplateFields.Count
-                            Dim colDef1 As DataGridTextColumn = New DataGridTextColumn()
-                            dGrid.Columns.Add(colDef1)
+                            Dim nameOfColumn As String = tableRowList(0).TemplateFields(i).Split(":")(1)
+
+                            Dim col1 As DataGridTextColumn =
+                                    New DataGridTextColumn()
+                            col1.Width = 200
+                            col1.Binding = New Binding(nameOfColumn)
+                            col1.Header = nameOfColumn
+
+                            dGrid.Columns.Add(col1)
                         Next
 
                         '                        tlPanel.ColumnCount = 10 ' maxNumberOfColument(tableRowList)
@@ -123,6 +135,7 @@ Class MainWindow
                             '                                dGrid.RowDefinitions.Add(rowDef4)
                             '                            Next
 
+                            Dim dataList = {}.ToList()
 
                             For currentTableRow As Integer = 0 To howManyRowsToCreate
                                 Dim colCounter As Integer = 0
@@ -136,13 +149,13 @@ Class MainWindow
 
                                         '                                        templateSavers.Add(New TextBoxSaver(newTB2))
                                         If elementInDocumentStructure.Contains(":") Then
-                                            tSaver.AddTableFormatString(elementInDocumentStructure)
-                                            columnsForTableCreation.Add(elementInDocumentStructure)
+                                            '                                            tSaver.AddTableFormatString(elementInDocumentStructure)
+                                            '                                            columnsForTableCreation.Add(elementInDocumentStructure)
                                         End If
                                         '                                        tlPanel.SetRow(newTB2, currentTableRow)
                                         '                                        tlPanel.SetColumn(newTB2, colCounter)
-                                        Grid.SetRow(newTB2, currentTableRow)
-                                        Grid.SetColumn(newTB2, colCounter)
+                                        '                                        Grid.SetRow(newTB2, currentTableRow)
+                                        '                                        Grid.SetColumn(newTB2, colCounter)
                                         ' dGrid.ItemsSource.Add(newTB2)
 
                                         colCounter = colCounter + 1
@@ -253,6 +266,46 @@ Class MainWindow
         window.Load_Tables_From_Datase()
         '        Me.TextBox1.VerticalScrollBarVisibility = True
     End Sub
+
+    Public Shared Function CreateClass(ByVal className As String, ByVal properties As Dictionary(Of String, Type)) As Type
+
+        Dim myDomain As AppDomain = AppDomain.CurrentDomain
+        Dim myAsmName As New AssemblyName("MyAssembly")
+        Dim myAssembly As AssemblyBuilder = myDomain.DefineDynamicAssembly(myAsmName, AssemblyBuilderAccess.Run)
+
+        Dim myModule As ModuleBuilder = myAssembly.DefineDynamicModule("MyModule")
+
+        Dim myType As TypeBuilder = myModule.DefineType(className, TypeAttributes.Public)
+
+        myType.DefineDefaultConstructor(MethodAttributes.Public)
+
+        For Each o In properties
+
+            Dim prop As PropertyBuilder = myType.DefineProperty(o.Key, Data.PropertyAttributes.Read Or Data.PropertyAttributes.Write, o.Value, Nothing)
+
+            Dim field As FieldBuilder = myType.DefineField("_" + o.Key, o.Value, FieldAttributes.[Private])
+
+            Dim getter As MethodBuilder = myType.DefineMethod("get_" + o.Key, MethodAttributes.[Public] Or MethodAttributes.SpecialName Or MethodAttributes.HideBySig, o.Value, Type.EmptyTypes)
+            Dim getterIL As ILGenerator = getter.GetILGenerator()
+            getterIL.Emit(OpCodes.Ldarg_0)
+            getterIL.Emit(OpCodes.Ldfld, field)
+            getterIL.Emit(OpCodes.Ret)
+
+            Dim setter As MethodBuilder = myType.DefineMethod("set_" + o.Key, MethodAttributes.[Public] Or MethodAttributes.SpecialName Or MethodAttributes.HideBySig, Nothing, New Type() {o.Value})
+            Dim setterIL As ILGenerator = setter.GetILGenerator()
+            setterIL.Emit(OpCodes.Ldarg_0)
+            setterIL.Emit(OpCodes.Ldarg_1)
+            setterIL.Emit(OpCodes.Stfld, field)
+            setterIL.Emit(OpCodes.Ret)
+
+            prop.SetGetMethod(getter)
+            prop.SetSetMethod(setter)
+
+        Next
+
+        Return myType.CreateType()
+
+    End Function
 
     Public Sub CreateNewTableAndcolumsForNewTemplateAndReturnTableId(template_id As Integer, templateName As String, tableNameWithTablePrefixAndColumns As String, columnsForTableCreation As List(Of String))
 

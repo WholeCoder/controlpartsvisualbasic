@@ -83,7 +83,7 @@ Class MainWindow
 
         For Each o In properties
 
-            Dim prop As PropertyBuilder = myType.DefineProperty(o.Key, PropertyAttributes.HasDefault, o.Value, Nothing)
+            Dim prop As PropertyBuilder = myType.DefineProperty(o.Key, Data.PropertyAttributes.Read Or Data.PropertyAttributes.Write, o.Value, Nothing)
 
             Dim field As FieldBuilder = myType.DefineField("_" + o.Key, o.Value, FieldAttributes.[Private])
 
