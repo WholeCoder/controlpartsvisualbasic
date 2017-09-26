@@ -79,15 +79,12 @@ Class MainWindow
                 Dim tSaver As TableSaverAndLoader = New TableSaverAndLoader()
                 window.myHTMLObjectSavers.Add(tSaver)
                 tSaver.dGrid = dGrid
-                Dim sv As ScrollViewer = New ScrollViewer()
-                sv.Height = 300
-                sv.Width = dGrid.Width
 
-                sv.Content = dGrid
-                window.grd.Children.Add(sv)
 
-                Canvas.SetTop(sv, y)
-                Canvas.SetLeft(sv, x)
+                window.grd.Children.Add(dGrid)
+
+                Canvas.SetTop(dGrid, y)
+                Canvas.SetLeft(dGrid, x)
 
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
                     Dim columnsForTableCreation As List(Of String) = New List(Of String)()
@@ -236,7 +233,7 @@ Class MainWindow
                 Canvas.SetLeft(minusButton, dGrid.Width + x + plusButton.Width)
                 Canvas.SetTop(minusButton, y)
 
-                y = y + sv.Height
+                y = y + dGrid.Height
                 tSaver.LoadFromDatabase()
 
             ElseIf dEl.StartsWith("field") Then
