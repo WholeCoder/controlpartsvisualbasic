@@ -1,6 +1,7 @@
 ﻿
 Imports System.Data
 Imports System.Data.SqlClient
+Imports System.Reflection
 Imports System.Windows.Controls
 
 Namespace WpfControlPartsApplication
@@ -13,6 +14,8 @@ Namespace WpfControlPartsApplication
         Public textBoxTypeStrings As List(Of String)
         Public tableFormatString As String
         Public table_id As Integer
+
+        Public dGrid As DataGrid
 
         Public Sub New()
             tBoxs = New List(Of List(Of Controls.TextBox))
@@ -105,9 +108,13 @@ Namespace WpfControlPartsApplication
             Return str
         End Function
 
+        Public Property myClazz As Type
+
         Public Overrides Sub LoadFromDatabase()
             Dim queryString As String = GetQueryString()
             Dim connectionString As String = "Server = localhost" & "\SQLEXPRESS;Database=ControlParts;" & "User ID=sa;Password=ssGood&Plenty;"
+
+            Dim dataList = {}.ToList()
 
             Using connection As New SqlConnection(connectionString)
                 Dim command As New SqlCommand(queryString, connection)
@@ -120,11 +127,25 @@ Namespace WpfControlPartsApplication
                 While reader.Read()
 
                     Dim cc As Integer = 0
-                    Dim listOfTextBoxes = tBoxs.Item(c)
+
+
+                    '                    Dim listOfTextBoxes = tBoxs.Item(c)
+
+
+
+                    Dim args() As Object = {}
+
+                    Dim o As Object = Activator.CreateInstance(myClazz, args)
+
                     For Each ent As String In textBoxTypeStrings
-                        listOfTextBoxes(cc).Text = reader(cc)
+
+                        Dim prop As PropertyInfo = myClazz.GetProperty(ent.Split(":")(1))
+                        prop.SetValue(o, reader(cc), Nothing)
+
+                        '                        listOfTextBoxes(cc).Text = reader(cc)
                         cc += 1
                     Next
+                    dataList.Add(o)
                     c += 1
                 End While
 
@@ -132,9 +153,12 @@ Namespace WpfControlPartsApplication
 
 
             End Using
+            dGrid.ItemsSource = dataList
             '        MessageBox.Show(queryString, "The Lorax",
             '                        MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
         End Sub
+
+        Private Property ListOfColumnNames As List(Of String) = New List(Of String)
 
         Private Function GetQueryString() As String
 
@@ -142,6 +166,7 @@ Namespace WpfControlPartsApplication
 
             For Each ent As String In textBoxTypeStrings
                 queryString &= ent.Split(":")(1) + ","
+                ListOfColumnNames.Add(ent.Split(":")(1))
             Next
 
             queryString = queryString.Substring(0, queryString.Count - 1)

@@ -74,17 +74,11 @@ Class MainWindow
                 dGrid.Height = 700
                 dGrid.AutoGenerateColumns = False
 
-                '                Canvas.SetTop(tlPanel, y)
-                '                Canvas.SetLeft(tlPanel, x)
+                dGrid.Width = 600
 
                 Dim tSaver As TableSaverAndLoader = New TableSaverAndLoader()
                 window.myHTMLObjectSavers.Add(tSaver)
-                '
-                '                tlPanel.Location = New System.Drawing.Point(x, y)
-                '                tlPanel.BorderStyle = BorderStyle.FixedSingle
-                '                tlPanel.BackColor = Color.Aqua
-                dGrid.Width = 600
-
+                tSaver.dGrid = dGrid
                 Dim sv As ScrollViewer = New ScrollViewer()
                 sv.Height = 300
                 sv.Width = dGrid.Width
@@ -100,8 +94,15 @@ Class MainWindow
                     If de.Key.ToString().Equals(dEl) Then
                         Dim tableRowList As List(Of TableRw) = de.Value
 
-                        For i As Integer = 1 To tableRowList(0).TemplateFields.Count
+
+
+
+                        Dim properties As Dictionary(Of String, Type) = New Dictionary(Of String, Type)
+
+                        For i As Integer = 0 To tableRowList(0).TemplateFields.Count - 1
                             Dim nameOfColumn As String = tableRowList(0).TemplateFields(i).Split(":")(1)
+
+                            '                            properties.Add(nameOfColumn, GetType(String))
 
                             Dim col1 As DataGridTextColumn =
                                     New DataGridTextColumn()
@@ -110,12 +111,12 @@ Class MainWindow
                             col1.Header = nameOfColumn
 
                             dGrid.Columns.Add(col1)
+
+                            properties.Add(nameOfColumn, GetType(String))
                         Next
 
-                        '                        tlPanel.ColumnCount = 10 ' maxNumberOfColument(tableRowList)
-                        '                        tlPanel.RowCount = tableRowList.Count
-                        '                        tlPanel.AutoScroll = True
-
+                        Dim myClazz As Type = CreateClass("MyClazz", properties)
+                        tSaver.myClazz = myClazz
 
                         ' This loop is for the headers
 
@@ -137,9 +138,12 @@ Class MainWindow
 
                             Dim dataList = {}.ToList()
 
-                            For currentTableRow As Integer = 0 To howManyRowsToCreate
+                            For currentTableRow As Integer = 0 To howManyRowsToCreate - 1
                                 Dim colCounter As Integer = 0
-                                Dim listOfTextBoxes As List(Of TextBox) = New List(Of Controls.TextBox)
+                                '                                Dim listOfTextBoxes As List(Of TextBox) = New List(Of Controls.TextBox)
+
+
+
 
                                 For Each elementInDocumentStructure As String In docStructure
                                     If currentTableRow = 0 Then
@@ -149,8 +153,9 @@ Class MainWindow
 
                                         '                                        templateSavers.Add(New TextBoxSaver(newTB2))
                                         If elementInDocumentStructure.Contains(":") Then
-                                            '                                            tSaver.AddTableFormatString(elementInDocumentStructure)
-                                            '                                            columnsForTableCreation.Add(elementInDocumentStructure)
+                                            tSaver.AddTableFormatString(elementInDocumentStructure)
+                                            'properties.Add(elementInDocumentStructure.Split(":")(1), GetType(String))
+                                            columnsForTableCreation.Add(elementInDocumentStructure)
                                         End If
                                         '                                        tlPanel.SetRow(newTB2, currentTableRow)
                                         '                                        tlPanel.SetColumn(newTB2, colCounter)
@@ -179,7 +184,9 @@ Class MainWindow
                                             '                                            templateSavers.Add(New TableSaver(dEl, tableId))
                                             newTB2.Text = ""
 
-                                            listOfTextBoxes.Add(newTB2)
+                                            '                                            dataList.Add()
+
+                                            '                                            listOfTextBoxes.Add(newTB2)
                                             Grid.SetRow(newTB2, currentTableRow)
                                             Grid.SetColumn(newTB2, colCounter)
                                             '                                            dGrid.Children.Add(newTB2)
@@ -189,7 +196,7 @@ Class MainWindow
                                         End If
                                     End If
                                 Next
-                                tSaver.Add(listOfTextBoxes)
+                                '                                tSaver.Add(listOfTextBoxes)
                             Next
                             If shouldCreateTableMetadata Then
                                 CreateNewTableAndcolumsForNewTemplateAndReturnTableId(template_id, tablePrefixName, dEl, columnsForTableCreation)
@@ -198,14 +205,14 @@ Class MainWindow
                             Dim tempRay() As String = dEl.Split(":")
                             Dim table_id As Integer = DatabaseInteractionApi.ReturnTableIdIfTableExists(tablePrefixName & "_" & tempRay(1), template_id)
 
-                            tSaver.tBoxs = tSaver.tBoxs.GetRange(1, tSaver.tBoxs.Count - 1)
+                            '                            tSaver.tBoxs = tSaver.tBoxs.GetRange(1, tSaver.tBoxs.Count - 1)
                             '                            MessageBox.Show(tSaver.tBoxs.Count & " tSaver.tBoxs exist - ", "The Lorax",
                             '                                            MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
 
-                            tSaver.tableFormatString = dEl
+                            '                            tSaver.tableFormatString = dEl
                             tSaver.table_id = table_id
-
-                            window.myObjectSavers.Add(tSaver)
+                            '
+                            '                            window.myObjectSavers.Add(tSaver)
 
                             columnsForTableCreation.Clear()
                             Me.TableName = ""
@@ -230,6 +237,8 @@ Class MainWindow
                 Canvas.SetTop(minusButton, y)
 
                 y = y + sv.Height
+                tSaver.LoadFromDatabase()
+
             ElseIf dEl.StartsWith("field") Then
                 Dim newTL As Controls.TextBox = New Controls.TextBox()
                 '                newTL.Multiline = True
@@ -262,7 +271,6 @@ Class MainWindow
 
 
         Me.TextBox1.Text = input
-
         window.Load_Tables_From_Datase()
         '        Me.TextBox1.VerticalScrollBarVisibility = True
     End Sub

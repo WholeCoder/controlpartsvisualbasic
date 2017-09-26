@@ -28,7 +28,10 @@ Class MainWindow
         o1.Name = "Ruth"
         o1.Age = "35"
 
+        Dim prop As PropertyInfo = myClazz.GetProperty("Name")
 
+        ' Set the value of the given property on the given instance
+        prop.SetValue(o1, "Samuel", Nothing)
 
 
         Dim col1 As DataGridTextColumn =
