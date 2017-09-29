@@ -17,11 +17,6 @@ Class MainWindow
         input = My.Computer.FileSystem.ReadAllText("../../a185.htm")
 
         Me.TextBox1.Text = input
-        '        Me.TextBox1.ScrollBars = ScrollBars.Vertical
-
-        Dim lbl As New Controls.TextBox
-        lbl.Text = "New TextBox@@@"
-        Me.grd.Children.Add(lbl)
 
         ' Create a window from the page you need to show
         Dim window As New Form1()
@@ -30,16 +25,6 @@ Class MainWindow
         window.Show()
 
         Dim tablePrefixName As String = Me.tableTextBox.Text
-
-        Dim templateIdForCheckTemplateAlreadyExists = DatabaseInteractionApi.ReturnTemplateIdIfTemplateExists(tablePrefixName)
-
-        '        If templateIdForCheckTemplateAlreadyExists <> -1 Then
-        '            MsgBox("This template already exists.  Please use a new name for your template", , "Template already exists")
-        '            Return
-        '        End If
-
-        '        My.Forms.Form2.Text = Now.ToString
-        '        My.Forms.Form2.AutoScroll = True
 
         Dim fieldSeparatorText = Me.fieldSeparatorTextBox.Text
         Dim tableSeparatorText = Me.tableSeparatorTextBox.Text
@@ -99,8 +84,6 @@ Class MainWindow
                         For i As Integer = 0 To tableRowList(0).TemplateFields.Count - 1
                             Dim nameOfColumn As String = tableRowList(0).TemplateFields(i).Split(":")(1)
 
-                            '                            properties.Add(nameOfColumn, GetType(String))
-
                             Dim col1 As DataGridTextColumn =
                                     New DataGridTextColumn()
                             col1.Width = 200
@@ -128,16 +111,11 @@ Class MainWindow
 
                             Dim howManyRowsToCreate = DatabaseInteractionApi.GetNumberOfRowsForTable(tablePrefixName & "_" & dEl.Split(":")(1))
 
-                            '                            For j As Integer = 1 To howManyRowsToCreate
-                            '                                Dim rowDef4 As RowDefinition = New RowDefinition()
-                            '                                dGrid.RowDefinitions.Add(rowDef4)
-                            '                            Next
 
                             Dim dataList = {}.ToList()
 
                             For currentTableRow As Integer = 0 To howManyRowsToCreate - 1
                                 Dim colCounter As Integer = 0
-                                '                                Dim listOfTextBoxes As List(Of TextBox) = New List(Of Controls.TextBox)
 
 
 
@@ -145,55 +123,31 @@ Class MainWindow
                                 For Each elementInDocumentStructure As String In docStructure
                                     If currentTableRow = 0 Then
                                         Dim newTB2 As New Controls.TextBox
-                                        '                                        newTB2.Name = elementInDocumentStructure
+
                                         newTB2.Text = elementInDocumentStructure
 
-                                        '                                        templateSavers.Add(New TextBoxSaver(newTB2))
                                         If elementInDocumentStructure.Contains(":") Then
                                             tSaver.AddTableFormatString(elementInDocumentStructure)
-                                            'properties.Add(elementInDocumentStructure.Split(":")(1), GetType(String))
                                             columnsForTableCreation.Add(elementInDocumentStructure)
                                         End If
-                                        '                                        tlPanel.SetRow(newTB2, currentTableRow)
-                                        '                                        tlPanel.SetColumn(newTB2, colCounter)
-                                        '                                        Grid.SetRow(newTB2, currentTableRow)
-                                        '                                        Grid.SetColumn(newTB2, colCounter)
-                                        ' dGrid.ItemsSource.Add(newTB2)
 
                                         colCounter = colCounter + 1
                                     Else
                                         If Not elementInDocumentStructure.Contains(":") Then
 
-                                            '                                            Dim newTB2 As New TextBox
-                                            '                                            newTB2.Name = e2
-                                            '
-                                            '                                            tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
                                             colCounter = colCounter + 1
-                                            '                                            newTB2.BackColor = Color.Aqua
 
                                         Else
-                                            '                                            If elementInDocumentStructure.Contains(":") And currentTableRow = 1 Then
-
-                                            '                                            End If
                                             Dim newTB2 As New Controls.TextBox
-                                            '                                            newTB2.Name = elementInDocumentStructure
-
-                                            '                                            templateSavers.Add(New TableSaver(dEl, tableId))
                                             newTB2.Text = ""
 
-                                            '                                            dataList.Add()
-
-                                            '                                            listOfTextBoxes.Add(newTB2)
                                             Grid.SetRow(newTB2, currentTableRow)
                                             Grid.SetColumn(newTB2, colCounter)
-                                            '                                            dGrid.Children.Add(newTB2)
-                                            '                                                tlPanel.Controls.Add(newTB2, colCounter, currentTableRow)
+
                                             colCounter = colCounter + 1
-                                            '                                            newTB2.BackColor = Color.Aqua
                                         End If
                                     End If
                                 Next
-                                '                                tSaver.Add(listOfTextBoxes)
                             Next
                             If shouldCreateTableMetadata Then
                                 CreateNewTableAndcolumsForNewTemplateAndReturnTableId(template_id, tablePrefixName, dEl, columnsForTableCreation)
@@ -202,21 +156,12 @@ Class MainWindow
                             Dim tempRay() As String = dEl.Split(":")
                             Dim table_id As Integer = DatabaseInteractionApi.ReturnTableIdIfTableExists(tablePrefixName & "_" & tempRay(1), template_id)
 
-                            '                            tSaver.tBoxs = tSaver.tBoxs.GetRange(1, tSaver.tBoxs.Count - 1)
-                            '                            MessageBox.Show(tSaver.tBoxs.Count & " tSaver.tBoxs exist - ", "The Lorax",
-                            '                                            MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk)
-
-                            '                            tSaver.tableFormatString = dEl
                             tSaver.table_id = table_id
-                            '
-                            '                            window.myObjectSavers.Add(tSaver)
 
                             columnsForTableCreation.Clear()
                             Me.TableName = ""
                         Next
                     End If
-                    '                    For Each cftc As String In columnsForTableCreation
-                    '                    Next
                 Next de
 
                 Dim plusButton As New Button
@@ -238,12 +183,11 @@ Class MainWindow
 
             ElseIf dEl.StartsWith("field") Then
                 Dim newTL As Controls.TextBox = New Controls.TextBox()
-                '                newTL.Multiline = True
-                '                newTL.ScrollBars = ScrollBars.Both
+
                 newTL.Text = dEl
                 newTL.Width = 600
                 newTL.Height = 20
-                '                newTL.Location = New System.Windows.Point(x, y)
+
                 window.grd.Children.Add(newTL)
                 Canvas.SetTop(newTL, y)
                 Canvas.SetLeft(newTL, x)
@@ -251,13 +195,11 @@ Class MainWindow
                 y = y + newTL.Height
             Else
                 Dim newTL As Controls.TextBox = New Controls.TextBox()
-                '                newTL.BackColor = Media.Color.LightGray
-                '                newTL.Multiline = True
-                '                newTL.ScrollBars = ScrollBars.Both
+
                 newTL.Text = dEl
                 newTL.Width = 600
                 newTL.Height = 150
-                '                newTL.Location = New System.Windows.Point(x, y)
+
                 window.grd.Children.Add(newTL)
                 Canvas.SetTop(newTL, y)
                 Canvas.SetLeft(newTL, x)
@@ -269,7 +211,6 @@ Class MainWindow
 
         Me.TextBox1.Text = input
         window.Load_Tables_From_Datase()
-        '        Me.TextBox1.VerticalScrollBarVisibility = True
     End Sub
 
     Public Shared Function CreateClass(ByVal className As String, ByVal properties As Dictionary(Of String, Type)) As Type
@@ -358,9 +299,6 @@ Class MainWindow
                         strSQL += sStringCol(1) & " DATETIME, "
                     End If
                 Next
-                '                             "LastName  VARCHAR(30), " &
-                '                             "FirstName VARCHAR(20), " &
-                '                             "Address   VARCHAR(50) " &
 
 
                 strSQL += "Id int NOT NULL PRIMARY KEY IDENTITY(1,1) " & ") "
