@@ -176,12 +176,26 @@ Class MainWindow
                 Dim newTL = New TextBox()
 
                 newTL.Text = dEl
-                newTL.Width = 600
+                newTL.Width = 300
                 newTL.Height = 20
+
+                Dim fValueTextBox As New TextBox
+                fValueTextBox.Text = ""
+                fValueTextBox.Width = 300
+                fValueTextBox.Height = 20
+
+                Dim fldSaveLoader As New FieldSaverOrLoaderFromDatabase
+                fldSaveLoader.FieldTypeString = newTL
+                fldSaveLoader.FieldValue = fValueTextBox
+                window.myHTMLObjectSavers.Add(fldSaveLoader)
 
                 window.grd.Children.Add(newTL)
                 Canvas.SetTop(newTL, y)
                 Canvas.SetLeft(newTL, x)
+
+                window.grd.Children.Add(fValueTextBox)
+                Canvas.SetTop(fValueTextBox, y)
+                Canvas.SetLeft(fValueTextBox, x + 300)
 
                 y = y + newTL.Height
             Else
