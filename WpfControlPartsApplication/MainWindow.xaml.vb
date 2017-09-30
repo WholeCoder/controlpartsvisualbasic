@@ -1,9 +1,7 @@
 ﻿Imports System.Data
 Imports System.Data.SqlClient
-Imports System
 Imports System.Reflection
 Imports System.Reflection.Emit
-Imports Microsoft.VisualBasic
 
 Imports WpfControlPartsApplication.WpfControlPartsApplication
 
@@ -33,8 +31,8 @@ Class MainWindow
         Dim getListOfKeywordskeywordList As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(input, fieldSeparatorText, tableSeparatorText, tableColumnSeparatorText)
         Dim documentStructure As List(Of String) = getListOfKeywordskeywordList.Item("documentstructure")
 
-        Const x As Integer = 100
-        Dim y As Integer = 40
+        Const x = 100
+        Dim y = 40
 
         window.myObjectSavers = New List(Of SaveOrLoadFromToDatabaseObject)
         window.myHTMLObjectSavers = New List(Of SaveOrLoadFromToDatabaseObject)
@@ -54,14 +52,13 @@ Class MainWindow
         For Each dEl As String In documentStructure
             If dEl.StartsWith("table") Then
 
-                Dim str = ""
-                Dim dGrid As DataGrid = New DataGrid()
+                Dim dGrid = New DataGrid()
                 dGrid.Height = 700
                 dGrid.AutoGenerateColumns = False
 
                 dGrid.Width = 600
 
-                Dim tSaver As TableSaverAndLoader = New TableSaverAndLoader()
+                Dim tSaver = New TableSaverAndLoader()
                 window.myHTMLObjectSavers.Add(tSaver)
                 tSaver.dGrid = dGrid
 
@@ -72,19 +69,19 @@ Class MainWindow
                 Canvas.SetLeft(dGrid, x)
 
                 For Each de As DictionaryEntry In getListOfKeywordskeywordList
-                    Dim columnsForTableCreation As List(Of String) = New List(Of String)()
+                    Dim columnsForTableCreation = New List(Of String)()
                     If de.Key.ToString().Equals(dEl) Then
                         Dim tableRowList As List(Of TableRw) = de.Value
 
 
 
 
-                        Dim properties As Dictionary(Of String, Type) = New Dictionary(Of String, Type)
+                        Dim properties = New Dictionary(Of String, Type)
 
-                        For i As Integer = 0 To tableRowList(0).TemplateFields.Count - 1
+                        For i = 0 To tableRowList(0).TemplateFields.Count - 1
                             Dim nameOfColumn As String = tableRowList(0).TemplateFields(i).Split(":")(1)
 
-                            Dim col1 As DataGridTextColumn =
+                            Dim col1 =
                                     New DataGridTextColumn()
                             col1.Width = 200
                             col1.Binding = New Binding(nameOfColumn)
@@ -102,9 +99,7 @@ Class MainWindow
 
                         For Each ent As TableRw In tableRowList
 
-                            Dim templateFields = ent.TemplateFields
                             Dim tableTemplateText = ent.TemplateText
-                            Dim stringsForHeaders As String = ""
 
                             Dim hashTableOfParsedDocumentElements As Hashtable = TemplateParserUtilitiy.ParseHashTableOfElements(tableTemplateText, tableColumnSeparatorText, "NotUsed", "Notused")
                             Dim docStructure = hashTableOfParsedDocumentElements.Item("documentstructure")
@@ -112,19 +107,15 @@ Class MainWindow
                             Dim howManyRowsToCreate = DatabaseInteractionApi.GetNumberOfRowsForTable(tablePrefixName & "_" & dEl.Split(":")(1))
 
 
-                            Dim dataList = {}.ToList()
-
-                            For currentTableRow As Integer = 0 To howManyRowsToCreate - 1
-                                Dim colCounter As Integer = 0
-
-
+                            For currentTableRow = 0 To howManyRowsToCreate - 1
+                                Dim colCounter = 0
 
 
                                 For Each elementInDocumentStructure As String In docStructure
                                     If currentTableRow = 0 Then
-                                        Dim newTB2 As New Controls.TextBox
-
-                                        newTB2.Text = elementInDocumentStructure
+                                        Dim newTb2 As New TextBox With {
+                                            .Text = elementInDocumentStructure
+                                        }
 
                                         If elementInDocumentStructure.Contains(":") Then
                                             tSaver.AddTableFormatString(elementInDocumentStructure)
@@ -182,7 +173,7 @@ Class MainWindow
                 tSaver.LoadFromDatabase()
 
             ElseIf dEl.StartsWith("field") Then
-                Dim newTL As Controls.TextBox = New Controls.TextBox()
+                Dim newTL = New TextBox()
 
                 newTL.Text = dEl
                 newTL.Width = 600
@@ -194,11 +185,15 @@ Class MainWindow
 
                 y = y + newTL.Height
             Else
-                Dim newTL As Controls.TextBox = New Controls.TextBox()
+                Dim newTL = New TextBox()
 
                 newTL.Text = dEl
                 newTL.Width = 600
                 newTL.Height = 150
+
+                Dim gftBox As New GenerateHTMLFromTextBoxOfHTML
+                gftBox.TBox = newTL
+                window.myHTMLObjectSavers.Add(gftBox)
 
                 window.grd.Children.Add(newTL)
                 Canvas.SetTop(newTL, y)
@@ -238,11 +233,11 @@ Class MainWindow
             getterIL.Emit(OpCodes.Ret)
 
             Dim setter As MethodBuilder = myType.DefineMethod("set_" + o.Key, MethodAttributes.[Public] Or MethodAttributes.SpecialName Or MethodAttributes.HideBySig, Nothing, New Type() {o.Value})
-            Dim setterIL As ILGenerator = setter.GetILGenerator()
-            setterIL.Emit(OpCodes.Ldarg_0)
-            setterIL.Emit(OpCodes.Ldarg_1)
-            setterIL.Emit(OpCodes.Stfld, field)
-            setterIL.Emit(OpCodes.Ret)
+            Dim setterIl As ILGenerator = setter.GetILGenerator()
+            setterIl.Emit(OpCodes.Ldarg_0)
+            setterIl.Emit(OpCodes.Ldarg_1)
+            setterIl.Emit(OpCodes.Stfld, field)
+            setterIl.Emit(OpCodes.Ret)
 
             prop.SetGetMethod(getter)
             prop.SetSetMethod(setter)
@@ -259,14 +254,14 @@ Class MainWindow
                                          "User ID=sa;Password=ssGood&Plenty;"
         Dim tableNameSuffix As String = Split(tableNameWithTablePrefixAndColumns, ":")(1)
 
-        Dim table_id As Integer = DatabaseInteractionApi.InsertTableIntoDatabaseAndReturnTableId(templateName & "_" & tableNameSuffix, template_id)
+        Dim tableId As Integer = DatabaseInteractionApi.InsertTableIntoDatabaseAndReturnTableId(templateName & "_" & tableNameSuffix, template_id)
 
         For Each e As String In columnsForTableCreation
             Dim sStringCol As String() = Split(e, ":")
             If e.Contains(":") And sStringCol(2).Equals("string") Then
-                DatabaseInteractionApi.InsertTableColumnsIntoDatabase(sStringCol(1), table_id, "string")
+                DatabaseInteractionApi.InsertTableColumnsIntoDatabase(sStringCol(1), tableId, "string")
             ElseIf e.Contains(":") And sStringCol(2).Equals("datetime") Then
-                DatabaseInteractionApi.InsertTableColumnsIntoDatabase(sStringCol(1), table_id, "datetime")
+                DatabaseInteractionApi.InsertTableColumnsIntoDatabase(sStringCol(1), tableId, "datetime")
             End If
         Next
 
