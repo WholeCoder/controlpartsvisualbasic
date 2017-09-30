@@ -12,9 +12,9 @@ Public Class Form1
     End Sub
 
     Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
-        For Each oSaver As SaveOrLoadFromToDatabaseObject In myObjectSavers
-            oSaver.LoadFromDatabase()
-        Next
+        '        For Each oSaver As SaveOrLoadFromToDatabaseObject In myObjectSavers
+        '            oSaver.LoadFromDatabase()
+        '        Next
 
         Dim htmlString As String = ""
 

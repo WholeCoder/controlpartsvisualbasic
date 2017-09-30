@@ -179,12 +179,16 @@ Namespace WpfControlPartsApplication
 
             Dim strng As String = ""
 
-            For Each listOfTextBoxes As List(Of Controls.TextBox) In tBoxs
-                For Each textBx As Controls.TextBox In listOfTextBoxes
-                    strng &= ", " & textBx.Text
+            Dim lst = dGrid.ItemsSource
+            For Each item As Object In lst
+                For Each ent As String In textBoxTypeStrings
+                    Dim prop As PropertyInfo = myClazz.GetProperty(ent.Split(":")(1))
+                    Dim objectsField = prop.GetValue(item, Nothing)
+
+                    strng &= objectsField & ","
                 Next
+                strng &= "\n"
             Next
-            strng &= "                             "
 
             Return strng
         End Function
